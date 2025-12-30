@@ -29,18 +29,18 @@ func respawn_block():
 	
 	# Redisplay block with 
 	global_position = initial_position
-	block.texture = load("res://assets/block_rest.png")
+	block.texture = load("res://assets/falling_block/block_rest.png")
 	
 	# Réaffiche le bloc
 	visible = true
 			
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		block.texture = load("res://assets/block_idle.png")
+		block.texture = load("res://assets/falling_block/block_idle.png")
 		timer.start()
 		
 func _on_timer_timeout() -> void:
-	block.texture = load("res://assets/block_fall.png")
+	block.texture = load("res://assets/falling_block/block_fall.png")
 	is_falling = true
 	fall_velocity = Vector2.ZERO
 	timer.stop()

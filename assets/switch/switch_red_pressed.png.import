@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpeuud18f06km"
-path="res://.godot/imported/flag_green_b.png-bc35bf4868ee084a8f7b56d2efb9fadc.ctex"
+uid="uid://uihdkxae7pfn"
+path="res://.godot/imported/switch_red_pressed.png-c0ff1a78c27ec15c57be8e674ed8858c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/flag_green_b.png"
-dest_files=["res://.godot/imported/flag_green_b.png-bc35bf4868ee084a8f7b56d2efb9fadc.ctex"]
+source_file="res://assets/switch/switch_red_pressed.png"
+dest_files=["res://.godot/imported/switch_red_pressed.png-c0ff1a78c27ec15c57be8e674ed8858c.ctex"]
 
 [params]
 

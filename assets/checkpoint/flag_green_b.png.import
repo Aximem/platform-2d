@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxmtqs5l7tyxm"
-path="res://.godot/imported/block_fall.png-c78b8c218d8fdb64a6f481a406750c10.ctex"
+uid="uid://bpeuud18f06km"
+path="res://.godot/imported/flag_green_b.png-dec15383f2868dd865f6a681b28ef78a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/block_fall.png"
-dest_files=["res://.godot/imported/block_fall.png-c78b8c218d8fdb64a6f481a406750c10.ctex"]
+source_file="res://assets/checkpoint/flag_green_b.png"
+dest_files=["res://.godot/imported/flag_green_b.png-dec15383f2868dd865f6a681b28ef78a.ctex"]
 
 [params]
 

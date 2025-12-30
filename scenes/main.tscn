@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cdhceurbwvuoy"]
+[gd_scene load_steps=17 format=4 uid="uid://cdhceurbwvuoy"]
 
 [ext_resource type="PackedScene" uid="uid://ck5wm7pliwulq" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cj1avd0a6t1dn" path="res://assets/spritesheet-tiles-default.png" id="2_0wfyh"]
@@ -8,6 +8,7 @@
 [ext_resource type="FontFile" uid="uid://c625rmrxp6huy" path="res://fonts/Blazma-Regular.ttf" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://cplayv3eqd243" path="res://scenes/checkpoint.tscn" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bsmtfqe4khytp" path="res://scenes/falling_platform.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://b7ltw5qwmv0xl" path="res://scenes/switch.tscn" id="9_85g3d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbgi4"]
 texture = ExtResource("2_jyhfs")
@@ -1487,3 +1488,10 @@ scale = Vector2(0.25, 0.25)
 z_index = 1
 position = Vector2(1038, 434)
 scale = Vector2(0.25, 0.25)
+
+[node name="Switchs" type="Node" parent="."]
+
+[node name="Switch" parent="Switchs" instance=ExtResource("9_85g3d")]
+position = Vector2(439, 477)
+scale = Vector2(0.25, 0.25)
+color = 1

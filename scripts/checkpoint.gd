@@ -5,7 +5,7 @@ extends Area2D
 @export var checkpoint_id: int = 0
 
 func _on_body_entered(_body: Node2D) -> void:
-	sprite_2d.texture = load("res://assets/flag_green_b.png")
+	sprite_2d.texture = load("res://assets/checkpoint/flag_green_b.png")
 	if not checkpoint_id == 0:
 		cpu_particles_2d.emitting = true
 	

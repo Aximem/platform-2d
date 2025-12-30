@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bsmtfqe4khytp"]
 
 [ext_resource type="Script" uid="uid://bbtlbk38ng7j4" path="res://scripts/falling_platform.gd" id="1_4u4ee"]
-[ext_resource type="Texture2D" uid="uid://b5h08fq8aa4xl" path="res://assets/block_rest.png" id="1_l3rcd"]
+[ext_resource type="Texture2D" uid="uid://b5h08fq8aa4xl" path="res://assets/falling_block/block_rest.png" id="1_l3rcd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egpwq"]
 size = Vector2(64, 64)

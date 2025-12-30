@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mhmw1jas654g"
-path="res://.godot/imported/block_idle.png-7c651385610a0bc33481ac266268c4c1.ctex"
+uid="uid://qkdwpkatcccj"
+path="res://.godot/imported/switch_yellow_pressed.png-b647ed304a6a19f39f4bb9c9b9abf0b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/block_idle.png"
-dest_files=["res://.godot/imported/block_idle.png-7c651385610a0bc33481ac266268c4c1.ctex"]
+source_file="res://assets/switch/switch_yellow_pressed.png"
+dest_files=["res://.godot/imported/switch_yellow_pressed.png-b647ed304a6a19f39f4bb9c9b9abf0b3.ctex"]
 
 [params]
 
