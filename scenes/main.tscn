@@ -1,8 +1,33 @@
-[gd_scene load_steps=7 format=4 uid="uid://cdhceurbwvuoy"]
+[gd_scene load_steps=10 format=4 uid="uid://cdhceurbwvuoy"]
 
 [ext_resource type="PackedScene" uid="uid://ck5wm7pliwulq" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cj1avd0a6t1dn" path="res://assets/spritesheet-tiles-default.png" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://bkpb2m2t4qf2j" path="res://assets/spritesheet-backgrounds-default.png" id="2_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cdogdm4npma5g" path="res://scenes/killzone.tscn" id="3_sugp2"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbgi4"]
+texture = ExtResource("2_jyhfs")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_sugp2"]
+tile_size = Vector2i(256, 256)
+sources/0 = SubResource("TileSetAtlasSource_tbgi4")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("2_0wfyh")
@@ -538,7 +563,12 @@ zoom = Vector2(4, 4)
 limit_bottom = 440
 position_smoothing_enabled = true
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="TileMapLayerBackgrounds" type="TileMapLayer" parent="."]
+scale = Vector2(0.5, 0.5)
+tile_map_data = PackedByteArray("AAACAAMAAAABAAAAAAADAAMAAAABAAAAAAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_sugp2")
+
+[node name="TileMapLayerTiles" type="TileMapLayer" parent="."]
 scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AAAaABkABAANAAcAAAAbABkABAANAAcAAAAcABkABAANAAcAAAAdABkABAAPAAcAAAAZABgABAACAAgAAAAZABkABAAOAAcAAAAaABgABAABAAgAAAAbABgABAABAAgAAAAcABcABAAQAAYAAAAcABgABAABAAgAAAAdABgABAADAAgAAAAfABUABAALAAgAAAAgABUABAAKAAgAAAAhABUABAAMAAgAAAAiAA8ABAAOAA4AAAAgABAABAAPAAEAAAAgABEABAAPAAEAAAAgABIABAAPAAEAAAAgABMABAAPAAEAAAAkABAABAAGAA4AAAAkABEABAADAA4AAAAkABIABAADAA4AAAAkABMABAADAA4AAAAlABEABAADAA8AAAAlABIABAACAA4AAAAlABMABAACAA4AAAAmABIABAADAA8AAAAnABMABAADAA8AAAAgAA8ABAALAAAAAAAhAA8ABAAPAA4AAAAjAA8ABAAOAA4AAAAkAA8ABAAQAA4AAAAlABAABAAEAA8AAAAmABEABAAEAA8AAAAnABIABAAEAA8AAAAoABMABAAHAA4AAAAgABQABAAPAAEAAAAhABQABAAOAAEAAAAiAA4ABAACAAMAAAAmABMABAACAA4AAAAkABQABAAOAAcAAAAlABQABAANAAcAAAAmABQABAANAAcAAAAnABQABAANAAcAAAAoABQABAABAA4AAAAsABMABAAPAA4AAAAtABMABAAOAA4AAAAuABMABAAQAA4AAAAtABIABAAHAAMAAAA=")
 tile_set = SubResource("TileSet_jyhfs")

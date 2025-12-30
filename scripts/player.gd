@@ -19,7 +19,7 @@ var slide_momentum: float = 0.0
 var slide_distance_remaining: float = 0.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
+@onready var tile_map_layer_tiles: TileMapLayer = $"../TileMapLayerTiles"
 
 func _physics_process(delta: float) -> void:
 	check_if_on_climbable()
@@ -145,9 +145,9 @@ func handle_normal_movement(delta: float):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
 func check_if_on_climbable():
-	var player_pos_in_tile_map = tile_map_layer.to_local(global_position)
-	var tile_pos = tile_map_layer.local_to_map(Vector2(player_pos_in_tile_map.x, player_pos_in_tile_map.y - 16))
-	var tile_data = tile_map_layer.get_cell_tile_data(tile_pos)
+	var player_pos_in_tile_map = tile_map_layer_tiles.to_local(global_position)
+	var tile_pos = tile_map_layer_tiles.local_to_map(Vector2(player_pos_in_tile_map.x, player_pos_in_tile_map.y - 16))
+	var tile_data = tile_map_layer_tiles.get_cell_tile_data(tile_pos)
 	if tile_data:
 		can_climb = tile_data.get_custom_data("is_climbable")
 	else:
@@ -159,7 +159,7 @@ func check_if_on_climbable():
 
 func check_if_on_slidable():
 	# Vérifie plusieurs points sous le joueur pour une détection fiable
-	var player_local_pos = tile_map_layer.to_local(global_position)
+	var player_local_pos = tile_map_layer_tiles.to_local(global_position)
 	
 	# Points à vérifier : centre, gauche, droite sous les pieds
 	var check_points = [
@@ -172,8 +172,8 @@ func check_if_on_slidable():
 
 	# Vérifie chaque point
 	for point in check_points:
-		var tile_pos = tile_map_layer.local_to_map(point)
-		var tile_data = tile_map_layer.get_cell_tile_data(tile_pos)
+		var tile_pos = tile_map_layer_tiles.local_to_map(point)
+		var tile_data = tile_map_layer_tiles.get_cell_tile_data(tile_pos)
 		
 		if tile_data and tile_data.get_custom_data("is_slidable"):
 			found_slidable = true
