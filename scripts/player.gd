@@ -9,9 +9,6 @@ const SLIDE_FRICTION = 50.0
 const SLIDE_OVERSHOOT_DISTANCE = 12.0
 const CLIMB_HORIZONTAL_SPEED = 100.0
 
-# Checkpoints
-var last_checkpoints 
-
 # Climbing
 var is_climbing: bool = false
 var can_climb: bool = false
