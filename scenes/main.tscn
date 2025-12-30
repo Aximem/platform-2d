@@ -535,6 +535,7 @@ scale = Vector2(0.18, 0.18)
 position = Vector2(5.555908, -16.666504)
 scale = Vector2(5.555556, 5.555556)
 zoom = Vector2(4, 4)
+limit_bottom = 440
 position_smoothing_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
