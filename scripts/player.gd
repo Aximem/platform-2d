@@ -7,6 +7,10 @@ const SLIDE_SPEED = 400.0
 const SLIDE_ACCELERATION = 400.0
 const SLIDE_FRICTION = 50.0
 const SLIDE_OVERSHOOT_DISTANCE = 12.0
+const CLIMB_HORIZONTAL_SPEED = 100.0
+
+# Checkpoints
+var last_checkpoints 
 
 # Climbing
 var is_climbing: bool = false
@@ -49,6 +53,25 @@ func handle_climbing(_delta: float):
 	elif Input.is_action_pressed("descend"):
 		# Descend
 		velocity.y = CLIMB_SPEED
+		
+	# Horizontal movement (left/right)
+	var horizontal_direction := Input.get_axis("move_left", "move_right")
+	if horizontal_direction != 0:
+		velocity.x = horizontal_direction * CLIMB_HORIZONTAL_SPEED
+	
+	# Jump while climbing
+	if Input.is_action_just_pressed("jump"):
+		is_climbing = false
+		velocity.y = JUMP_VELOCITY
+		# Keep horizontal speed if player is moving horizontally
+		if horizontal_direction != 0:
+			velocity.x = horizontal_direction * SPEED
+	
+	# IMPORTANT: check if we cannot climb anymore, make player stop climbing and fall
+	if not can_climb:
+		is_climbing = false
+		# Apply gravity to fall
+		velocity.y = 0
 		
 func handle_sliding(delta: float):
 	animated_sprite.play("slide")
