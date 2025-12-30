@@ -426,10 +426,8 @@ texture_region_size = Vector2i(64, 64)
 2:15/0 = 0
 2:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 3:15/0 = 0
-3:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, 32, 32, -26.615788, 26.652374, -32, -32, -32, -32, 32)
 3:15/0/custom_data_1 = true
 4:15/0 = 0
-4:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 0.4656906, 3.4150696, 32, 32, -32, 32)
 4:15/0/custom_data_1 = true
 5:15/0 = 0
 5:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
@@ -549,3 +547,9 @@ position = Vector2(335, 440)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 shape = SubResource("WorldBoundaryShape2D_jyhfs")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(592, 257)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(12, 12, 48, 48, 42, 54, -11, 0, 0, 0)

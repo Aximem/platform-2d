@@ -4,8 +4,7 @@ const SPEED = 130
 const JUMP_VELOCITY = -300.0
 const CLIMB_SPEED = 150.0
 const SLIDE_SPEED = 300.0
-const SLIDE_GRAVITY_MULTIPLIER = 1.5  # Augmented gravity on slide
-const SLIDE_ACCELERATION = 1000.0
+const SLIDE_ACCELERATION = 300.0
 
 var is_climbing: bool = false
 var can_climb: bool = false
@@ -45,17 +44,21 @@ func handle_climbing(_delta: float):
 func handle_sliding(delta: float):
 	animated_sprite.play("slide")
 	
-	# Accélération progressive vers la vitesse de glissade
+	# Activate floor snapping, 8 pixels distance on the floor
+	floor_snap_length = 8.0
+	
 	var target_velocity_x = SLIDE_SPEED
-	velocity += get_gravity() * delta  # ✅ Applique la gravité
+	velocity += get_gravity() * delta 
 	velocity.x = move_toward(velocity.x, target_velocity_x, SLIDE_ACCELERATION * delta)
 	
-	# Permet de sauter
 	if Input.is_action_just_pressed("jump"):
 		is_sliding = false
+		floor_snap_length = 0 # Disable the snap when jumping
 		velocity.y = JUMP_VELOCITY
 	
 func handle_normal_movement(delta: float):
+	floor_snap_length = 0 # Disable floor snapping on normal movement
+	
 	if (can_climb and Input.is_action_pressed("climb")) or (can_climb and Input.is_action_pressed("descend") or is_climbing) :
 		is_climbing = true
 		return
@@ -126,7 +129,4 @@ func check_if_on_slidable():
 		if tile_data and tile_data.get_custom_data("is_slidable"):
 			found_slidable = true
 
-	if found_slidable and is_on_floor():
-		is_sliding = true
-	else:
-		is_sliding = false
+	is_sliding = found_slidable
