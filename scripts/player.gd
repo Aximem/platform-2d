@@ -3,13 +3,20 @@ extends CharacterBody2D
 const SPEED = 130
 const JUMP_VELOCITY = -300.0
 const CLIMB_SPEED = 150.0
-const SLIDE_SPEED = 300.0
-const SLIDE_ACCELERATION = 300.0
+const SLIDE_SPEED = 400.0
+const SLIDE_ACCELERATION = 400.0
+const SLIDE_FRICTION = 50.0
+const SLIDE_OVERSHOOT_DISTANCE = 12.0
 
+# Climbing
 var is_climbing: bool = false
 var can_climb: bool = false
 
+# Sliding
 var is_sliding: bool = false
+var was_sliding: bool = false
+var slide_momentum: float = 0.0
+var slide_distance_remaining: float = 0.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
@@ -30,6 +37,8 @@ func _physics_process(delta: float) -> void:
 func handle_climbing(_delta: float):
 	animated_sprite.play("climb")
 	
+	# reset momentum
+	slide_momentum = 0
 	# Disable gravity
 	velocity.y = 0
 	velocity.x = 0
@@ -51,13 +60,53 @@ func handle_sliding(delta: float):
 	velocity += get_gravity() * delta 
 	velocity.x = move_toward(velocity.x, target_velocity_x, SLIDE_ACCELERATION * delta)
 	
-	if Input.is_action_just_pressed("jump"):
+	was_sliding = true
+	# Save sliding velocity
+	slide_momentum = velocity.x
+	slide_distance_remaining = SLIDE_OVERSHOOT_DISTANCE
+	
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		is_sliding = false
+		was_sliding = false  
+		slide_momentum = 0  
+		slide_distance_remaining = 0
 		floor_snap_length = 0 # Disable the snap when jumping
 		velocity.y = JUMP_VELOCITY
+		return
 	
 func handle_normal_movement(delta: float):
 	floor_snap_length = 0 # Disable floor snapping on normal movement
+	
+	# Just finished sliding
+	if was_sliding and slide_distance_remaining > 0:
+		# Calculate distance traveled
+		var distance_moved = abs(velocity.x * delta)
+		slide_distance_remaining -= distance_moved
+
+		# Add friction
+		slide_momentum = move_toward(slide_momentum, 0, SLIDE_FRICTION * delta)
+		
+		# Continue with slide velocity
+		velocity.x = slide_momentum
+		
+		# Apply gravity during slide overshoot
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+			
+		# Keep slide animation
+		animated_sprite.play("slide")
+			
+		# When distance traveled or velocity is low, we stop player
+		if slide_distance_remaining <= 0:
+			was_sliding = false
+			slide_momentum = 0
+			slide_distance_remaining = 0
+		
+		return
+	
+	# Normal mode, no inerty
+	was_sliding = false
+	slide_momentum = 0
 	
 	if (can_climb and Input.is_action_pressed("climb")) or (can_climb and Input.is_action_pressed("descend") or is_climbing) :
 		is_climbing = true
