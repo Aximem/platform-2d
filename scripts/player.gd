@@ -20,7 +20,7 @@ var slide_momentum: float = 0.0
 var slide_distance_remaining: float = 0.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var tile_map_layer_tiles: TileMapLayer = $"../TileMapLayerTiles"
+@onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
 
 func _physics_process(delta: float) -> void:
 	check_if_on_climbable()
