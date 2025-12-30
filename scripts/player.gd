@@ -6,7 +6,7 @@ const CLIMB_SPEED = 150.0
 const SLIDE_SPEED = 400.0
 const SLIDE_ACCELERATION = 400.0
 const SLIDE_FRICTION = 50.0
-const SLIDE_OVERSHOOT_DISTANCE = 12.0
+const SLIDE_OVERSHOOT_DISTANCE = 16.0
 const CLIMB_HORIZONTAL_SPEED = 100.0
 
 # Climbing
@@ -40,6 +40,7 @@ func handle_climbing(_delta: float):
 	
 	# reset momentum
 	slide_momentum = 0
+	
 	# Disable gravity
 	velocity.y = 0
 	velocity.x = 0
@@ -99,36 +100,45 @@ func handle_normal_movement(delta: float):
 	
 	# Just finished sliding
 	if was_sliding and slide_distance_remaining > 0:
-		# Calculate distance traveled
-		var distance_moved = abs(velocity.x * delta)
-		slide_distance_remaining -= distance_moved
-
-		# Add friction
-		slide_momentum = move_toward(slide_momentum, 0, SLIDE_FRICTION * delta)
 		
-		# Continue with slide velocity
-		velocity.x = slide_momentum
-		
-		# Apply gravity during slide overshoot
-		if not is_on_floor():
-			velocity += get_gravity() * delta
-			
-		# Keep slide animation
-		animated_sprite.play("slide")
-			
-		# When distance traveled or velocity is low, we stop player
-		if slide_distance_remaining <= 0:
+		if Input.is_action_just_pressed("jump") and is_on_floor():
 			was_sliding = false
 			slide_momentum = 0
 			slide_distance_remaining = 0
-		
-		return
+			velocity.y = JUMP_VELOCITY
+			return
+			
+		# If momentum is too weak, cancel it immediately to prevent being stuck
+		if abs(slide_momentum) < 50:  # Minimum velocity treshold
+			was_sliding = false
+			slide_momentum = 0
+			slide_distance_remaining = 0
+		else:
+			# Calculate distance traveled
+			var distance_moved = abs(velocity.x * delta)
+			slide_distance_remaining -= distance_moved
+
+			# Add friction
+			slide_momentum = move_toward(slide_momentum, 0, SLIDE_FRICTION * delta)
+			
+			# Continue with slide velocity
+			velocity.x = slide_momentum
+			
+			# Apply gravity during slide overshoot
+			if not is_on_floor():
+				velocity += get_gravity() * delta
+				
+			# Keep slide animation
+			animated_sprite.play("slide")
+			
+			return
 	
-	# Normal mode, no inerty
+	# Normal mode, no inertia
 	was_sliding = false
 	slide_momentum = 0
+	slide_distance_remaining = 0
 	
-	if (can_climb and Input.is_action_pressed("climb")) or (can_climb and Input.is_action_pressed("descend") or is_climbing) :
+	if can_climb and (Input.is_action_pressed("climb") or Input.is_action_pressed("descend")):
 		is_climbing = true
 		return
 		
