@@ -1494,4 +1494,4 @@ scale = Vector2(0.25, 0.25)
 [node name="Switch" parent="Switchs" instance=ExtResource("9_85g3d")]
 position = Vector2(439, 477)
 scale = Vector2(0.25, 0.25)
-color = 1
+color = 3

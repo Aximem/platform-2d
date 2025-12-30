@@ -7,6 +7,7 @@ enum SwitchColor {
 	Yellow
 }
 
+@export var id: int = 0
 @export var color: SwitchColor = SwitchColor.Blue
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -30,5 +31,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		sprite_2d.texture = load("res://assets/switch/switch_" + _get_color_text() + "_pressed.png")
+		# Send signal
+		SwitchManager.switch_activated.emit(id, _get_color_text())
 	
 	
