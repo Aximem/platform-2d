@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://ck5wm7pliwulq"]
+[gd_scene load_steps=17 format=3 uid="uid://ck5wm7pliwulq"]
 
 [ext_resource type="Texture2D" uid="uid://xxy85vq8vu16" path="res://assets/spritesheet-characters-default.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://5luq1vcu5pmj" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://csd6je372demq" path="res://assets/weapon/raygunBig.png" id="3_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_3vyb7")
@@ -32,6 +33,14 @@ atlas = ExtResource("1_3vyb7")
 region = Rect2(256, 256, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(384, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(384, 256, 128, 128)
 
@@ -87,6 +96,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v2ag")
+}],
+"loop": true,
+"name": &"run_with_gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_y4r1p")
 }],
 "loop": true,
@@ -103,9 +123,15 @@ script = ExtResource("1_g2els")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -65)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"slide"
+animation = &"run_with_gun"
 autoplay = "idle"
+frame_progress = 0.70571667
 speed_scale = 0.8
+
+[node name="Gun" type="Sprite2D" parent="AnimatedSprite2D"]
+position = Vector2(50.000004, 31.999996)
+scale = Vector2(1.4714285, 1.3571428)
+texture = ExtResource("3_qhqgy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3, -50)

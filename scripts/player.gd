@@ -25,6 +25,7 @@ var can_move: bool = true
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
 @onready var tile_map_layer_moving_water: TileMapLayer = $"../TileMaps/TileMapLayerMovingWater"
+@onready var gun: Sprite2D = $AnimatedSprite2D/Gun
 
 @onready var bridges: Array[StaticBody2D] = [
 	$"../Bridges/Bridge",
@@ -40,11 +41,21 @@ var can_move: bool = true
 	$"../Bridges/Bridge11"
 ]
 
+func _ready() -> void:
+	gun.visible = false
+	disable_bridges()
+	SwitchManager.switch_activated.connect(_on_switch_activated)
+	
+	var checkpoint_id = CheckpointManager.get_active_checkpoint_id()
+	if checkpoint_id != -1:
+		var checkpoint_pos = CheckpointManager.get_active_checkpoint_position()
+		global_position = checkpoint_pos
+		velocity = Vector2.ZERO
+
 func _physics_process(delta: float) -> void:
 	if not can_move:
 		return
 	
-	check_if_in_water()
 	check_if_on_climbable()
 	check_if_on_slidable()
 	
@@ -177,9 +188,9 @@ func handle_normal_movement(delta: float):
 	
 	#Flip the Sprite
 	if direction > 0:
-		animated_sprite.flip_h = false
+		animated_sprite.scale.x = 1
 	elif direction < 0:
-		animated_sprite.flip_h = true
+		animated_sprite.scale.x = -1
 		
 	# Play animations
 	if is_on_floor():
@@ -195,20 +206,6 @@ func handle_normal_movement(delta: float):
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	
-func check_if_in_water():
-	var player_pos_in_tile_map = tile_map_layer_moving_water.to_local(global_position)
-	var tile_pos = tile_map_layer_moving_water.local_to_map(player_pos_in_tile_map)
-	var tile_data = tile_map_layer_moving_water.get_cell_tile_data(tile_pos)
-	var is_in_water = false
-	if tile_data:
-		is_in_water = tile_data.get_custom_data("water")
-	
-	if is_in_water:
-		disable_bridges()
-		await get_tree().create_timer(1.0).timeout
-		enable_bridges()
-		return
 		
 func disable_bridges():
 	for bridge in bridges:
@@ -255,3 +252,10 @@ func check_if_on_slidable():
 			found_slidable = true
 
 	is_sliding = found_slidable
+
+func pickup_gun(): 
+	gun.visible = true
+
+func _on_switch_activated(id: int):
+	if id == 0:
+		enable_bridges()

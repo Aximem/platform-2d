@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bufbf2xyt1e8h"]
+
+[ext_resource type="Script" uid="uid://cbk81qnpfhnno" path="res://scripts/gun.gd" id="1_og67c"]
+[ext_resource type="Texture2D" uid="uid://csd6je372demq" path="res://assets/weapon/raygunBig.png" id="1_x77fm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_og67c"]
+size = Vector2(38, 27)
+
+[node name="Gun" type="Area2D"]
+script = ExtResource("1_og67c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 2.5)
+shape = SubResource("RectangleShape2D_og67c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_x77fm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

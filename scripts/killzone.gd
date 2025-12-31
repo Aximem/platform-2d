@@ -2,19 +2,15 @@ extends Area2D
 
 @onready var timer: Timer = $Timer
 
-func _on_body_entered(_body: Node2D) -> void:
-	print("Dead")
-	Engine.time_scale = 0.5
-	timer.start()
+func _on_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		print("Dead")
+		var playerCollisionShape2D: CollisionShape2D = get_tree().current_scene.get_node("Player/CollisionShape2D")
+		playerCollisionShape2D.set_deferred("disabled", true)
+		Engine.time_scale = 0.5
+		timer.start()
 
 func _on_timer_timeout() -> void:
 	Engine.time_scale = 1.0
-	var active_checkpoint_id = CheckpointManager.get_active_checkpoint_id()
-	# -1 means player didn't reach first checkpoint, reload the game
-	if active_checkpoint_id == -1:
-		get_tree().reload_current_scene()
-	else:
-		var active_checkpoint_position = CheckpointManager.get_active_checkpoint_position()
-		var player = get_node("/root/Main/Player")
-		player.global_position = active_checkpoint_position
-		timer.stop()
+	get_tree().reload_current_scene()
+	
