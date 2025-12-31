@@ -23,7 +23,7 @@ func move_water_down():
 	tween.tween_property(
 		camera, 
 		"position:y", 
-		initial_camera_y + 400, 
+		initial_camera_y + 500, 
 		0.6
 	)
 	
