@@ -12,6 +12,8 @@ enum SwitchColor {
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
+var activated: bool = false
+
 func _get_color_text() -> String:
 	var color_text: String = "blue"
 		
@@ -29,9 +31,10 @@ func _ready() -> void:
 	sprite_2d.texture = load("res://assets/switch/switch_" + _get_color_text() + ".png")
 	
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
+	if body.name == "Player" and not activated:
+		activated = true
 		sprite_2d.texture = load("res://assets/switch/switch_" + _get_color_text() + "_pressed.png")
 		# Send signal
-		SwitchManager.switch_activated.emit(id, _get_color_text())
+		SwitchManager.switch_activated.emit(id)
 	
 	

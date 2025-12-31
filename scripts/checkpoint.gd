@@ -6,9 +6,7 @@ extends Area2D
 
 func _on_body_entered(_body: Node2D) -> void:
 	sprite_2d.texture = load("res://assets/checkpoint/flag_green_b.png")
-	if not checkpoint_id == 0:
-		cpu_particles_2d.emitting = true
-	
+	cpu_particles_2d.emitting = true
 	# Test to prevent case user goes back and active an old checkpoint
 	var current_checkpoint_id = CheckpointManager.get_active_checkpoint_id()
 	if checkpoint_id > current_checkpoint_id:

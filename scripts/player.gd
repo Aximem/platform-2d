@@ -19,10 +19,32 @@ var was_sliding: bool = false
 var slide_momentum: float = 0.0
 var slide_distance_remaining: float = 0.0
 
+# Used to disable inputs
+var can_move: bool = true
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
+@onready var tile_map_layer_moving_water: TileMapLayer = $"../TileMaps/TileMapLayerMovingWater"
+
+@onready var bridges: Array[StaticBody2D] = [
+	$"../Bridges/Bridge",
+	$"../Bridges/Bridge2",
+	$"../Bridges/Bridge3",
+	$"../Bridges/Bridge4",
+	$"../Bridges/Bridge5",
+	$"../Bridges/Bridge6",
+	$"../Bridges/Bridge7",
+	$"../Bridges/Bridge8",
+	$"../Bridges/Bridge9",
+	$"../Bridges/Bridge10",
+	$"../Bridges/Bridge11"
+]
 
 func _physics_process(delta: float) -> void:
+	if not can_move:
+		return
+	
+	check_if_in_water()
 	check_if_on_climbable()
 	check_if_on_slidable()
 	
@@ -174,6 +196,30 @@ func handle_normal_movement(delta: float):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
+func check_if_in_water():
+	var player_pos_in_tile_map = tile_map_layer_moving_water.to_local(global_position)
+	var tile_pos = tile_map_layer_moving_water.local_to_map(player_pos_in_tile_map)
+	var tile_data = tile_map_layer_moving_water.get_cell_tile_data(tile_pos)
+	var is_in_water = false
+	if tile_data:
+		is_in_water = tile_data.get_custom_data("water")
+	
+	if is_in_water:
+		disable_bridges()
+		await get_tree().create_timer(1.0).timeout
+		enable_bridges()
+		return
+		
+func disable_bridges():
+	for bridge in bridges:
+		var collision = bridge.get_node("CollisionShape2D")
+		collision.set_deferred("disabled", true)
+
+func enable_bridges():
+	for bridge in bridges:
+		var collision = bridge.get_node("CollisionShape2D")
+		collision.set_deferred("disabled", false)	
+		
 func check_if_on_climbable():
 	var player_pos_in_tile_map = tile_map_layer_tiles.to_local(global_position)
 	var tile_pos = tile_map_layer_tiles.local_to_map(Vector2(player_pos_in_tile_map.x, player_pos_in_tile_map.y - 16))

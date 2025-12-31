@@ -31,7 +31,7 @@ func respawn_block():
 	global_position = initial_position
 	block.texture = load("res://assets/falling_block/block_rest.png")
 	
-	# Réaffiche le bloc
+	# Redisplay the block
 	visible = true
 			
 func _on_area_2d_body_entered(body: Node2D) -> void:

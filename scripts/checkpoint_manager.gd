@@ -1,6 +1,6 @@
 extends Node
 
-var active_checkpoint_id: int = 0
+var active_checkpoint_id: int = -1
 var active_checkpoint_position: Vector2
 
 func set_active_checkpoint_id(id: int, position: Vector2): 

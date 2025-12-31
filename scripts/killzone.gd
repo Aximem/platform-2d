@@ -10,7 +10,8 @@ func _on_body_entered(_body: Node2D) -> void:
 func _on_timer_timeout() -> void:
 	Engine.time_scale = 1.0
 	var active_checkpoint_id = CheckpointManager.get_active_checkpoint_id()
-	if active_checkpoint_id == 0:
+	# -1 means player didn't reach first checkpoint, reload the game
+	if active_checkpoint_id == -1:
 		get_tree().reload_current_scene()
 	else:
 		var active_checkpoint_position = CheckpointManager.get_active_checkpoint_position()
