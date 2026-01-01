@@ -35,6 +35,6 @@ func _on_body_entered(body: Node2D) -> void:
 		activated = true
 		sprite_2d.texture = load("res://assets/switch/switch_" + _get_color_text() + "_pressed.png")
 		# Send signal
-		SwitchManager.switch_activated.emit(id)
+		GameManager.switch_activated.emit(id)
 	
 	

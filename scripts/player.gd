@@ -44,11 +44,11 @@ var can_move: bool = true
 func _ready() -> void:
 	gun.visible = false
 	disable_bridges()
-	SwitchManager.switch_activated.connect(_on_switch_activated)
-	
-	var checkpoint_id = CheckpointManager.get_active_checkpoint_id()
+	GameManager.switch_activated.connect(_on_switch_activated)
+
+	var checkpoint_id = GameManager.get_active_checkpoint_id()
 	if checkpoint_id != -1:
-		var checkpoint_pos = CheckpointManager.get_active_checkpoint_position()
+		var checkpoint_pos = GameManager.get_active_checkpoint_position()
 		global_position = checkpoint_pos
 		velocity = Vector2.ZERO
 

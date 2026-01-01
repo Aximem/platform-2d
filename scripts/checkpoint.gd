@@ -11,8 +11,8 @@ func _on_body_entered(body: Node2D) -> void:
 		cpu_particles_2d.emitting = true
 		activated = true
 		# Test to prevent case user goes back and active an old checkpoint
-		var current_checkpoint_id = CheckpointManager.get_active_checkpoint_id()
+		var current_checkpoint_id = GameManager.get_active_checkpoint_id()
 		if checkpoint_id > current_checkpoint_id:
-			CheckpointManager.set_active_checkpoint_id(checkpoint_id, self.global_position)
+			GameManager.set_active_checkpoint_id(checkpoint_id, self.global_position)
 		
 	
