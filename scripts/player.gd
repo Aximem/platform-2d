@@ -51,6 +51,7 @@ func _ready() -> void:
 	gun.visible = false
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
+	GameManager.remove_gun.connect(_on_remove_gun)
 
 	var checkpoint_id = GameManager.get_active_checkpoint_id()
 	if checkpoint_id != -1:
@@ -284,3 +285,8 @@ func shoot():
 
 	await get_tree().create_timer(SHOOT_COOLDOWN).timeout
 	can_shoot = true
+
+func _on_remove_gun():
+	can_shoot = false
+	has_gun = false
+	gun.visible = false

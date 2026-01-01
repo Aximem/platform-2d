@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bmjnok6mltb47"]
+[gd_scene load_steps=13 format=3 uid="uid://bmjnok6mltb47"]
 
 [ext_resource type="Script" uid="uid://c4250ukakx06s" path="res://scripts/ennemy.gd" id="1_n4lfa"]
 [ext_resource type="Texture2D" uid="uid://xxy85vq8vu16" path="res://assets/spritesheet-characters-default.png" id="1_rsyu2"]
@@ -37,6 +37,9 @@ size = Vector2(103, 97)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hkdl5"]
 size = Vector2(103, 101)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxvsj"]
+size = Vector2(82, 97)
+
 [node name="Ennemy" type="CharacterBody2D"]
 script = ExtResource("1_n4lfa")
 
@@ -73,5 +76,18 @@ position = Vector2(1, 14)
 position = Vector2(11.5, -1.5)
 shape = SubResource("RectangleShape2D_hkdl5")
 
+[node name="BodyArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyArea"]
+position = Vector2(1, 13)
+shape = SubResource("RectangleShape2D_bxvsj")
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -39.0
+offset_top = -57.0
+offset_right = 40.0
+offset_bottom = -45.0
+
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="area_entered" from="BodyArea" to="." method="_on_body_area_area_entered"]
