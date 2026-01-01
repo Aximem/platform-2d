@@ -3,7 +3,7 @@ extends Node
 # Signals
 signal gun_picked()
 signal switch_activated(id: int)
-signal remove_gun()
+signal enemy_killed(id: int)
 
 # Checkpoint state
 var active_checkpoint_id: int = -1
@@ -12,6 +12,7 @@ var active_checkpoint_position: Vector2
 func _ready():
 	gun_picked.connect(_on_gun_picked)
 	switch_activated.connect(_on_switch_activated)
+	enemy_killed.connect(_on_enemy_killed)
 
 # Gun logic
 func _on_gun_picked():
@@ -72,3 +73,8 @@ func move_water_down():
 
 	# Enable the inputs
 	player.can_move = true
+
+func _on_enemy_killed(id: int):
+	if id == 0:
+		var falling_platform = get_tree().current_scene.get_node("FallingPlatforms/FallingPlatform5")
+		falling_platform.visible = true

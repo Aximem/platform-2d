@@ -3,11 +3,15 @@ extends CharacterBody2D
 
 @export var chase_speed: float = 50.0
 @export var detection_range: float = 600.0
+@export var id: int = -1
 
 @onready var detection_area: Area2D = $DetectionArea
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var health_bar: TextureProgressBar = $HealthBar
 @onready var collision_shape_2d: CollisionShape2D = $BodyArea/CollisionShape2D
+@onready var impact_area: Marker2D = $ImpactArea
+
+var projectile_impact = preload("res://scenes/projectile_impact.tscn")
 
 var player: CharacterBody2D = null
 var is_chasing: bool = false
@@ -80,13 +84,25 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 func _on_body_area_area_entered(area: Area2D) -> void:
 	if area.name == "Bullet":
 		area.queue_free()
+		impact()
 		# Apply damage
 		health_point -= GameData.BULLET_DAMAGE
 		update_health_bar()
 		if health_point <= 0:
 			queue_free()
-			GameManager.remove_gun.emit()
-
+			GameManager.enemy_killed.emit(id)
+			
+func impact():
+	randomize()
+	var x_pos = randi() % 31
+	randomize()
+	var y_pos = randi() % 31
+	var impact_location = Vector2(x_pos, y_pos)
+	var new_impact = projectile_impact.instantiate()
+	new_impact.scale = Vector2(2, 2)
+	new_impact.position = impact_location
+	impact_area.add_child(new_impact)
+	
 func update_health_bar():
 	var tween = create_tween()
 	tween.tween_property(health_bar, "value", health_point, 0.2)

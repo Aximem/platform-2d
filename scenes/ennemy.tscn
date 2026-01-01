@@ -9,22 +9,22 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rsyu2"]
 size = Vector2(101, 98)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rsyu2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_batjq"]
 atlas = ExtResource("1_rsyu2")
-region = Rect2(516, 516, 128, 128)
+region = Rect2(645, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n4lfa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkdl5"]
 atlas = ExtResource("1_rsyu2")
-region = Rect2(0, 645, 128, 128)
+region = Rect2(129, 129, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_40eh0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rsyu2")
+"texture": SubResource("AtlasTexture_batjq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_n4lfa")
+"texture": SubResource("AtlasTexture_hkdl5")
 }],
 "loop": true,
 "name": &"default",
@@ -87,6 +87,9 @@ offset_left = -39.0
 offset_top = -57.0
 offset_right = 40.0
 offset_bottom = -45.0
+
+[node name="ImpactArea" type="Marker2D" parent="."]
+position = Vector2(-16, 12)
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

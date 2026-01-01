@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgujyqocu6kkl"]
+
+[ext_resource type="Texture2D" uid="uid://comt0801vmcur" path="res://assets/weapon/laserPurpleDot.png" id="1_5i0pe"]
+[ext_resource type="Script" uid="uid://cattdp67wwg3n" path="res://scripts/projectile_impact.gd" id="2_qxem0"]
+
+[node name="ProjectileImpact" type="Sprite2D"]
+texture = ExtResource("1_5i0pe")
+script = ExtResource("2_qxem0")
