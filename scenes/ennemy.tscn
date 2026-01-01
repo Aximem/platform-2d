@@ -32,7 +32,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_batjq"]
-size = Vector2(1151, 97)
+size = Vector2(103, 97)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hkdl5"]
 size = Vector2(103, 101)
@@ -63,7 +63,7 @@ texture = ExtResource("3_batjq")
 [node name="DetectionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(0.5, 12.5)
+position = Vector2(12.5, 12.5)
 shape = SubResource("RectangleShape2D_batjq")
 
 [node name="Killzone" parent="." instance=ExtResource("5_batjq")]

@@ -129,6 +129,7 @@ frame_progress = 0.70571667
 speed_scale = 0.8
 
 [node name="Gun" type="Sprite2D" parent="AnimatedSprite2D"]
+visible = false
 position = Vector2(50.000004, 31.999996)
 scale = Vector2(1.4714285, 1.3571428)
 texture = ExtResource("3_qhqgy")

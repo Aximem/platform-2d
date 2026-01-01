@@ -8,6 +8,8 @@ const SLIDE_ACCELERATION = 400.0
 const SLIDE_FRICTION = 50.0
 const SLIDE_OVERSHOOT_DISTANCE = 16.0
 const CLIMB_HORIZONTAL_SPEED = 100.0
+const BULLET_SCENE = preload("res://scenes/bullet.tscn")
+const SHOOT_COOLDOWN = 0.2
 
 # Climbing
 var is_climbing: bool = false
@@ -21,6 +23,10 @@ var slide_distance_remaining: float = 0.0
 
 # Used to disable inputs
 var can_move: bool = true
+
+# Gun
+var has_gun: bool = false
+var can_shoot: bool = true
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
@@ -58,6 +64,9 @@ func _physics_process(delta: float) -> void:
 	
 	check_if_on_climbable()
 	check_if_on_slidable()
+	
+	if has_gun:
+		shoot()
 	
 	if is_climbing:
 		handle_climbing(delta)
@@ -254,8 +263,24 @@ func check_if_on_slidable():
 	is_sliding = found_slidable
 
 func pickup_gun(): 
+	has_gun = true
 	gun.visible = true
 
 func _on_switch_activated(id: int):
 	if id == 0:
 		enable_bridges()
+
+func shoot():
+	if not can_shoot:
+		return
+
+	can_shoot = false
+
+	var bullet = BULLET_SCENE.instantiate()
+	bullet.direction = animated_sprite.scale.x
+	bullet.global_position = gun.global_position
+	bullet.scale = Vector2(0.25, 0.25)
+	get_parent().add_child(bullet)
+
+	await get_tree().create_timer(SHOOT_COOLDOWN).timeout
+	can_shoot = true
