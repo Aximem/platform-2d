@@ -4,6 +4,7 @@ extends Node
 signal gun_picked()
 signal switch_activated(id: int)
 signal enemy_killed(id: int)
+signal remove_gun()
 
 # Checkpoint state
 var active_checkpoint_id: int = -1

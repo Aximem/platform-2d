@@ -4,6 +4,7 @@ extends Area2D
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
+		GameManager.remove_gun.emit()
 		print("Dead")
 		var playerCollisionShape2D: CollisionShape2D = get_tree().current_scene.get_node("Player/CollisionShape2D")
 		playerCollisionShape2D.set_deferred("disabled", true)

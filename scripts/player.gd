@@ -52,6 +52,7 @@ func _ready() -> void:
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
 	GameManager.enemy_killed.connect(_on_enemy_killed)
+	GameManager.remove_gun.connect(_on_remove_gun)
 
 	var checkpoint_id = GameManager.get_active_checkpoint_id()
 	if checkpoint_id != -1:
@@ -288,6 +289,11 @@ func shoot():
 
 func _on_enemy_killed(_id: int):
 	# Remove gun
+	can_shoot = false
+	has_gun = false
+	gun.visible = false
+
+func _on_remove_gun():
 	can_shoot = false
 	has_gun = false
 	gun.visible = false
