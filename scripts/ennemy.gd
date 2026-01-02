@@ -82,7 +82,7 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 		velocity.x = 0
 
 func _on_body_area_area_entered(area: Area2D) -> void:
-	if area.name == "Bullet":
+	if area.is_in_group("bullets"):
 		area.queue_free()
 		impact()
 		# Apply damage
