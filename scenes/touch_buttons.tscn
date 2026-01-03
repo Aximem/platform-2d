@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckw0gdh2pvayy"]
+
+[ext_resource type="Texture2D" uid="uid://cpqeojj86u8dh" path="res://assets/button/direction_left.png" id="1_rpj4i"]
+[ext_resource type="Script" uid="uid://bu6qhrjkx4sbn" path="res://scripts/touch_buttons.gd" id="1_sts82"]
+[ext_resource type="Texture2D" uid="uid://c562wun14tf3a" path="res://assets/button/direction_right.png" id="2_24v8d"]
+[ext_resource type="Texture2D" uid="uid://bfonns5vku8dg" path="res://assets/button/direction_top.png" id="3_tyxis"]
+[ext_resource type="Texture2D" uid="uid://lyk8fdt1h3gr" path="res://assets/button/direction_bottom.png" id="4_sts82"]
+[ext_resource type="Texture2D" uid="uid://ba3820lmhwqfc" path="res://assets/button/button_circle.png" id="5_fpuaf"]
+
+[node name="TouchButtons" type="CanvasLayer"]
+script = ExtResource("1_sts82")
+
+[node name="LeftTouch" type="TouchScreenButton" parent="."]
+position = Vector2(46, 478)
+texture_normal = ExtResource("1_rpj4i")
+passby_press = true
+
+[node name="RightTouch" type="TouchScreenButton" parent="."]
+position = Vector2(183, 480)
+texture_normal = ExtResource("2_24v8d")
+passby_press = true
+
+[node name="TopTouch" type="TouchScreenButton" parent="."]
+position = Vector2(116, 412)
+texture_normal = ExtResource("3_tyxis")
+passby_press = true
+
+[node name="BottomTouch" type="TouchScreenButton" parent="."]
+position = Vector2(114, 548)
+texture_normal = ExtResource("4_sts82")
+passby_press = true
+
+[node name="JumpTouch" type="TouchScreenButton" parent="."]
+position = Vector2(970, 457)
+scale = Vector2(1.703125, 1.703125)
+texture_normal = ExtResource("5_fpuaf")
+passby_press = true
+
+[connection signal="pressed" from="LeftTouch" to="." method="_on_left_touch_pressed"]
+[connection signal="released" from="LeftTouch" to="." method="_on_left_touch_released"]
+[connection signal="pressed" from="RightTouch" to="." method="_on_right_touch_pressed"]
+[connection signal="released" from="RightTouch" to="." method="_on_right_touch_released"]
+[connection signal="pressed" from="TopTouch" to="." method="_on_top_touch_pressed"]
+[connection signal="released" from="TopTouch" to="." method="_on_top_touch_released"]
+[connection signal="pressed" from="BottomTouch" to="." method="_on_bottom_touch_pressed"]
+[connection signal="released" from="BottomTouch" to="." method="_on_bottom_touch_released"]
+[connection signal="pressed" from="JumpTouch" to="." method="_on_jump_touch_pressed"]
+[connection signal="released" from="JumpTouch" to="." method="_on_jump_touch_released"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://cdhceurbwvuoy"]
+[gd_scene load_steps=23 format=4 uid="uid://cdhceurbwvuoy"]
 
 [ext_resource type="PackedScene" uid="uid://ck5wm7pliwulq" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cj1avd0a6t1dn" path="res://assets/spritesheet-tiles-default.png" id="2_0wfyh"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cdogdm4npma5g" path="res://scenes/killzone.tscn" id="3_sugp2"]
 [ext_resource type="FontFile" uid="uid://c625rmrxp6huy" path="res://fonts/Blazma-Regular.ttf" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://cplayv3eqd243" path="res://scenes/checkpoint.tscn" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://ckw0gdh2pvayy" path="res://scenes/touch_buttons.tscn" id="7_trceg"]
 [ext_resource type="PackedScene" uid="uid://bsmtfqe4khytp" path="res://scenes/falling_platform.tscn" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://b7ltw5qwmv0xl" path="res://scenes/switch.tscn" id="9_85g3d"]
 [ext_resource type="PackedScene" uid="uid://bn0ui6h28oiwj" path="res://scenes/bridge.tscn" id="10_choun"]
@@ -6329,3 +6330,5 @@ scale = Vector2(0.25, 0.25)
 position = Vector2(1808.0001, 475.00003)
 scale = Vector2(0.17, 0.17)
 id = 0
+
+[node name="TouchButtons" parent="." instance=ExtResource("7_trceg")]
