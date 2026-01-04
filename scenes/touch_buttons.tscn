@@ -52,6 +52,7 @@ layout_mode = 2
 position = Vector2(0, 64)
 texture_normal = ExtResource("1_rpj4i")
 passby_press = true
+visibility_mode = 1
 
 [node name="Control2" type="Control" parent="Control/MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(64, 192)
@@ -66,11 +67,13 @@ theme_override_constants/separation = 64
 [node name="TopTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer"]
 texture_normal = ExtResource("3_tyxis")
 passby_press = true
+visibility_mode = 1
 
 [node name="BottomTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer"]
 position = Vector2(0, 128)
 texture_normal = ExtResource("4_sts82")
 passby_press = true
+visibility_mode = 1
 
 [node name="Control3" type="Control" parent="Control/MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(64, 64)
@@ -80,6 +83,7 @@ layout_mode = 2
 position = Vector2(0, 64)
 texture_normal = ExtResource("2_24v8d")
 passby_press = true
+visibility_mode = 1
 
 [node name="Control2" type="Control" parent="Control/MarginContainer/Control"]
 custom_minimum_size = Vector2(150, 150)
@@ -98,6 +102,7 @@ grow_vertical = 0
 scale = Vector2(1.703125, 1.703125)
 texture_normal = ExtResource("5_fpuaf")
 passby_press = true
+visibility_mode = 1
 
 [connection signal="pressed" from="Control/MarginContainer/Control/HBoxContainer/Control/LeftTouch" to="." method="_on_left_touch_pressed"]
 [connection signal="released" from="Control/MarginContainer/Control/HBoxContainer/Control/LeftTouch" to="." method="_on_left_touch_released"]

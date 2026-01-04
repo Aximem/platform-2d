@@ -1,7 +1,6 @@
 Features:
 
-- Version mobile problème de taille de bouton
-- Grand écran on voit les bords
+- Mobile lancer en mode paysage
 - Boutons pour ouvrir porte avec énigme, 3 boutons, un seul ouvre
 
 Fixes:
