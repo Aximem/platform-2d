@@ -37,13 +37,22 @@ func resize_all() -> void:
 
 	# Espacement entre boutons
 	hbox_container.add_theme_constant_override("separation", spacing_size)
-	vbox_container.add_theme_constant_override("separation", spacing_size)
+	# VBox: espace d'un bouton entre top et bottom
+	vbox_container.add_theme_constant_override("separation", button_size + spacing_size * 2)
 
-	# Taille des Control wrappers
+	# D-pad en croix : 3 boutons de haut, 3 boutons de large
+	# Layout:
+	#        [TOP]
+	# [LEFT]       [RIGHT]
+	#       [BOTTOM]
+
 	var jump_size = int(button_size * 1.5)
-	control_left.custom_minimum_size = Vector2(button_size, button_size)
-	control_center.custom_minimum_size = Vector2(button_size, button_size * 2 + spacing_size)
-	control_right.custom_minimum_size = Vector2(button_size, button_size)
+	var dpad_size = button_size * 3 + spacing_size * 2  # 3 boutons + 2 espacements
+
+	# Tous les wrappers ont la même hauteur pour le HBox
+	control_left.custom_minimum_size = Vector2(button_size, dpad_size)
+	control_center.custom_minimum_size = Vector2(button_size, dpad_size)
+	control_right.custom_minimum_size = Vector2(button_size, dpad_size)
 	control_jump.custom_minimum_size = Vector2(jump_size, jump_size)
 
 	# Offset du control_jump pour aligner le bas avec le bas du D-pad
@@ -53,7 +62,7 @@ func resize_all() -> void:
 	control_jump.offset_bottom = 0
 
 	# Taille du HBoxContainer
-	hbox_container.custom_minimum_size = Vector2(button_size * 3 + spacing_size * 2, button_size * 2 + spacing_size)
+	hbox_container.custom_minimum_size = Vector2(dpad_size, dpad_size)
 
 	# Redimensionner les boutons
 	var buttons = [left_touch, right_touch, top_touch, bottom_touch, jump_touch]
@@ -69,12 +78,14 @@ func resize_all() -> void:
 		var scale_factor = float(button_size * 1.5) / texture_size.y
 		jump_touch.scale = Vector2(scale_factor, scale_factor)
 
-	# Repositionner les boutons dans leur wrapper
-	# Left et Right sont en bas de leur wrapper (alignés avec bottom)
+	# Repositionner les boutons en croix (D-pad style manette)
+	# Left et Right au milieu verticalement (alignés entre top et bottom)
 	left_touch.position = Vector2(0, button_size + spacing_size)
 	right_touch.position = Vector2(0, button_size + spacing_size)
-	top_touch.position = Vector2.ZERO
-	bottom_touch.position = Vector2(0, button_size + spacing_size)
+	# Top en haut, Bottom en bas
+	top_touch.position = Vector2(0, spacing_size)
+	bottom_touch.position = Vector2(0, button_size * 2 + spacing_size)
+	# Jump
 	jump_touch.position = Vector2.ZERO
 
 func _on_left_touch_pressed() -> void:
