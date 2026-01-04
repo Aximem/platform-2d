@@ -10,39 +10,102 @@
 [node name="TouchButtons" type="CanvasLayer"]
 script = ExtResource("1_sts82")
 
-[node name="LeftTouch" type="TouchScreenButton" parent="."]
-position = Vector2(46, 478)
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="Control" type="Control" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/Control"]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -192.0
+offset_right = 242.0
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Control" type="Control" parent="Control/MarginContainer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="LeftTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control"]
+position = Vector2(0, 64)
 texture_normal = ExtResource("1_rpj4i")
 passby_press = true
 
-[node name="RightTouch" type="TouchScreenButton" parent="."]
-position = Vector2(183, 480)
-texture_normal = ExtResource("2_24v8d")
-passby_press = true
+[node name="Control2" type="Control" parent="Control/MarginContainer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(64, 192)
+layout_mode = 2
 
-[node name="TopTouch" type="TouchScreenButton" parent="."]
-position = Vector2(116, 412)
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/Control/HBoxContainer/Control2"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 128.0
+theme_override_constants/separation = 64
+
+[node name="TopTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer"]
 texture_normal = ExtResource("3_tyxis")
 passby_press = true
 
-[node name="BottomTouch" type="TouchScreenButton" parent="."]
-position = Vector2(114, 548)
+[node name="BottomTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer"]
+position = Vector2(0, 128)
 texture_normal = ExtResource("4_sts82")
 passby_press = true
 
-[node name="JumpTouch" type="TouchScreenButton" parent="."]
-position = Vector2(970, 457)
+[node name="Control3" type="Control" parent="Control/MarginContainer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="RightTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control3"]
+position = Vector2(0, 64)
+texture_normal = ExtResource("2_24v8d")
+passby_press = true
+
+[node name="Control2" type="Control" parent="Control/MarginContainer/Control"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -150.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="JumpTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/Control2"]
 scale = Vector2(1.703125, 1.703125)
 texture_normal = ExtResource("5_fpuaf")
 passby_press = true
 
-[connection signal="pressed" from="LeftTouch" to="." method="_on_left_touch_pressed"]
-[connection signal="released" from="LeftTouch" to="." method="_on_left_touch_released"]
-[connection signal="pressed" from="RightTouch" to="." method="_on_right_touch_pressed"]
-[connection signal="released" from="RightTouch" to="." method="_on_right_touch_released"]
-[connection signal="pressed" from="TopTouch" to="." method="_on_top_touch_pressed"]
-[connection signal="released" from="TopTouch" to="." method="_on_top_touch_released"]
-[connection signal="pressed" from="BottomTouch" to="." method="_on_bottom_touch_pressed"]
-[connection signal="released" from="BottomTouch" to="." method="_on_bottom_touch_released"]
-[connection signal="pressed" from="JumpTouch" to="." method="_on_jump_touch_pressed"]
-[connection signal="released" from="JumpTouch" to="." method="_on_jump_touch_released"]
+[connection signal="pressed" from="Control/MarginContainer/Control/HBoxContainer/Control/LeftTouch" to="." method="_on_left_touch_pressed"]
+[connection signal="released" from="Control/MarginContainer/Control/HBoxContainer/Control/LeftTouch" to="." method="_on_left_touch_released"]
+[connection signal="pressed" from="Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer/TopTouch" to="." method="_on_top_touch_pressed"]
+[connection signal="released" from="Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer/TopTouch" to="." method="_on_top_touch_released"]
+[connection signal="pressed" from="Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer/BottomTouch" to="." method="_on_bottom_touch_pressed"]
+[connection signal="released" from="Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer/BottomTouch" to="." method="_on_bottom_touch_released"]
+[connection signal="pressed" from="Control/MarginContainer/Control/HBoxContainer/Control3/RightTouch" to="." method="_on_right_touch_pressed"]
+[connection signal="released" from="Control/MarginContainer/Control/HBoxContainer/Control3/RightTouch" to="." method="_on_right_touch_released"]
+[connection signal="pressed" from="Control/MarginContainer/Control/Control2/JumpTouch" to="." method="_on_jump_touch_pressed"]
+[connection signal="released" from="Control/MarginContainer/Control/Control2/JumpTouch" to="." method="_on_jump_touch_released"]
