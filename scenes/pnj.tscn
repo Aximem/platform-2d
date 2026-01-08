@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=3 uid="uid://bdd0rffss6dpx"]
+
+[ext_resource type="Texture2D" uid="uid://dii1bfw8jybgt" path="res://assets/spritesheet-enemies-default.png" id="1_0yhv8"]
+[ext_resource type="Script" uid="uid://by20irefrdutc" path="res://scripts/pnj.gd" id="1_xg58l"]
+[ext_resource type="FontFile" uid="uid://c625rmrxp6huy" path="res://fonts/Blazma-Regular.ttf" id="3_3is8m"]
+[ext_resource type="Texture2D" uid="uid://bseyn3sgo02t" path="res://assets/keyboard/keyboard_enter.png" id="4_v1ya0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xg58l"]
+atlas = ExtResource("1_0yhv8")
+region = Rect2(195, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3is8m"]
+atlas = ExtResource("1_0yhv8")
+region = Rect2(260, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v1ya0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xg58l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3is8m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0yhv8"]
+radius = 32.06244
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0yhv8"]
+size = Vector2(103, 72)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3is8m"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Pnj" type="CharacterBody2D"]
+script = ExtResource("1_xg58l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v1ya0")
+autoplay = "default"
+frame_progress = 0.57791513
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0yhv8")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_0yhv8")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -202.0
+offset_top = -293.0
+offset_right = 204.0
+offset_bottom = -69.0
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3is8m")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Label" type="Label" parent="Control/Panel/MarginContainer"]
+custom_minimum_size = Vector2(366, 184)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("3_3is8m")
+theme_override_font_sizes/font_size = 32
+autowrap_mode = 2
+clip_text = true
+
+[node name="KeyboardEnter" type="Sprite2D" parent="Control/Panel/MarginContainer"]
+position = Vector2(359, 177)
+texture = ExtResource("4_v1ya0")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
