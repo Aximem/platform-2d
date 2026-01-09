@@ -32,6 +32,9 @@ var can_shoot: bool = true
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
 @onready var tile_map_layer_moving_water: TileMapLayer = $"../TileMaps/TileMapLayerMovingWater"
 @onready var gun: Sprite2D = $AnimatedSprite2D/Gun
+@onready var answer_control: Control = $AnswerControl
+@onready var line_edit: LineEdit = $AnswerControl/Panel/MarginContainer/LineEdit
+@onready var keyboard_enter: Sprite2D = $AnswerControl/Panel/MarginContainer/KeyboardEnter
 
 @onready var bridges: Array[StaticBody2D] = [
 	$"../Bridges/Bridge",
@@ -49,10 +52,16 @@ var can_shoot: bool = true
 
 func _ready() -> void:
 	gun.visible = false
+	answer_control.visible = false
+	keyboard_enter.visible = false
+	
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
 	GameManager.enemy_killed.connect(_on_enemy_killed)
 	GameManager.remove_gun.connect(_on_remove_gun)
+	GameManager.display_player_answer.connect(_on_display_player_answer)
+	GameManager.dialogue_started.connect(_on_dialogue_started)
+	GameManager.dialogue_ended.connect(_on_dialogue_ended)
 
 	var checkpoint_id = GameManager.get_active_checkpoint_id()
 	if checkpoint_id != -1:
@@ -297,3 +306,25 @@ func _on_remove_gun():
 	can_shoot = false
 	has_gun = false
 	gun.visible = false
+
+func _on_dialogue_started():
+	can_move = false
+	
+func _on_dialogue_ended():
+	can_move = true
+	
+func _on_display_player_answer():
+	answer_control.visible = true
+	line_edit.grab_focus.call_deferred()
+	line_edit.caret_blink = true
+	
+func _on_line_edit_text_submitted(new_text: String) -> void:
+	line_edit.text = ""
+	answer_control.visible = false
+	GameManager.send_answer.emit(new_text)
+
+func _on_line_edit_text_changed(new_text: String) -> void:
+	if new_text.length() > 0:
+		keyboard_enter.visible = true
+	else:
+		keyboard_enter.visible = false

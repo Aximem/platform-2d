@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var label: Label = $Control/Panel/MarginContainer/Label
 @onready var keyboard_enter: Sprite2D = $Control/Panel/MarginContainer/KeyboardEnter
 
-@export var detection_range: float = 600.0
+@export var detection_range: float = 150.0
 @export var id: int = -1
 @export var char_delay: float = 0.03  # Delay between characters
 
@@ -14,8 +14,14 @@ var current_dialogue_index: int = 0
 var is_typing: bool = false
 var full_text: String = ""
 var current_char_index: int = 0
+var is_answering: bool = false
+var answered_wrongly: bool = false
+var found_solution: bool = false
 
 func _ready():
+	control.visible = false
+	GameManager.send_answer.connect(_on_send_answer)
+	
 	var collision_shape = detection_area.get_node("CollisionShape2D")
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(detection_range * 2, 50)
@@ -38,14 +44,25 @@ func _input(event: InputEvent) -> void:
 			label.text = full_text
 			is_typing = false
 		else:
+			if is_answering:
+				if answered_wrongly:
+					answered_wrongly = false
+					start_typing(getQuestionByIndex(0))
+					is_answering = false
+				else:
+					control.visible = false
+					GameManager.dialogue_ended.emit()
+				return
+						
 			# Next text
 			current_dialogue_index += 1
-			if current_dialogue_index < GameData.PNJ_DIALOGUES[id].size():
-				start_typing(getDialogueByIndex(current_dialogue_index))
+			if current_dialogue_index < GameData.PNJ_DIALOGUES[id]["question"].size():
+				start_typing(getQuestionByIndex(current_dialogue_index))
 			else:
 				# Plus de dialogues, fermer la bulle
 				control.visible = false
 				current_dialogue_index = 0
+				GameManager.display_player_answer.emit()
 
 func start_typing(text: String) -> void:
 	full_text = text
@@ -62,15 +79,33 @@ func type_next_char() -> void:
 	else:
 		is_typing = false
 
-func getDialogueByIndex(index: int) -> String:
-	return GameData.PNJ_DIALOGUES[id][index]
+func getQuestionByIndex(index: int) -> String:
+	return GameData.PNJ_DIALOGUES[id]["question"][index]
+	
+func getAnswerByIndex() -> Dictionary:
+	return GameData.PNJ_DIALOGUES[id]["answer"]
 
+func _on_send_answer(text: String):
+	is_answering = true
+	display_enigma = true
+	control.visible = true
+	current_dialogue_index = 0
+	var answer = getAnswerByIndex()
+	if answer["value"] == text:
+		start_typing(answer["correct"])
+		found_solution = true
+		# Display platform
+	else:
+		start_typing(answer["incorrect"])
+		answered_wrongly = true
+		
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
+	if body.name == "Player" and not found_solution:
+		GameManager.dialogue_started.emit()
 		display_enigma = true
 		control.visible = true
 		current_dialogue_index = 0
-		start_typing(getDialogueByIndex(0))
+		start_typing(getQuestionByIndex(0))
 
 func _on_detection_area_body_exited(body: Node2D) -> void:
 	if body.name == "Player":

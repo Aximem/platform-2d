@@ -58,9 +58,9 @@ shape = SubResource("RectangleShape2D_0yhv8")
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -202.0
-offset_top = -293.0
-offset_right = 204.0
+offset_left = -316.0
+offset_top = -412.0
+offset_right = 766.0
 offset_bottom = -69.0
 
 [node name="Panel" type="Panel" parent="Control"]
@@ -89,12 +89,12 @@ custom_minimum_size = Vector2(366, 184)
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("3_3is8m")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 autowrap_mode = 2
 clip_text = true
 
 [node name="KeyboardEnter" type="Sprite2D" parent="Control/Panel/MarginContainer"]
-position = Vector2(359, 177)
+position = Vector2(1021, 289)
 texture = ExtResource("4_v1ya0")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

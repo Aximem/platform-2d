@@ -1,8 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://ck5wm7pliwulq"]
+[gd_scene load_steps=23 format=3 uid="uid://ck5wm7pliwulq"]
 
 [ext_resource type="Texture2D" uid="uid://xxy85vq8vu16" path="res://assets/spritesheet-characters-default.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://5luq1vcu5pmj" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://csd6je372demq" path="res://assets/weapon/raygunBig.png" id="3_qhqgy"]
+[ext_resource type="FontFile" uid="uid://c625rmrxp6huy" path="res://fonts/Blazma-Regular.ttf" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://bseyn3sgo02t" path="res://assets/keyboard/keyboard_enter.png" id="5_qlg0r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_3vyb7")
@@ -117,6 +119,18 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 48.010414
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlg0r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tuyoq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fjrip"]
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_g2els")
 
@@ -137,3 +151,48 @@ texture = ExtResource("3_qhqgy")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3, -50)
 shape = SubResource("CircleShape2D_g2els")
+
+[node name="AnswerControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -325.0
+offset_top = -289.0
+offset_right = 324.0
+offset_bottom = -128.0
+
+[node name="Panel" type="Panel" parent="AnswerControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dqkch")
+
+[node name="MarginContainer" type="MarginContainer" parent="AnswerControl/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="LineEdit" type="LineEdit" parent="AnswerControl/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_dqkch")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_qlg0r")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_tuyoq")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fjrip")
+
+[node name="KeyboardEnter" type="Sprite2D" parent="AnswerControl/Panel/MarginContainer"]
+position = Vector2(601, 110)
+texture = ExtResource("5_qlg0r")
+
+[connection signal="text_changed" from="AnswerControl/Panel/MarginContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_submitted" from="AnswerControl/Panel/MarginContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

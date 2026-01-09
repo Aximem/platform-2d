@@ -5,6 +5,10 @@ signal gun_picked()
 signal switch_activated(id: int)
 signal enemy_killed(id: int)
 signal remove_gun()
+signal dialogue_started()
+signal display_player_answer()
+signal send_answer(text: String)
+signal dialogue_ended()
 
 # Checkpoint state
 var active_checkpoint_id: int = -1
