@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7p470qwthf4r"]
+
+[ext_resource type="Texture2D" uid="uid://rvqvuyoel6ta" path="res://assets/bomb/bomb.png" id="1_4kkau"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4kkau"]
+size = Vector2(60, 56)
+
+[node name="Bomb" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_4kkau")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_4kkau")
