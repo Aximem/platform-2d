@@ -51,7 +51,7 @@ func _input(event: InputEvent) -> void:
 					is_answering = false
 				else:
 					control.visible = false
-					GameManager.dialogue_ended.emit()
+					GameManager.validate_enigma.emit(id)
 				return
 						
 			# Next text

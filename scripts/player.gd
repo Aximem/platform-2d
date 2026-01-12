@@ -61,7 +61,7 @@ func _ready() -> void:
 	GameManager.remove_gun.connect(_on_remove_gun)
 	GameManager.display_player_answer.connect(_on_display_player_answer)
 	GameManager.dialogue_started.connect(_on_dialogue_started)
-	GameManager.dialogue_ended.connect(_on_dialogue_ended)
+	GameManager.validate_enigma.connect(_on_validate_enigma)
 
 	var checkpoint_id = GameManager.get_active_checkpoint_id()
 	if checkpoint_id != -1:
@@ -310,7 +310,7 @@ func _on_remove_gun():
 func _on_dialogue_started():
 	can_move = false
 	
-func _on_dialogue_ended():
+func _on_validate_enigma(_pngId: int):
 	can_move = true
 	
 func _on_display_player_answer():

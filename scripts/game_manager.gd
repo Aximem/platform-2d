@@ -8,7 +8,7 @@ signal remove_gun()
 signal dialogue_started()
 signal display_player_answer()
 signal send_answer(text: String)
-signal dialogue_ended()
+signal validate_enigma(pnjId: int)
 
 # Checkpoint state
 var active_checkpoint_id: int = -1
