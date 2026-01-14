@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://cdhceurbwvuoy"]
+[gd_scene load_steps=31 format=4 uid="uid://cdhceurbwvuoy"]
 
 [ext_resource type="Script" uid="uid://bjn7b0ovgit7" path="res://scripts/main.gd" id="1_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://ck5wm7pliwulq" path="res://scenes/player.tscn" id="1_o5qli"]
@@ -6790,6 +6790,9 @@ tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_jkv2x")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jbj1t"]
+size = Vector2(48, 16)
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jyhfs"]
 
 [node name="Main" type="Node2D"]
@@ -6823,11 +6826,20 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AACYAB4AAAAMAAEAAACZAB4AAAAMAAEAAACaAB4AAAAMAAEAAACbAB4AAAAMAAEAAACcAB4AAAAMAAEAAACdAB4AAAAMAAEAAACeAB4AAAAMAAEAAACfAB4AAAAMAAEAAAA=")
 tile_set = SubResource("TileSet_jkv2x")
 
-[node name="TileMapLayerMovingPlatform" type="TileMapLayer" parent="TileMaps"]
-position = Vector2(0, 101)
+[node name="MovingPlatform" type="AnimatableBody2D" parent="TileMaps"]
+position = Vector2(2836, 324)
+sync_to_physics = false
+
+[node name="TileMapLayerMovingPlatform" type="TileMapLayer" parent="TileMaps/MovingPlatform"]
+position = Vector2(-2835, -223)
 scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AACxAA4AAAAPAA4AAACyAA4AAAAOAA4AAACzAA4AAAAQAA4AAAA=")
 tile_set = SubResource("TileSet_jbj1t")
+collision_enabled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMaps/MovingPlatform"]
+position = Vector2(21, 9)
+shape = SubResource("RectangleShape2D_jbj1t")
 
 [node name="Checkpoints" type="Node" parent="."]
 
@@ -7025,19 +7037,28 @@ scale = Vector2(0.17, 0.17)
 id = 0
 
 [node name="Ennemy2" parent="Ennemies" instance=ExtResource("12_eb6dy")]
-position = Vector2(2841.9998, 314.00003)
+position = Vector2(2845, 314)
 scale = Vector2(0.17, 0.17)
 id = 1
 
 [node name="Ennemy3" parent="Ennemies" instance=ExtResource("12_eb6dy")]
-position = Vector2(2867, 314)
+position = Vector2(2866.0002, 314)
 scale = Vector2(0.17, 0.17)
 id = 1
 
 [node name="TouchButtons" parent="." instance=ExtResource("7_trceg")]
 visible = false
 
-[node name="BoomLabel" type="Label" parent="."]
+[node name="Pnjs" type="Node" parent="."]
+
+[node name="Pnj" parent="Pnjs" instance=ExtResource("14_a8y0u")]
+position = Vector2(2411, 473)
+scale = Vector2(0.25, 0.25)
+id = 0
+
+[node name="Bombs" type="Node" parent="."]
+
+[node name="BoomLabel" type="Label" parent="Bombs"]
 z_index = 1
 offset_left = 2867.0
 offset_top = 235.0
@@ -7049,14 +7070,7 @@ theme_override_font_sizes/font_size = 16
 text = "Boom!"
 metadata/_edit_use_anchors_ = true
 
-[node name="Bomb" parent="." instance=ExtResource("15_jbj1t")]
+[node name="Bomb" parent="Bombs" instance=ExtResource("15_jbj1t")]
 z_index = 1
-position = Vector2(2871, 268)
+position = Vector2(2872, 268)
 scale = Vector2(0.25, 0.25)
-
-[node name="Pnjs" type="Node" parent="."]
-
-[node name="Pnj" parent="Pnjs" instance=ExtResource("14_a8y0u")]
-position = Vector2(2411, 473)
-scale = Vector2(0.25, 0.25)
-id = 0

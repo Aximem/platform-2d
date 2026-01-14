@@ -52,10 +52,14 @@ func _ready():
 	health_bar.max_value = GameData.ENNEMY_HEALTH_POINT
 	health_bar.value = health_point
 
-func _physics_process(_delta: float):
+func _physics_process(delta: float):
+	# Apply gravity
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+
 	if is_chasing and player:
 		chase_player()
-	
+
 	move_and_slide()
 
 func chase_player():
