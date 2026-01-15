@@ -18,6 +18,9 @@ func _on_body_entered(body: Node2D) -> void:
 		Input.action_release("jump")
 		
 		timer.start()
+		
+	if body.is_in_group("bombs"):
+		GameManager.emit_signal("bomb_disappear", body.switch_id)
 
 func _on_timer_timeout() -> void:
 	Engine.time_scale = 1.0

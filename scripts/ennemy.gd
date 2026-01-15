@@ -51,6 +51,9 @@ func _ready():
 
 	health_bar.max_value = GameData.ENNEMY_HEALTH_POINT
 	health_bar.value = health_point
+	
+	if id == 2:
+		animated_sprite_2d.scale.x = -1
 
 func _physics_process(delta: float):
 	# Apply gravity

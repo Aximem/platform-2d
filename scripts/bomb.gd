@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var switch_id: int = 0
+
 const GRAVITY = 980.0
 
 func _physics_process(delta: float):

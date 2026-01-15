@@ -86,7 +86,18 @@ func _physics_process(delta: float) -> void:
 	else:
 		handle_normal_movement(delta)
 		
+	check_collisions()
+	
 	move_and_slide()
+
+func check_collisions():
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if collider.is_in_group("bombs"):
+			var push_direction = sign(velocity.x)
+			collider.velocity.x = push_direction * 100.0
 
 func handle_climbing(_delta: float):
 	animated_sprite.play("climb")
@@ -100,7 +111,7 @@ func handle_climbing(_delta: float):
 	
 	if Input.is_action_pressed("climb"):
 		# Climb
-		velocity.y = -CLIMB_SPEED
+		velocity.y = - CLIMB_SPEED
 	elif Input.is_action_pressed("descend"):
 		# Descend
 		velocity.y = CLIMB_SPEED
@@ -131,7 +142,7 @@ func handle_sliding(delta: float):
 	floor_snap_length = 8.0
 	
 	var target_velocity_x = SLIDE_SPEED
-	velocity += get_gravity() * delta 
+	velocity += get_gravity() * delta
 	velocity.x = move_toward(velocity.x, target_velocity_x, SLIDE_ACCELERATION * delta)
 	
 	was_sliding = true
@@ -141,8 +152,8 @@ func handle_sliding(delta: float):
 	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		is_sliding = false
-		was_sliding = false  
-		slide_momentum = 0  
+		was_sliding = false
+		slide_momentum = 0
 		slide_distance_remaining = 0
 		floor_snap_length = 0 # Disable the snap when jumping
 		velocity.y = JUMP_VELOCITY
@@ -153,7 +164,6 @@ func handle_normal_movement(delta: float):
 	
 	# Just finished sliding
 	if was_sliding and slide_distance_remaining > 0:
-		
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			was_sliding = false
 			slide_momentum = 0
@@ -162,7 +172,7 @@ func handle_normal_movement(delta: float):
 			return
 			
 		# If momentum is too weak, cancel it immediately to prevent being stuck
-		if abs(slide_momentum) < 50:  # Minimum velocity treshold
+		if abs(slide_momentum) < 50: # Minimum velocity treshold
 			was_sliding = false
 			slide_momentum = 0
 			slide_distance_remaining = 0
@@ -235,7 +245,7 @@ func disable_bridges():
 func enable_bridges():
 	for bridge in bridges:
 		var collision = bridge.get_node("CollisionShape2D")
-		collision.set_deferred("disabled", false)	
+		collision.set_deferred("disabled", false)
 		
 func check_if_on_climbable():
 	var player_pos_in_tile_map = tile_map_layer_tiles.to_local(global_position)
@@ -256,9 +266,9 @@ func check_if_on_slidable():
 	
 	# Points à vérifier : centre, gauche, droite sous les pieds
 	var check_points = [
-		Vector2(player_local_pos.x, player_local_pos.y + 24),      # Centre bas
-		Vector2(player_local_pos.x - 24, player_local_pos.y + 24),  # Gauche bas
-		Vector2(player_local_pos.x + 24, player_local_pos.y + 24),  # Droite bas
+		Vector2(player_local_pos.x, player_local_pos.y + 24), # Centre bas
+		Vector2(player_local_pos.x - 24, player_local_pos.y + 24), # Gauche bas
+		Vector2(player_local_pos.x + 24, player_local_pos.y + 24), # Droite bas
 	]
 	
 	var found_slidable = false
@@ -273,7 +283,7 @@ func check_if_on_slidable():
 
 	is_sliding = found_slidable
 
-func pickup_gun(): 
+func pickup_gun():
 	has_gun = true
 	gun.visible = true
 

@@ -28,6 +28,7 @@ func _get_color_text() -> String:
 	return color_text
 	
 func _ready() -> void:
+	GameManager.reset_switch_activated.connect(_on_reset_switch_activated)
 	sprite_2d.texture = load("res://assets/switch/switch_" + _get_color_text() + ".png")
 	
 func _on_body_entered(body: Node2D) -> void:
@@ -37,4 +38,8 @@ func _on_body_entered(body: Node2D) -> void:
 		# Send signal
 		GameManager.switch_activated.emit(id)
 	
+func _on_reset_switch_activated(switch_id: int):
+	if switch_id == id:
+		activated = false
+		sprite_2d.texture = load("res://assets/switch/switch_" + _get_color_text() + ".png")
 	

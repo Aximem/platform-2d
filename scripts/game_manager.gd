@@ -3,12 +3,14 @@ extends Node
 # Signals
 signal gun_picked()
 signal switch_activated(id: int)
+signal reset_switch_activated(switch_id: int)
 signal enemy_killed(id: int)
 signal remove_gun()
 signal dialogue_started()
 signal display_player_answer()
 signal send_answer(text: String)
 signal validate_enigma(pnjId: int)
+signal bomb_disappear(switch_id: int)
 
 # Checkpoint state
 var active_checkpoint_id: int = -1
@@ -18,6 +20,7 @@ func _ready():
 	gun_picked.connect(_on_gun_picked)
 	switch_activated.connect(_on_switch_activated)
 	enemy_killed.connect(_on_enemy_killed)
+	bomb_disappear.connect(_on_bomb_disappear)
 
 # Gun logic
 func _on_gun_picked():
@@ -83,3 +86,6 @@ func _on_enemy_killed(id: int):
 	if id == 0:
 		var falling_platform = get_tree().current_scene.get_node("FallingPlatforms/FallingPlatform5")
 		falling_platform.visible = true
+
+func _on_bomb_disappear(switch_id: int):
+	emit_signal("reset_switch_activated", switch_id)

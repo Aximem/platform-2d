@@ -2,19 +2,27 @@ extends Node2D
 
 @onready var tile_map_layer_bridge: TileMapLayer = $TileMaps/TileMapLayerBridge
 @onready var moving_platform: AnimatableBody2D = $TileMaps/MovingPlatform
+@onready var bomb: CharacterBody2D = $Bombs/Bomb
+@onready var boom_label: Label = $Bombs/BoomLabel
 
 var platform_speed: float = 75.0
 var platform_direction: int = 1  # 1 = droite, -1 = gauche
 var platform_initial_position: Vector2
 var platform_max_distance: float = 125.0
+var bomb_initial_position: Vector2
 
 func _ready() -> void:
 	GameManager.validate_enigma.connect(_on_validate_enigma)
+	GameManager.switch_activated.connect(_on_switch_activated)
 
 	tile_map_layer_bridge.visible = false
 	tile_map_layer_bridge.collision_enabled = false
 
 	platform_initial_position = moving_platform.position
+	
+	bomb.visible = false
+	boom_label.visible = false
+	bomb_initial_position = bomb.position
 
 func _physics_process(delta: float) -> void:
 	_move_platform(delta)
@@ -37,3 +45,9 @@ func _move_platform(delta: float) -> void:
 func _on_validate_enigma(_pnjId: int):
 	tile_map_layer_bridge.visible = true
 	tile_map_layer_bridge.collision_enabled = true
+	
+func _on_switch_activated(id: int): 
+	if id == 1: 
+		bomb.position = bomb_initial_position
+		bomb.visible = true
+		boom_label.visible = true

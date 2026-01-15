@@ -153,6 +153,7 @@ position = Vector2(3, -50)
 shape = SubResource("CircleShape2D_g2els")
 
 [node name="AnswerControl" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -325.0
