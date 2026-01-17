@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://cdhceurbwvuoy"]
+[gd_scene load_steps=30 format=4 uid="uid://cdhceurbwvuoy"]
 
 [ext_resource type="Script" uid="uid://bjn7b0ovgit7" path="res://scripts/main.gd" id="1_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://ck5wm7pliwulq" path="res://scenes/player.tscn" id="1_o5qli"]
@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://bufbf2xyt1e8h" path="res://scenes/gun.tscn" id="10_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bmjnok6mltb47" path="res://scenes/ennemy.tscn" id="12_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://bdd0rffss6dpx" path="res://scenes/pnj.tscn" id="14_a8y0u"]
-[ext_resource type="PackedScene" uid="uid://b7p470qwthf4r" path="res://scenes/bomb.tscn" id="15_jbj1t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbgi4"]
 texture = ExtResource("2_jyhfs")
@@ -6791,7 +6790,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_jkv2x")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jbj1t"]
-size = Vector2(48, 16)
+size = Vector2(14, 16)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jyhfs"]
 
@@ -6827,18 +6826,18 @@ tile_map_data = PackedByteArray("AACYAB4AAAAMAAEAAACZAB4AAAAMAAEAAACaAB4AAAAMAAE
 tile_set = SubResource("TileSet_jkv2x")
 
 [node name="MovingPlatform" type="AnimatableBody2D" parent="TileMaps"]
-position = Vector2(2836, 324)
+position = Vector2(2848, 324)
 sync_to_physics = false
 
-[node name="TileMapLayerMovingPlatform" type="TileMapLayer" parent="TileMaps/MovingPlatform"]
+[node name="TileMapLayerMovingPlatform" type="TileMapLayer" parent="TileMaps/MovingPlatform" groups=["moving_platform"]]
 position = Vector2(-2835, -223)
 scale = Vector2(0.25, 0.25)
-tile_map_data = PackedByteArray("AACxAA4AAAAPAA4AAACyAA4AAAAOAA4AAACzAA4AAAAQAA4AAAA=")
+tile_map_data = PackedByteArray("AACxAA4AAAAQAA0AAAA=")
 tile_set = SubResource("TileSet_jbj1t")
 collision_enabled = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMaps/MovingPlatform"]
-position = Vector2(21, 9)
+position = Vector2(5, 9)
 shape = SubResource("RectangleShape2D_jbj1t")
 
 [node name="Checkpoints" type="Node" parent="."]
@@ -7043,14 +7042,9 @@ scale = Vector2(0.17, 0.17)
 id = 0
 
 [node name="Ennemy2" parent="Ennemies" instance=ExtResource("12_eb6dy")]
-position = Vector2(2845, 314)
+position = Vector2(2851.9998, 314)
 scale = Vector2(0.17, 0.17)
 id = 1
-
-[node name="Ennemy3" parent="Ennemies" instance=ExtResource("12_eb6dy")]
-position = Vector2(2872, 314)
-scale = Vector2(0.17, 0.17)
-id = 2
 
 [node name="TouchButtons" parent="." instance=ExtResource("7_trceg")]
 visible = false
@@ -7075,9 +7069,3 @@ theme_override_fonts/font = ExtResource("5_tbgi4")
 theme_override_font_sizes/font_size = 16
 text = "Boom!"
 metadata/_edit_use_anchors_ = true
-
-[node name="Bomb" parent="Bombs" instance=ExtResource("15_jbj1t")]
-z_index = 10
-position = Vector2(2871, 268)
-scale = Vector2(0.25, 0.25)
-switch_id = 1

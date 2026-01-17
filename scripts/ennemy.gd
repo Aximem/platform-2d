@@ -22,6 +22,7 @@ const GRAVITY = 980.0
 
 func _ready():
 	var collision_shape = detection_area.get_node("CollisionShape2D")
+	
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(detection_range * 2, 50)
 	collision_shape.shape = shape
@@ -51,16 +52,13 @@ func _ready():
 
 	health_bar.max_value = GameData.ENNEMY_HEALTH_POINT
 	health_bar.value = health_point
-	
-	if id == 2:
-		animated_sprite_2d.scale.x = -1
 
 func _physics_process(delta: float):
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	if is_chasing and player:
+	if is_chasing and player and id != 1:
 		chase_player()
 
 	move_and_slide()
