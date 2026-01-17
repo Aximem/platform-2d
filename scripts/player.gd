@@ -35,6 +35,8 @@ var can_shoot: bool = true
 @onready var answer_control: Control = $AnswerControl
 @onready var line_edit: LineEdit = $AnswerControl/Panel/MarginContainer/LineEdit
 @onready var keyboard_enter: Sprite2D = $AnswerControl/Panel/MarginContainer/KeyboardEnter
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var camera_2d: Camera2D = $Camera2D
 
 @onready var bridges: Array[StaticBody2D] = [
 	$"../Bridges/Bridge",
@@ -320,8 +322,13 @@ func _on_remove_gun():
 func _on_dialogue_started():
 	can_move = false
 	
-func _on_validate_enigma(_pngId: int):
-	can_move = true
+func _on_validate_enigma(pnjId: int):
+	if pnjId == 0:
+		# else we ended game
+		can_move = true
+	if pnjId == 1:
+		camera_2d.limit_bottom = 1300
+		tile_map_layer_tiles.collision_enabled = false
 	
 func _on_display_player_answer():
 	answer_control.visible = true

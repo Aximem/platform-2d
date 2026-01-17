@@ -2,6 +2,9 @@ extends Area2D
 
 @onready var timer: Timer = $Timer
 
+func _ready() -> void:
+	GameManager.validate_enigma.connect(_on_validate_enigma)
+	
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		GameManager.remove_gun.emit()
@@ -26,3 +29,6 @@ func _on_timer_timeout() -> void:
 	Engine.time_scale = 1.0
 	get_tree().reload_current_scene()
 	
+func _on_validate_enigma(pnjId):
+	if pnjId == 1:
+		queue_free()
