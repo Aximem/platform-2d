@@ -10,3 +10,10 @@ func _physics_process(delta: float):
 		velocity.y += GRAVITY * delta
 		
 	move_and_slide()
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("ennemy"):
+		body.queue_free()
+		visible = false
+		GameManager.emit_signal("bomb_disappear", switch_id)
