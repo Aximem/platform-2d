@@ -28,6 +28,8 @@ var can_move: bool = true
 var has_gun: bool = false
 var can_shoot: bool = true
 
+var current_pnj_id_speaking: int = -1
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
 @onready var tile_map_layer_moving_water: TileMapLayer = $"../TileMaps/TileMapLayerMovingWater"
@@ -319,8 +321,9 @@ func _on_remove_gun():
 	has_gun = false
 	gun.visible = false
 
-func _on_dialogue_started():
+func _on_dialogue_started(pnjId: int):
 	can_move = false
+	current_pnj_id_speaking = pnjId
 	
 func _on_validate_enigma(pnjId: int):
 	if pnjId == 0:
@@ -339,7 +342,7 @@ func _on_display_player_answer():
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	line_edit.text = ""
 	answer_control.visible = false
-	GameManager.send_answer.emit(new_text)
+	GameManager.send_answer.emit(new_text, current_pnj_id_speaking)
 
 func _on_line_edit_text_changed(new_text: String) -> void:
 	if new_text.length() > 0:

@@ -52,6 +52,7 @@ func _input(event: InputEvent) -> void:
 				else:
 					control.visible = false
 					GameManager.validate_enigma.emit(id)
+					display_enigma = false
 				return
 						
 			# Next text
@@ -85,23 +86,24 @@ func getQuestionByIndex(index: int) -> String:
 func getAnswerByIndex() -> Dictionary:
 	return GameData.PNJ_DIALOGUES[id]["answer"]
 
-func _on_send_answer(text: String):
-	is_answering = true
-	display_enigma = true
-	control.visible = true
-	current_dialogue_index = 0
-	var answer = getAnswerByIndex()
-	if answer["value"].to_upper() == text.to_upper():
-		start_typing(answer["correct"])
-		found_solution = true
-		# Display platform
-	else:
-		start_typing(answer["incorrect"])
-		answered_wrongly = true
+func _on_send_answer(text: String, pnjId: int):
+	if pnjId == id:
+		is_answering = true
+		display_enigma = true
+		control.visible = true
+		current_dialogue_index = 0
+		var answer = getAnswerByIndex()
+		if answer["value"].to_upper() == text.to_upper():
+			start_typing(answer["correct"])
+			found_solution = true
+			# Display platform
+		else:
+			start_typing(answer["incorrect"])
+			answered_wrongly = true
 		
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not found_solution:
-		GameManager.dialogue_started.emit()
+		GameManager.dialogue_started.emit(id)
 		display_enigma = true
 		control.visible = true
 		current_dialogue_index = 0

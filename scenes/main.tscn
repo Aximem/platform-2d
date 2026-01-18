@@ -6826,7 +6826,7 @@ tile_map_data = PackedByteArray("AABRAB4AAAAEABEAAABSAB4AAAAEABEAAABTAB4AAAAEABE
 tile_set = SubResource("TileSet_choun")
 
 [node name="TileMapLayerBridge" type="TileMapLayer" parent="TileMaps"]
-position = Vector2(-2, 8)
+position = Vector2(-2, 5)
 scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AACYAB4AAAAMAAEAAACZAB4AAAAMAAEAAACaAB4AAAAMAAEAAACbAB4AAAAMAAEAAACcAB4AAAAMAAEAAACdAB4AAAAMAAEAAACeAB4AAAAMAAEAAACfAB4AAAAMAAEAAAA=")
 tile_set = SubResource("TileSet_jkv2x")
@@ -6901,7 +6901,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 z_index = 10
-position = Vector2(3738, 484.99997)
+position = Vector2(2180, 482)
 scale = Vector2(0.18, 0.18)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
