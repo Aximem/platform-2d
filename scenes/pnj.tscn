@@ -59,7 +59,7 @@ shape = SubResource("RectangleShape2D_0yhv8")
 layout_mode = 3
 anchors_preset = 0
 offset_left = -316.0
-offset_top = -412.0
+offset_top = -513.0
 offset_right = 766.0
 offset_bottom = -69.0
 
@@ -94,7 +94,7 @@ autowrap_mode = 2
 clip_text = true
 
 [node name="KeyboardEnter" type="Sprite2D" parent="Control/Panel/MarginContainer"]
-position = Vector2(1021, 289)
+position = Vector2(1025, 386)
 texture = ExtResource("4_v1ya0")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

@@ -91,7 +91,7 @@ func _on_send_answer(text: String):
 	control.visible = true
 	current_dialogue_index = 0
 	var answer = getAnswerByIndex()
-	if answer["value"] == text:
+	if answer["value"].to_upper() == text.to_upper():
 		start_typing(answer["correct"])
 		found_solution = true
 		# Display platform
