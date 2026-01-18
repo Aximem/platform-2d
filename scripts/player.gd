@@ -327,6 +327,7 @@ func _on_validate_enigma(pnjId: int):
 		# else we ended game
 		can_move = true
 	if pnjId == 1:
+		can_move = true
 		camera_2d.limit_bottom = 1300
 		tile_map_layer_tiles.collision_enabled = false
 	

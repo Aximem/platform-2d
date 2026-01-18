@@ -6853,8 +6853,8 @@ position = Vector2(5, 9)
 shape = SubResource("RectangleShape2D_jbj1t")
 
 [node name="Img7456" type="Sprite2D" parent="TileMaps"]
-position = Vector2(3757, 1065)
-scale = Vector2(0.26249972, 0.26249975)
+position = Vector2(3759.0002, 1151.0001)
+scale = Vector2(0.13281243, 0.13281246)
 texture = ExtResource("5_jbj1t")
 
 [node name="Checkpoints" type="Node" parent="."]
@@ -6901,7 +6901,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 z_index = 10
-position = Vector2(396, 484.99997)
+position = Vector2(3738, 484.99997)
 scale = Vector2(0.18, 0.18)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -7060,10 +7060,10 @@ id = 1
 
 [node name="SupriseLabel" type="Label" parent="."]
 z_index = 1
-offset_left = 3584.0
-offset_top = 815.0
-offset_right = 3929.0
-offset_bottom = 889.0
+offset_left = 3587.0
+offset_top = 990.0
+offset_right = 3932.0
+offset_bottom = 1064.0
 theme_override_colors/font_color = Color(0, 0, 0, 0.4392157)
 theme_override_fonts/font = ExtResource("5_tbgi4")
 theme_override_font_sizes/font_size = 64
