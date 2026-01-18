@@ -6796,7 +6796,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_jkv2x")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jbj1t"]
-size = Vector2(14, 16)
+size = Vector2(30, 16)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jyhfs"]
 
@@ -6844,12 +6844,12 @@ sync_to_physics = false
 [node name="TileMapLayerMovingPlatform" type="TileMapLayer" parent="TileMaps/MovingPlatform" groups=["moving_platform"]]
 position = Vector2(-2835, -223)
 scale = Vector2(0.25, 0.25)
-tile_map_data = PackedByteArray("AACxAA4AAAAQAA0AAAA=")
+tile_map_data = PackedByteArray("AACxAA4AAAAPAA4AAACyAA4AAAAQAA4AAAA=")
 tile_set = SubResource("TileSet_jbj1t")
 collision_enabled = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMaps/MovingPlatform"]
-position = Vector2(5, 9)
+position = Vector2(13, 9)
 shape = SubResource("RectangleShape2D_jbj1t")
 
 [node name="Img7456" type="Sprite2D" parent="TileMaps"]
@@ -7039,7 +7039,7 @@ scale = Vector2(0.17, 0.17)
 id = 0
 
 [node name="Ennemy2" parent="Ennemies" instance=ExtResource("12_eb6dy")]
-position = Vector2(2851.9998, 314)
+position = Vector2(2858.9998, 314)
 scale = Vector2(0.17, 0.17)
 id = 1
 
