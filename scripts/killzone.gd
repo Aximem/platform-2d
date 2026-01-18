@@ -7,19 +7,26 @@ func _ready() -> void:
 	
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
+		# Check if parent (enemy) is being deleted
+		if get_parent() and get_parent().is_queued_for_deletion():
+			return
+
 		GameManager.remove_gun.emit()
 		print("Dead")
-		var playerCollisionShape2D: CollisionShape2D = get_tree().current_scene.get_node("Player/CollisionShape2D")
-		playerCollisionShape2D.set_deferred("disabled", true)
+		var player = get_tree().current_scene.get_node_or_null("Player")
+		if player:
+			var playerCollisionShape2D = player.get_node_or_null("CollisionShape2D")
+			if playerCollisionShape2D:
+				playerCollisionShape2D.set_deferred("disabled", true)
 		Engine.time_scale = 0.5
-		
+
 		# Release inputs
 		Input.action_release("move_left")
 		Input.action_release("move_right")
 		Input.action_release("climb")
 		Input.action_release("descend")
 		Input.action_release("jump")
-		
+
 		timer.start()
 		
 	if body.is_in_group("bombs"):
