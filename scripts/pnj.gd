@@ -73,6 +73,8 @@ func start_typing(text: String) -> void:
 	type_next_char()
 
 func type_next_char() -> void:
+	if not is_typing:
+		return
 	if current_char_index < full_text.length():
 		label.text += full_text[current_char_index]
 		current_char_index += 1
