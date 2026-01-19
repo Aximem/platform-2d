@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ck5wm7pliwulq"]
+[gd_scene load_steps=25 format=3 uid="uid://ck5wm7pliwulq"]
 
 [ext_resource type="Texture2D" uid="uid://xxy85vq8vu16" path="res://assets/spritesheet-characters-default.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://5luq1vcu5pmj" path="res://scripts/player.gd" id="1_g2els"]
@@ -94,7 +94,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -131,15 +131,38 @@ corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fjrip"]
 
+[sub_resource type="Animation" id="Animation_qlg0r"]
+resource_name = "run_footsteps"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_footstep"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuyoq"]
+_data = {
+&"run_footsteps": SubResource("Animation_qlg0r")
+}
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -65)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"run_with_gun"
+animation = &"run"
 autoplay = "idle"
-frame_progress = 0.70571667
 speed_scale = 0.8
 
 [node name="Gun" type="Sprite2D" parent="AnimatedSprite2D"]
@@ -194,6 +217,17 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_fjrip")
 [node name="KeyboardEnter" type="Sprite2D" parent="AnswerControl/Panel/MarginContainer"]
 position = Vector2(601, 110)
 texture = ExtResource("5_qlg0r")
+
+[node name="FootstepAudio" type="AudioStreamPlayer2D" parent="."]
+volume_db = -25.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tuyoq")
+}
+
+[node name="GunAudio" type="AudioStreamPlayer2D" parent="."]
+volume_db = -15.0
 
 [connection signal="text_changed" from="AnswerControl/Panel/MarginContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_submitted" from="AnswerControl/Panel/MarginContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

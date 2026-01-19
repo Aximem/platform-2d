@@ -39,6 +39,12 @@ var current_pnj_id_speaking: int = -1
 @onready var keyboard_enter: Sprite2D = $AnswerControl/Panel/MarginContainer/KeyboardEnter
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var camera_2d: Camera2D = $Camera2D
+@onready var footstep_audio: AudioStreamPlayer2D = $FootstepAudio
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var gun_audio: AudioStreamPlayer2D = $GunAudio
+
+var footstep_sounds: Array[AudioStream] = []
+var laser_sound: AudioStream = preload("res://assets/audio/laser/laserSmall_000.ogg")
 
 @onready var bridges: Array[StaticBody2D] = [
 	$"../Bridges/Bridge",
@@ -58,7 +64,7 @@ func _ready() -> void:
 	gun.visible = false
 	answer_control.visible = false
 	keyboard_enter.visible = false
-	
+
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
 	GameManager.enemy_killed.connect(_on_enemy_killed)
@@ -66,6 +72,13 @@ func _ready() -> void:
 	GameManager.display_player_answer.connect(_on_display_player_answer)
 	GameManager.dialogue_started.connect(_on_dialogue_started)
 	GameManager.validate_enigma.connect(_on_validate_enigma)
+
+	# Load footstep sounds
+	footstep_sounds = [
+		preload("res://assets/audio/step/footstep00.ogg"),
+		preload("res://assets/audio/step/footstep01.ogg"),
+		preload("res://assets/audio/step/footstep02.ogg"),
+	]
 
 	var checkpoint_id = GameManager.get_active_checkpoint_id()
 	if checkpoint_id != -1:
@@ -75,6 +88,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not can_move:
+		if animation_player.is_playing():
+			animation_player.stop()
 		return
 	
 	check_if_on_climbable()
@@ -230,10 +245,16 @@ func handle_normal_movement(delta: float):
 	if is_on_floor():
 		if direction == 0:
 			animated_sprite.play("idle")
+			if animation_player.is_playing():
+				animation_player.stop()
 		else:
 			animated_sprite.play("run")
+			if not animation_player.is_playing():
+				animation_player.play("run_footsteps")
 	else:
 		animated_sprite.play("jump")
+		if animation_player.is_playing():
+			animation_player.stop()
 	
 	# Apply movement
 	if direction:
@@ -305,6 +326,8 @@ func shoot():
 	bullet.direction = animated_sprite.scale.x
 	bullet.global_position = gun.global_position
 	bullet.scale = Vector2(0.25, 0.25)
+	gun_audio.stream = laser_sound
+	gun_audio.play()
 	get_parent().add_child(bullet)
 
 	await get_tree().create_timer(SHOOT_COOLDOWN).timeout
@@ -349,3 +372,13 @@ func _on_line_edit_text_changed(new_text: String) -> void:
 		keyboard_enter.visible = true
 	else:
 		keyboard_enter.visible = false
+
+func play_footstep():
+	if footstep_sounds.size() > 0:
+		var random_sound = footstep_sounds[randi() % footstep_sounds.size()]
+		footstep_audio.stream = random_sound
+		footstep_audio.pitch_scale = randf_range(0.9, 1.1)
+		footstep_audio.play()
+		# Stop after 0.3 seconds
+		await get_tree().create_timer(0.3).timeout
+		footstep_audio.stop()
