@@ -47,9 +47,12 @@ func move_water_down():
 	var tile_map = get_tree().current_scene.get_node("TileMaps/TileMapLayerMovingWater")
 	var camera = get_tree().current_scene.get_node("Player/Camera2D")
 	var player = get_tree().current_scene.get_node("Player")
+	var water_audio = get_tree().current_scene.get_node("Audio/WaterAudio")
 	var tween = create_tween()
 	var initial_camera_y = camera.position.y
 
+	water_audio.play() 
+	
 	# Disable the inputs
 	player.can_move = false
 

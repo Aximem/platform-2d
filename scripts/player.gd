@@ -32,7 +32,6 @@ var current_pnj_id_speaking: int = -1
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
-@onready var tile_map_layer_moving_water: TileMapLayer = $"../TileMaps/TileMapLayerMovingWater"
 @onready var gun: Sprite2D = $AnimatedSprite2D/Gun
 @onready var answer_control: Control = $AnswerControl
 @onready var line_edit: LineEdit = $AnswerControl/Panel/MarginContainer/LineEdit
@@ -43,6 +42,7 @@ var current_pnj_id_speaking: int = -1
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var gun_audio: AudioStreamPlayer2D = $GunAudio
 @onready var jump_audio: AudioStreamPlayer2D = $JumpAudio
+@onready var ennemy_death_audio: AudioStreamPlayer2D = $EnnemyDeathAudio
 
 var footstep_sounds: Array[AudioStream] = []
 var laser_sound: AudioStream = preload("res://assets/audio/laser/laser2.ogg")
@@ -342,6 +342,8 @@ func _on_enemy_killed(_id: int):
 	can_shoot = false
 	has_gun = false
 	gun.visible = false
+	ennemy_death_audio.play()
+	
 
 func _on_remove_gun():
 	can_shoot = false

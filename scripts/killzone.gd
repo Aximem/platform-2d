@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var timer: Timer = $Timer
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func _ready() -> void:
 	GameManager.validate_enigma.connect(_on_validate_enigma)
@@ -12,7 +13,9 @@ func _on_body_entered(body: Node2D) -> void:
 			return
 
 		GameManager.remove_gun.emit()
-		print("Dead")
+		
+		audio_stream_player_2d.play()
+		
 		var player = get_tree().current_scene.get_node_or_null("Player")
 		if player:
 			var playerCollisionShape2D = player.get_node_or_null("CollisionShape2D")

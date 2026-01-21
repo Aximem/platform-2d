@@ -1,7 +1,8 @@
 Features:
 
 - Mobile lancer en mode paysage
+- Sounds:
+  Bomb explosion
+  Dialogue
 
 Fixes:
-
-- Si je tue un ennemy au même moment où je meurs, le jeu plante

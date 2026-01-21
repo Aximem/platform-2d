@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://ck5wm7pliwulq"]
+[gd_scene load_steps=26 format=3 uid="uid://ck5wm7pliwulq"]
 
 [ext_resource type="Texture2D" uid="uid://xxy85vq8vu16" path="res://assets/spritesheet-characters-default.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://5luq1vcu5pmj" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://csd6je372demq" path="res://assets/weapon/raygunBig.png" id="3_qhqgy"]
 [ext_resource type="FontFile" uid="uid://c625rmrxp6huy" path="res://fonts/Blazma-Regular.ttf" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://bseyn3sgo02t" path="res://assets/keyboard/keyboard_enter.png" id="5_qlg0r"]
+[ext_resource type="AudioStream" uid="uid://dq1iqta5lkxc6" path="res://assets/audio/death/ennemy_death.wav" id="6_tuyoq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_3vyb7")
@@ -230,6 +231,10 @@ libraries = {
 volume_db = -30.0
 
 [node name="JumpAudio" type="AudioStreamPlayer2D" parent="."]
+volume_db = -15.0
+
+[node name="EnnemyDeathAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_tuyoq")
 volume_db = -15.0
 
 [connection signal="text_changed" from="AnswerControl/Panel/MarginContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
