@@ -218,8 +218,8 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_fjrip")
 position = Vector2(601, 110)
 texture = ExtResource("5_qlg0r")
 
-[node name="FootstepAudio" type="AudioStreamPlayer2D" parent="."]
-volume_db = -25.0
+[node name="MoveAudio" type="AudioStreamPlayer2D" parent="."]
+volume_db = -15.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -227,6 +227,9 @@ libraries = {
 }
 
 [node name="GunAudio" type="AudioStreamPlayer2D" parent="."]
+volume_db = -30.0
+
+[node name="JumpAudio" type="AudioStreamPlayer2D" parent="."]
 volume_db = -15.0
 
 [connection signal="text_changed" from="AnswerControl/Panel/MarginContainer/LineEdit" to="." method="_on_line_edit_text_changed"]

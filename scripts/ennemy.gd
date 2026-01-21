@@ -11,6 +11,10 @@ extends CharacterBody2D
 @onready var collision_shape_2d: CollisionShape2D = $BodyArea/CollisionShape2D
 @onready var impact_area: Marker2D = $ImpactArea
 
+@onready var impact_audio: AudioStreamPlayer2D = $ImpactAudio
+
+var impact_sound: AudioStream = preload("res://assets/audio/impact/impactMetal_001.ogg")
+
 var projectile_impact = preload("res://scenes/projectile_impact.tscn")
 
 var player: CharacterBody2D = null
@@ -88,6 +92,8 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 
 func _on_body_area_area_entered(area: Area2D) -> void:
 	if area.is_in_group("bullets"):
+		impact_audio.stream = impact_sound
+		impact_audio.play()
 		area.queue_free()
 		impact()
 		# Apply damage

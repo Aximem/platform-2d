@@ -39,12 +39,14 @@ var current_pnj_id_speaking: int = -1
 @onready var keyboard_enter: Sprite2D = $AnswerControl/Panel/MarginContainer/KeyboardEnter
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var camera_2d: Camera2D = $Camera2D
-@onready var footstep_audio: AudioStreamPlayer2D = $FootstepAudio
+@onready var move_audio: AudioStreamPlayer2D = $MoveAudio
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var gun_audio: AudioStreamPlayer2D = $GunAudio
+@onready var jump_audio: AudioStreamPlayer2D = $JumpAudio
 
 var footstep_sounds: Array[AudioStream] = []
-var laser_sound: AudioStream = preload("res://assets/audio/laser/laserSmall_000.ogg")
+var laser_sound: AudioStream = preload("res://assets/audio/laser/laser2.ogg")
+var jump_sound: AudioStream = preload("res://assets/audio/jump/phaseJump1.ogg")
 
 @onready var bridges: Array[StaticBody2D] = [
 	$"../Bridges/Bridge",
@@ -75,9 +77,9 @@ func _ready() -> void:
 
 	# Load footstep sounds
 	footstep_sounds = [
-		preload("res://assets/audio/step/footstep00.ogg"),
-		preload("res://assets/audio/step/footstep01.ogg"),
-		preload("res://assets/audio/step/footstep02.ogg"),
+		preload("res://assets/audio/step/footstep_concrete_000.ogg"),
+		preload("res://assets/audio/step/footstep_concrete_001.ogg"),
+		preload("res://assets/audio/step/footstep_concrete_002.ogg"),
 	]
 
 	var checkpoint_id = GameManager.get_active_checkpoint_id()
@@ -231,6 +233,8 @@ func handle_normal_movement(delta: float):
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		jump_audio.stream = jump_sound
+		jump_audio.play()
 
 	# Get the input direction: -1, 0, 1
 	var direction := Input.get_axis("move_left", "move_right")
@@ -376,9 +380,9 @@ func _on_line_edit_text_changed(new_text: String) -> void:
 func play_footstep():
 	if footstep_sounds.size() > 0:
 		var random_sound = footstep_sounds[randi() % footstep_sounds.size()]
-		footstep_audio.stream = random_sound
-		footstep_audio.pitch_scale = randf_range(0.9, 1.1)
-		footstep_audio.play()
+		move_audio.stream = random_sound
+		move_audio.pitch_scale = randf_range(0.9, 1.1)
+		move_audio.play()
 		# Stop after 0.3 seconds
 		await get_tree().create_timer(0.3).timeout
-		footstep_audio.stop()
+		move_audio.stop()
