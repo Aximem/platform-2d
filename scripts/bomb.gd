@@ -15,8 +15,10 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("ennemy"):
 		body.queue_free()
 		queue_free()
+		GameManager.emit_signal("enemy_killed", body.id)
 		GameManager.emit_signal("bomb_disappear", switch_id)
 	if body.is_in_group("moving_platform"):
+		print("moving_platform")
 		queue_free()
 		GameManager.emit_signal("bomb_disappear", switch_id)
 		

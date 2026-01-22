@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://cdhceurbwvuoy"]
+[gd_scene load_steps=38 format=4 uid="uid://cdhceurbwvuoy"]
 
 [ext_resource type="Script" uid="uid://bjn7b0ovgit7" path="res://scripts/main.gd" id="1_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://ck5wm7pliwulq" path="res://scenes/player.tscn" id="1_o5qli"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://b8jg54ui3it4q" path="res://assets/keyboard/keyboard_arrow_right.png" id="19_pm3ni"]
 [ext_resource type="Texture2D" uid="uid://d4ihtvaqnyv5n" path="res://assets/keyboard/keyboard_arrow_up.png" id="20_y6deb"]
 [ext_resource type="Texture2D" uid="uid://cn7dfoxfpj8kg" path="res://assets/keyboard/keyboard_space.png" id="21_og1vs"]
+[ext_resource type="AudioStream" uid="uid://der54k4kr8lfs" path="res://assets/audio/explosion/explosion.mp3" id="22_jscy8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbgi4"]
 texture = ExtResource("2_jyhfs")
@@ -6876,11 +6877,11 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AADnAE4AAAAMAAEAAADoAE4AAAAMAAEAAADpAE4AAAAMAAEAAADqAE4AAAAMAAEAAADrAE4AAAAMAAEAAADsAE4AAAAMAAEAAADtAE4AAAAMAAEAAADuAE4AAAAMAAEAAAA=")
 tile_set = SubResource("TileSet_jkv2x")
 
-[node name="MovingPlatform" type="AnimatableBody2D" parent="TileMaps"]
+[node name="MovingPlatform" type="AnimatableBody2D" parent="TileMaps" groups=["moving_platform"]]
 position = Vector2(2848, 324)
 sync_to_physics = false
 
-[node name="TileMapLayerMovingPlatform" type="TileMapLayer" parent="TileMaps/MovingPlatform" groups=["moving_platform"]]
+[node name="TileMapLayerMovingPlatform" type="TileMapLayer" parent="TileMaps/MovingPlatform"]
 position = Vector2(-2835, -223)
 scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AACxAA4AAAAPAA4AAACyAA4AAAAQAA4AAAA=")
@@ -6892,6 +6893,7 @@ position = Vector2(13, 9)
 shape = SubResource("RectangleShape2D_jbj1t")
 
 [node name="Img7456" type="Sprite2D" parent="TileMaps"]
+visible = false
 position = Vector2(3759.0002, 1151.0001)
 scale = Vector2(0.13281243, 0.13281246)
 texture = ExtResource("5_jbj1t")
@@ -6940,7 +6942,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 z_index = 10
-position = Vector2(916, 483.99997)
+position = Vector2(394.99997, 483.99997)
 scale = Vector2(0.18, 0.18)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -7098,6 +7100,7 @@ scale = Vector2(0.25, 0.25)
 id = 1
 
 [node name="SupriseLabel" type="Label" parent="."]
+visible = false
 z_index = 1
 offset_left = 3622.0
 offset_top = 1024.0
@@ -7187,3 +7190,9 @@ text = "SAUTER"
 
 [node name="WaterAudio" type="AudioStreamPlayer2D" parent="Audio"]
 stream = SubResource("AudioStreamWAV_yc10j")
+max_distance = 100000000.0
+
+[node name="ExplosionAudio" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("22_jscy8")
+volume_db = -20.0
+max_distance = 1000000000.0

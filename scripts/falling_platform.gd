@@ -2,7 +2,7 @@ extends StaticBody2D
 
 @onready var block: Sprite2D = $Block
 @onready var timer: Timer = $Timer
-@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var falling_audio: AudioStreamPlayer2D = $FallingAudio
 
 var initial_position: Vector2
 var is_falling: bool = false
@@ -43,6 +43,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func _on_timer_timeout() -> void:
 	block.texture = load("res://assets/falling_block/block_fall.png")
 	is_falling = true
-	audio_stream_player_2d.play()
+	falling_audio.play()
 	fall_velocity = Vector2.ZERO
 	timer.stop()
