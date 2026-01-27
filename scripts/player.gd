@@ -21,6 +21,10 @@ var was_sliding: bool = false
 var slide_momentum: float = 0.0
 var slide_distance_remaining: float = 0.0
 
+# Jump buffering - permet de sauter même si l'input arrive quelques frames avant d'être au sol
+const JUMP_BUFFER_TIME = 0.1
+var jump_buffer_timer: float = 0.0
+
 # Used to disable inputs
 var can_move: bool = true
 
@@ -171,7 +175,12 @@ func handle_sliding(delta: float):
 	slide_momentum = velocity.x
 	slide_distance_remaining = SLIDE_OVERSHOOT_DISTANCE
 	
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	# Jump buffering pendant le sliding
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = JUMP_BUFFER_TIME
+
+	if jump_buffer_timer > 0 and is_on_floor():
+		jump_buffer_timer = 0.0
 		is_sliding = false
 		was_sliding = false
 		slide_momentum = 0
@@ -179,13 +188,20 @@ func handle_sliding(delta: float):
 		floor_snap_length = 0 # Disable the snap when jumping
 		velocity.y = JUMP_VELOCITY
 		return
+
+	jump_buffer_timer -= delta
 	
 func handle_normal_movement(delta: float):
 	floor_snap_length = 0 # Disable floor snapping on normal movement
 	
 	# Just finished sliding
 	if was_sliding and slide_distance_remaining > 0:
-		if Input.is_action_just_pressed("jump") and is_on_floor():
+		# Jump buffering post-sliding
+		if Input.is_action_just_pressed("jump"):
+			jump_buffer_timer = JUMP_BUFFER_TIME
+
+		if jump_buffer_timer > 0 and is_on_floor():
+			jump_buffer_timer = 0.0
 			was_sliding = false
 			slide_momentum = 0
 			slide_distance_remaining = 0
@@ -230,11 +246,19 @@ func handle_normal_movement(delta: float):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	# Jump buffering - mémorise l'input de saut
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = JUMP_BUFFER_TIME
+
+	# Handle jump avec buffer
+	if jump_buffer_timer > 0 and is_on_floor():
+		jump_buffer_timer = 0.0
 		velocity.y = JUMP_VELOCITY
 		jump_audio.stream = jump_sound
 		jump_audio.play()
+
+	# Décrémente le buffer timer
+	jump_buffer_timer -= delta
 
 	# Get the input direction: -1, 0, 1
 	var direction := Input.get_axis("move_left", "move_right")
