@@ -21,6 +21,9 @@ func _ready():
 	switch_activated.connect(_on_switch_activated)
 	enemy_killed.connect(_on_enemy_killed)
 	bomb_disappear.connect(_on_bomb_disappear)
+	
+	var tile_map_layer_platform_visible = get_tree().current_scene.get_node("TileMaps/TileMapLayerPlatformVisible")
+	tile_map_layer_platform_visible.collision_enabled = false
 
 # Gun logic
 func _on_gun_picked():
@@ -87,8 +90,9 @@ func move_water_down():
 
 func _on_enemy_killed(id: int):
 	if id == 0:
-		var falling_platform = get_tree().current_scene.get_node("FallingPlatforms/FallingPlatform5")
-		falling_platform.visible = true
+		var tile_map_layer_platform_visible = get_tree().current_scene.get_node("TileMaps/TileMapLayerPlatformVisible")
+		tile_map_layer_platform_visible.visible = true
+		tile_map_layer_platform_visible.collision_enabled = true
 
 func _on_bomb_disappear(switch_id: int):
 	emit_signal("reset_switch_activated", switch_id)
