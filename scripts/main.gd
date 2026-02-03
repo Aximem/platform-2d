@@ -5,10 +5,10 @@ extends Node2D
 @onready var boom_label: Label = $Bombs/BoomLabel
 @onready var explosion_audio: AudioStreamPlayer2D = $Audio/ExplosionAudio
 
-var platform_speed: float = 75.0
+var platform_speed: float = 65.0
 var platform_direction: int = 1  # 1 = droite, -1 = gauche
 var platform_initial_position: Vector2
-var platform_max_distance: float = 125.0
+var platform_max_distance: float = 95.0
 
 var bomb_scene: PackedScene = preload("res://scenes/bomb.tscn")
 var bomb_spawn_position: Vector2 = Vector2(2875.0, 250.0)
