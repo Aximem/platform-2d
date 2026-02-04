@@ -19,15 +19,25 @@ const SPACING_PERCENT = 0.02 # 2% de la hauteur pour l'espacement
 @onready var bottom_touch: TouchScreenButton = $Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer/BottomTouch
 @onready var jump_touch: TouchScreenButton = $Control/MarginContainer/Control/Control2/JumpTouch
 @onready var touch_screen_button: TouchScreenButton = $Control/Panel/MarginContainer/TouchScreenButton
+@onready var onscreen_keyboard: PanelContainer = $Control/OnscreenKeyboard
 
 func _ready() -> void:
 	if not _is_mobile_device():
 		visible = false
 		return
 
+	GameManager.display_player_answer.connect(_on_display_player_answer)
+	GameManager.send_answer.connect(_on_send_answer)
+	
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
 
+func _on_display_player_answer():
+	onscreen_keyboard.visible = true
+	
+func _on_send_answer(_text: String, _pnjId: int):
+	onscreen_keyboard.visible = false
+	
 func _is_mobile_device() -> bool:
 	var os_name = OS.get_name()
 
