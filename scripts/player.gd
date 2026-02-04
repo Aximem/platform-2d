@@ -431,9 +431,20 @@ func _is_mobile_device() -> bool:
 	
 func _on_display_player_answer():
 	answer_control.visible = true
+	line_edit.editable = true
 	line_edit.grab_focus.call_deferred()
 	line_edit.caret_blink = true
+
+	# Sur mobile (Android/iOS), le clavier devrait s'afficher automatiquement
+	# Mais on peut forcer l'affichage sur Android si nécessaire
 	if _is_mobile_device():
+		var os_name = OS.get_name()
+		if os_name == "Android" or os_name == "Web":
+			# Sur Android et Web, forcer l'affichage du clavier
+			call_deferred("_show_keyboard")
+
+func _show_keyboard():
+	if line_edit.has_focus():
 		DisplayServer.virtual_keyboard_show(line_edit.text, line_edit.get_global_rect())
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:

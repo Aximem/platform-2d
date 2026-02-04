@@ -43,7 +43,7 @@ func _force_landscape_on_mobile():
 
 					var rotateOverlay = document.createElement('div');
 					rotateOverlay.id = 'rotate-overlay';
-					rotateOverlay.innerHTML = '<div style="text-align:center;"><div style="font-size:60px;">📱↔️</div><div>Tourne ton téléphone</div></div>';
+					rotateOverlay.innerHTML = '<div style="text-align:center;"><div style="font-size:60px;">📱↔️</div><div>Tourne ton téléphone<br/>(mode paysage)</div></div>';
 					rotateOverlay.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:black;color:white;font-size:24px;z-index:99999;justify-content:center;align-items:center;font-family:sans-serif;';
 					document.body.appendChild(rotateOverlay);
 
@@ -94,7 +94,7 @@ func move_water_down():
 	var tween = create_tween()
 	var initial_camera_y = camera.position.y
 
-	water_audio.play() 
+	water_audio.play()
 	
 	# Disable the inputs
 	player.can_move = false
