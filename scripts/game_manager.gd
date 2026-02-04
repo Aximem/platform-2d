@@ -22,9 +22,19 @@ func _ready():
 	switch_activated.connect(_on_switch_activated)
 	enemy_killed.connect(_on_enemy_killed)
 	bomb_disappear.connect(_on_bomb_disappear)
-	
+
+	_force_landscape_on_mobile()
+
 	var tile_map_layer_platform_visible = get_tree().current_scene.get_node("TileMaps/TileMapLayerPlatformVisible")
 	tile_map_layer_platform_visible.collision_enabled = false
+
+func _force_landscape_on_mobile():
+	if OS.get_name() == "Web":
+		JavaScriptBridge.eval("""
+			if (screen.orientation && screen.orientation.lock) {
+				screen.orientation.lock('landscape').catch(function(e) {});
+			}
+		""")
 
 # Gun logic
 func _on_gun_picked():

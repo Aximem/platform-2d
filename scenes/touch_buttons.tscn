@@ -99,7 +99,7 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="JumpTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/Control2"]
-scale = Vector2(1.703125, 1.703125)
+scale = Vector2(1.2, 1.2)
 texture_normal = ExtResource("5_fpuaf")
 passby_press = true
 visibility_mode = 1

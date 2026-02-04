@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-const BUTTON_SIZE_PERCENT = 0.15  # 10% de la hauteur de l'écran
+const BUTTON_SIZE_PERCENT = 0.20  # 10% de la hauteur de l'écran
 const MARGIN_PERCENT = 0.06  # 3% de la hauteur pour les marges
 const SPACING_PERCENT = 0.02  # 2% de la hauteur pour l'espacement
 
@@ -20,8 +20,29 @@ const SPACING_PERCENT = 0.02  # 2% de la hauteur pour l'espacement
 @onready var jump_touch: TouchScreenButton = $Control/MarginContainer/Control/Control2/JumpTouch
 
 func _ready() -> void:
+	if not _is_mobile_device():
+		visible = false
+		return
+
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
+
+func _is_mobile_device() -> bool:
+	var os_name = OS.get_name()
+
+	# Native mobile
+	if os_name in ["Android", "iOS"]:
+		return true
+
+	# Web: detect mobile browser via JavaScript
+	if os_name == "Web":
+		var is_mobile = JavaScriptBridge.eval("""
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
+		""")
+		return is_mobile
+
+	return false
 
 func resize_all() -> void:
 	var screen_height = get_viewport().get_visible_rect().size.y
