@@ -14,6 +14,8 @@ const SHOOT_COOLDOWN = 0.2
 # Climbing
 var is_climbing: bool = false
 var can_climb: bool = false
+var climb_dismount_timer: float = 0.0
+const CLIMB_DISMOUNT_DURATION = 0.12
 
 # Sliding
 var is_sliding: bool = false
@@ -203,7 +205,15 @@ func handle_sliding(delta: float):
 	
 func handle_normal_movement(delta: float):
 	floor_snap_length = 0 # Disable floor snapping on normal movement
-	
+
+	# Just finished climbing - maintain momentum briefly
+	if climb_dismount_timer > 0:
+		climb_dismount_timer -= delta
+		# Apply gravity but don't allow input to modify velocity
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+		return
+
 	# Just finished sliding
 	if was_sliding and slide_distance_remaining > 0:
 		# Jump buffering post-sliding
@@ -322,6 +332,10 @@ func check_if_on_climbable():
 	# Reach top of climb
 	if not can_climb and is_climbing:
 		is_climbing = false
+		# Create a jump movement to the right to mount the platform
+		velocity.x = SPEED * 1.2
+		velocity.y = JUMP_VELOCITY * 0.6 # Smaller jump than regular jump
+		climb_dismount_timer = CLIMB_DISMOUNT_DURATION
 
 func check_if_on_slidable():
 	# Vérifie plusieurs points sous le joueur pour une détection fiable
