@@ -49,6 +49,7 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
 [node name="LeftTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control"]
+visible = false
 position = Vector2(0, 64)
 scale = Vector2(1.21875, 1)
 texture_normal = ExtResource("1_rpj4i")
