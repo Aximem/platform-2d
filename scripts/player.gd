@@ -34,6 +34,8 @@ var can_shoot: bool = true
 
 var current_pnj_id_speaking: int = -1
 
+var game_ended: bool = false
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
 @onready var gun: Sprite2D = $AnimatedSprite2D/Gun
@@ -94,6 +96,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not can_move:
+		animated_sprite.play("idle")
 		if animation_player.is_playing():
 			animation_player.stop()
 		return
@@ -380,12 +383,12 @@ func _on_dialogue_started(pnjId: int):
 	
 func _on_validate_enigma(pnjId: int):
 	if pnjId == 0:
-		# else we ended game
 		can_move = true
 	if pnjId == 1 or pnjId == 2:
 		can_move = true
 		camera_2d.limit_bottom = 1300
 		tile_map_layer_tiles.collision_enabled = false
+		game_ended = true
 	
 func _on_display_player_answer():
 	answer_control.visible = true

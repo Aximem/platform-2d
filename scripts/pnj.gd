@@ -44,6 +44,7 @@ func _input(event: InputEvent) -> void:
 			# If press enter during typing, display all text
 			label.text = full_text
 			is_typing = false
+			audio_stream_player_2d.stop()
 		else:
 			if is_answering:
 				if answered_wrongly:
@@ -54,6 +55,7 @@ func _input(event: InputEvent) -> void:
 					control.visible = false
 					GameManager.validate_enigma.emit(id)
 					display_enigma = false
+					audio_stream_player_2d.stop()
 				return
 						
 			# Next text
@@ -65,6 +67,7 @@ func _input(event: InputEvent) -> void:
 				control.visible = false
 				current_dialogue_index = 0
 				GameManager.display_player_answer.emit()
+				audio_stream_player_2d.stop()
 
 func start_typing(text: String) -> void:
 	full_text = text
