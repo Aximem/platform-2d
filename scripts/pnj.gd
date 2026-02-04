@@ -100,6 +100,9 @@ func _on_send_answer(text: String, pnjId: int):
 			found_solution = true
 			# Display platform
 		else:
+			if id == 1:
+				id = 2
+			GameManager.dialogue_started.emit(id)
 			start_typing(answer["incorrect"])
 			answered_wrongly = true
 		

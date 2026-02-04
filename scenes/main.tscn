@@ -11667,13 +11667,13 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 z_index = 10
-position = Vector2(2893, 322)
+position = Vector2(399, 483.99997)
 scale = Vector2(0.18, 0.18)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(5.555908, -16.666504)
 scale = Vector2(5.555556, 5.555556)
-zoom = Vector2(6, 6)
+zoom = Vector2(3, 3)
 limit_left = -9999904
 limit_top = -10000024
 limit_right = 10000096

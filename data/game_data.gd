@@ -24,6 +24,17 @@ const PNJ_DIALOGUES = {
 		"answer": {
 			"value": "surprise",
 			"correct": "Oui Suprise, Bravo ! Photo Surprise !",
+			"incorrect": "Non, je te donne un indice supplémentaire."
+		}
+	},
+	2: {
+		"question": [
+			"J’entre dans une pièce plongée dans le noir, la lumière s’allume et tout le monde crie ce mot !",
+			"J’arrive sans prévenir et je fais souvent sourire.\nJe fait dire « Oh ! » ou « Waouh ! » quand on me découvre.\nJe me passe souvent lors d’un anniversaire ou d’une fête.",
+		],
+		"answer": {
+			"value": "surprise",
+			"correct": "Oui Suprise, Bravo ! Photo Surprise !",
 			"incorrect": "Non, je vais répéter."
 		}
 	}

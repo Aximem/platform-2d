@@ -40,5 +40,5 @@ func _on_timer_timeout() -> void:
 	get_tree().reload_current_scene()
 	
 func _on_validate_enigma(pnjId):
-	if pnjId == 1:
+	if pnjId == 1 or pnjId == 2:
 		queue_free()

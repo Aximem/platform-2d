@@ -29,6 +29,8 @@ func _ready():
 	
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(detection_range * 2, 50)
+	if id == 1:
+		shape.size = Vector2(detection_range / 2, 50)
 	collision_shape.shape = shape
 
 	# Get sizes from elements
@@ -62,7 +64,7 @@ func _physics_process(delta: float):
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	if is_chasing and player and id != 1:
+	if is_chasing and player:
 		chase_player()
 
 	move_and_slide()
