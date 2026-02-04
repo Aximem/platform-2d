@@ -1,8 +1,8 @@
 extends CanvasLayer
 
-const BUTTON_SIZE_PERCENT = 0.20  # 10% de la hauteur de l'écran
-const MARGIN_PERCENT = 0.06  # 3% de la hauteur pour les marges
-const SPACING_PERCENT = 0.02  # 2% de la hauteur pour l'espacement
+const BUTTON_SIZE_PERCENT = 0.20 # 20% de la hauteur de l'écran
+const MARGIN_PERCENT = 0.06 # 3% de la hauteur pour les marges
+const SPACING_PERCENT = 0.02 # 2% de la hauteur pour l'espacement
 
 @onready var margin_container: MarginContainer = $Control/MarginContainer
 @onready var hbox_container: HBoxContainer = $Control/MarginContainer/Control/HBoxContainer
@@ -68,7 +68,7 @@ func resize_all() -> void:
 	#       [BOTTOM]
 
 	var jump_size = int(button_size * 1.5)
-	var dpad_size = button_size * 3 + spacing_size * 2  # 3 boutons + 2 espacements
+	var dpad_size = button_size * 3 + spacing_size * 2 # 3 boutons + 2 espacements
 
 	# Tous les wrappers ont la même hauteur pour le HBox
 	control_left.custom_minimum_size = Vector2(button_size, dpad_size)
@@ -80,11 +80,11 @@ func resize_all() -> void:
 	# Le centre du D-pad est à dpad_size / 2 depuis le bas
 	# On positionne le centre du Jump au même niveau
 	var dpad_center_from_bottom = dpad_size / 2.0
-	var jump_offset_top = -(dpad_center_from_bottom + jump_size / 2.0)
-	control_jump.offset_left = -jump_size
+	var jump_offset_top = - (dpad_center_from_bottom + jump_size / 2.0)
+	control_jump.offset_left = - jump_size
 	control_jump.offset_top = jump_offset_top
 	control_jump.offset_right = 0
-	control_jump.offset_bottom = -(dpad_center_from_bottom - jump_size / 2.0)
+	control_jump.offset_bottom = - (dpad_center_from_bottom - jump_size / 2.0)
 
 	# Taille du HBoxContainer
 	hbox_container.custom_minimum_size = Vector2(dpad_size, dpad_size)

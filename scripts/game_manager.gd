@@ -31,9 +31,21 @@ func _ready():
 func _force_landscape_on_mobile():
 	if OS.get_name() == "Web":
 		JavaScriptBridge.eval("""
-			if (screen.orientation && screen.orientation.lock) {
-				screen.orientation.lock('landscape').catch(function(e) {});
-			}
+			(function() {
+				var rotateOverlay = document.createElement('div');
+				rotateOverlay.id = 'rotate-overlay';
+				rotateOverlay.innerHTML = '<div style="text-align:center;"><div style="font-size:60px;">📱↔️</div><div>Tourne ton téléphone</div></div>';
+				rotateOverlay.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:black;color:white;font-size:24px;z-index:99999;justify-content:center;align-items:center;font-family:sans-serif;';
+				document.body.appendChild(rotateOverlay);
+
+				function checkOrientation() {
+					var isPortrait = window.innerHeight > window.innerWidth;
+					rotateOverlay.style.display = isPortrait ? 'flex' : 'none';
+				}
+
+				checkOrientation();
+				window.addEventListener('resize', checkOrientation);
+			})();
 		""")
 
 # Gun logic

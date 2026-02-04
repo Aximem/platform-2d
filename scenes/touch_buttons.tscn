@@ -50,6 +50,7 @@ layout_mode = 2
 
 [node name="LeftTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control"]
 position = Vector2(0, 64)
+scale = Vector2(1.21875, 1)
 texture_normal = ExtResource("1_rpj4i")
 passby_press = true
 visibility_mode = 1
@@ -80,7 +81,8 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
 [node name="RightTouch" type="TouchScreenButton" parent="Control/MarginContainer/Control/HBoxContainer/Control3"]
-position = Vector2(0, 64)
+position = Vector2(-11.99999, 64)
+scale = Vector2(1.1874999, 1)
 texture_normal = ExtResource("2_24v8d")
 passby_press = true
 visibility_mode = 1
