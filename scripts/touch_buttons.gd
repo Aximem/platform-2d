@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-const BUTTON_SIZE_PERCENT = 0.10  # 10% de la hauteur de l'écran
+const BUTTON_SIZE_PERCENT = 0.15  # 10% de la hauteur de l'écran
 const MARGIN_PERCENT = 0.06  # 3% de la hauteur pour les marges
 const SPACING_PERCENT = 0.02  # 2% de la hauteur pour l'espacement
 
