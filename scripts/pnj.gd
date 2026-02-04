@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var control: Control = $Control
 @onready var label: Label = $Control/Panel/MarginContainer/Label
 @onready var keyboard_enter: Sprite2D = $Control/Panel/MarginContainer/KeyboardEnter
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 @export var detection_range: float = 150.0
 @export var id: int = -1
@@ -71,6 +72,7 @@ func start_typing(text: String) -> void:
 	current_char_index = 0
 	is_typing = true
 	type_next_char()
+	audio_stream_player_2d.play()
 
 func type_next_char() -> void:
 	if not is_typing:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7ltw5qwmv0xl"]
+[gd_scene load_steps=6 format=3 uid="uid://b7ltw5qwmv0xl"]
 
 [ext_resource type="Texture2D" uid="uid://23sv57g5ykml" path="res://assets/switch/switch_blue.png" id="1_1i7pn"]
 [ext_resource type="Script" uid="uid://wkfy3xfmva5f" path="res://scripts/switch.gd" id="1_e08h5"]
+[ext_resource type="AudioStream" uid="uid://bnqfsg1s7nq6y" path="res://assets/audio/button/button_pressed.mp3" id="3_nnoiq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e08h5"]
 size = Vector2(46, 41)
@@ -24,5 +25,8 @@ shape = SubResource("RectangleShape2D_e08h5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(0, 18)
 shape = SubResource("RectangleShape2D_1i7pn")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_nnoiq")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

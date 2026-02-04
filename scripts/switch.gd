@@ -11,6 +11,7 @@ enum SwitchColor {
 @export var color: SwitchColor = SwitchColor.Blue
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var activated: bool = false
 
@@ -37,6 +38,7 @@ func _on_body_entered(body: Node2D) -> void:
 		sprite_2d.texture = load("res://assets/switch/switch_" + _get_color_text() + "_pressed.png")
 		# Send signal
 		GameManager.switch_activated.emit(id)
+		audio_stream_player_2d.play()
 	
 func _on_reset_switch_activated(switch_id: int):
 	if switch_id == id:

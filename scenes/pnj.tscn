@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bdd0rffss6dpx"]
+[gd_scene load_steps=12 format=3 uid="uid://bdd0rffss6dpx"]
 
 [ext_resource type="Texture2D" uid="uid://dii1bfw8jybgt" path="res://assets/spritesheet-enemies-default.png" id="1_0yhv8"]
 [ext_resource type="Script" uid="uid://by20irefrdutc" path="res://scripts/pnj.gd" id="1_xg58l"]
 [ext_resource type="FontFile" uid="uid://c625rmrxp6huy" path="res://fonts/Blazma-Regular.ttf" id="3_3is8m"]
 [ext_resource type="Texture2D" uid="uid://bseyn3sgo02t" path="res://assets/keyboard/keyboard_enter.png" id="4_v1ya0"]
+[ext_resource type="AudioStream" uid="uid://dwjnochwccbc6" path="res://assets/audio/babbling/babbling.mp3" id="5_r3d7l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xg58l"]
 atlas = ExtResource("1_0yhv8")
@@ -96,6 +97,10 @@ clip_text = true
 [node name="KeyboardEnter" type="Sprite2D" parent="Control/Panel/MarginContainer"]
 position = Vector2(1025, 386)
 texture = ExtResource("4_v1ya0")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_r3d7l")
+volume_db = -20.0
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

@@ -9,8 +9,9 @@ script = ExtResource("1_xlapc")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.8
 
-[node name="FallingAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="FallingAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_kl8fp")
+volume_db = -10.245
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

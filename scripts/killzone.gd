@@ -1,7 +1,7 @@
 extends Area2D
 
 @onready var timer: Timer = $Timer
-@onready var falling_audio: AudioStreamPlayer2D = $FallingAudio
+@onready var falling_audio: AudioStreamPlayer = $FallingAudio
 
 func _ready() -> void:
 	GameManager.validate_enigma.connect(_on_validate_enigma)
