@@ -28,15 +28,18 @@ func _ready() -> void:
 
 	GameManager.display_player_answer.connect(_on_display_player_answer)
 	GameManager.send_answer.connect(_on_send_answer)
-	
+
+	# Disable auto_show to prevent keyboard from hiding automatically
+	onscreen_keyboard.auto_show = false
+
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
 
 func _on_display_player_answer():
-	onscreen_keyboard.visible = true
-	
+	onscreen_keyboard.show()
+
 func _on_send_answer(_text: String, _pnjId: int):
-	onscreen_keyboard.visible = false
+	onscreen_keyboard.hide()
 	
 func _is_mobile_device() -> bool:
 	var os_name = OS.get_name()
