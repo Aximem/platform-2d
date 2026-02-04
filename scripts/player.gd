@@ -398,10 +398,29 @@ func _on_validate_enigma(pnjId: int):
 		game_ended = true
 		GameManager.game_ended.emit()
 	
+func _is_mobile_device() -> bool:
+	var os_name = OS.get_name()
+
+	# Native mobile
+	if os_name in ["Android", "iOS"]:
+		return true
+
+	# Web: detect mobile browser via JavaScript
+	if os_name == "Web":
+		var is_mobile = JavaScriptBridge.eval("""
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
+		""")
+		return is_mobile
+
+	return false
+	
 func _on_display_player_answer():
 	answer_control.visible = true
 	line_edit.grab_focus.call_deferred()
 	line_edit.caret_blink = true
+	if _is_mobile_device():
+		DisplayServer.virtual_keyboard_show(line_edit.text, line_edit.get_global_rect())
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	line_edit.text = ""

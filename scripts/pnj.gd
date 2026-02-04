@@ -157,3 +157,7 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 func _on_touch_screen_button_pressed() -> void:
 	if display_enigma:
 		_handle_accept_action()
+
+func _on_touch_screen_button_2_pressed() -> void:
+	if display_enigma:
+		_handle_accept_action()

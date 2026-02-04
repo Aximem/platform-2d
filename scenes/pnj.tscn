@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bdd0rffss6dpx"]
+[gd_scene load_steps=14 format=3 uid="uid://bdd0rffss6dpx"]
 
 [ext_resource type="Texture2D" uid="uid://dii1bfw8jybgt" path="res://assets/spritesheet-enemies-default.png" id="1_0yhv8"]
 [ext_resource type="Script" uid="uid://by20irefrdutc" path="res://scripts/pnj.gd" id="1_xg58l"]
@@ -35,6 +35,8 @@ radius = 32.06244
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0yhv8"]
 size = Vector2(103, 72)
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_32aag"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3is8m"]
 corner_radius_top_left = 20
 corner_radius_top_right = 20
@@ -65,6 +67,11 @@ offset_top = -513.0
 offset_right = 766.0
 offset_bottom = -69.0
 mouse_filter = 1
+
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="Control"]
+position = Vector2(9, 12)
+scale = Vector2(1059.9999, 419)
+texture_normal = SubResource("CanvasTexture_32aag")
 
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1
@@ -112,5 +119,6 @@ volume_db = -20.0
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="pressed" from="Control/TouchScreenButton2" to="." method="_on_touch_screen_button_2_pressed"]
 [connection signal="pressed" from="Control/Panel/MarginContainer/TouchScreenButton" to="." method="_on_touch_screen_button_pressed"]
 [connection signal="released" from="Control/Panel/MarginContainer/TouchScreenButton" to="." method="_on_touch_screen_button_released"]

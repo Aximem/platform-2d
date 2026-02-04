@@ -1,6 +1,7 @@
 Features:
 
 - Gestion clavier / dialogue sur téléphone
+- Au bout de la grimpe, provoquer un déplacement sur la droite
 
 Fixes:
 
