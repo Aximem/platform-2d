@@ -95,6 +95,13 @@ func _ready() -> void:
 		velocity = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
+	# Game ended: apply gravity but block horizontal movement
+	if game_ended:
+		velocity.x = 0
+		velocity += get_gravity() * delta
+		move_and_slide()
+		return
+
 	if not can_move:
 		animated_sprite.play("idle")
 		if animation_player.is_playing():
@@ -389,6 +396,7 @@ func _on_validate_enigma(pnjId: int):
 		camera_2d.limit_bottom = 1300
 		tile_map_layer_tiles.collision_enabled = false
 		game_ended = true
+		GameManager.game_ended.emit()
 	
 func _on_display_player_answer():
 	answer_control.visible = true
