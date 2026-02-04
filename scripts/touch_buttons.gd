@@ -97,6 +97,14 @@ func resize_all() -> void:
 			var scale_factor = float(button_size) / texture_size.y
 			button.scale = Vector2(scale_factor, scale_factor)
 
+	# Left et Right plus larges de 20px
+	if left_touch and left_touch.texture_normal:
+		var extra_width = 20.0 / left_touch.texture_normal.get_size().x
+		left_touch.scale.x += extra_width
+	if right_touch and right_touch.texture_normal:
+		var extra_width = 20.0 / right_touch.texture_normal.get_size().x
+		right_touch.scale.x += extra_width
+
 	# Jump est plus gros
 	if jump_touch and jump_touch.texture_normal:
 		var texture_size = jump_touch.texture_normal.get_size()
