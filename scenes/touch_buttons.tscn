@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckw0gdh2pvayy"]
+[gd_scene load_steps=8 format=3 uid="uid://ckw0gdh2pvayy"]
 
 [ext_resource type="Texture2D" uid="uid://cpqeojj86u8dh" path="res://assets/button/direction_left.png" id="1_rpj4i"]
 [ext_resource type="Script" uid="uid://bu6qhrjkx4sbn" path="res://scripts/touch_buttons.gd" id="1_sts82"]
 [ext_resource type="Texture2D" uid="uid://c562wun14tf3a" path="res://assets/button/direction_right.png" id="2_24v8d"]
+[ext_resource type="Script" uid="uid://bf0esc4o736ox" path="res://addons/onscreenkeyboard/onscreen_keyboard.gd" id="2_fpuaf"]
 [ext_resource type="Texture2D" uid="uid://bfonns5vku8dg" path="res://assets/button/direction_top.png" id="3_tyxis"]
 [ext_resource type="Texture2D" uid="uid://lyk8fdt1h3gr" path="res://assets/button/direction_bottom.png" id="4_sts82"]
 [ext_resource type="Texture2D" uid="uid://ba3820lmhwqfc" path="res://assets/button/button_circle.png" id="5_fpuaf"]
@@ -105,6 +106,22 @@ scale = Vector2(1.2, 1.2)
 texture_normal = ExtResource("5_fpuaf")
 passby_press = true
 visibility_mode = 1
+
+[node name="OnscreenKeyboard" type="PanelContainer" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -232.0
+offset_top = -144.0
+offset_right = 237.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("2_fpuaf")
+metadata/_custom_type_script = "uid://bf0esc4o736ox"
 
 [connection signal="pressed" from="Control/MarginContainer/Control/HBoxContainer/Control/LeftTouch" to="." method="_on_left_touch_pressed"]
 [connection signal="released" from="Control/MarginContainer/Control/HBoxContainer/Control/LeftTouch" to="." method="_on_left_touch_released"]
