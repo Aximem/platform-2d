@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdd0rffss6dpx"]
+[gd_scene load_steps=13 format=3 uid="uid://bdd0rffss6dpx"]
 
 [ext_resource type="Texture2D" uid="uid://dii1bfw8jybgt" path="res://assets/spritesheet-enemies-default.png" id="1_0yhv8"]
 [ext_resource type="Script" uid="uid://by20irefrdutc" path="res://scripts/pnj.gd" id="1_xg58l"]
 [ext_resource type="FontFile" uid="uid://c625rmrxp6huy" path="res://fonts/Blazma-Regular.ttf" id="3_3is8m"]
 [ext_resource type="Texture2D" uid="uid://bseyn3sgo02t" path="res://assets/keyboard/keyboard_enter.png" id="4_v1ya0"]
+[ext_resource type="Texture2D" uid="uid://b3k7kajew6fyo" path="res://assets/keyboard/touch.png" id="5_32aag"]
 [ext_resource type="AudioStream" uid="uid://jjduvx5insky" path="res://assets/audio/babbling/babbling.mp3" id="5_r3d7l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xg58l"]
@@ -63,6 +64,7 @@ offset_left = -316.0
 offset_top = -513.0
 offset_right = 766.0
 offset_bottom = -69.0
+mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1
@@ -71,6 +73,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_3is8m")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/Panel"]
@@ -98,9 +101,16 @@ clip_text = true
 position = Vector2(1025, 386)
 texture = ExtResource("4_v1ya0")
 
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control/Panel/MarginContainer"]
+position = Vector2(955, 362)
+scale = Vector2(0.014588235, 0.0149553735)
+texture_normal = ExtResource("5_32aag")
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_r3d7l")
 volume_db = -20.0
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="pressed" from="Control/Panel/MarginContainer/TouchScreenButton" to="." method="_on_touch_screen_button_pressed"]
+[connection signal="released" from="Control/Panel/MarginContainer/TouchScreenButton" to="." method="_on_touch_screen_button_released"]

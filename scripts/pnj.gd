@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var label: Label = $Control/Panel/MarginContainer/Label
 @onready var keyboard_enter: Sprite2D = $Control/Panel/MarginContainer/KeyboardEnter
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var touch_screen_button: TouchScreenButton = $Control/Panel/MarginContainer/TouchScreenButton
 
 @export var detection_range: float = 150.0
 @export var id: int = -1
@@ -19,6 +20,23 @@ var is_answering: bool = false
 var answered_wrongly: bool = false
 var found_solution: bool = false
 
+func _is_mobile_device() -> bool:
+	var os_name = OS.get_name()
+
+	# Native mobile
+	if os_name in ["Android", "iOS"]:
+		return true
+
+	# Web: detect mobile browser via JavaScript
+	if os_name == "Web":
+		var is_mobile = JavaScriptBridge.eval("""
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
+		""")
+		return is_mobile
+
+	return false
+	
 func _ready():
 	control.visible = false
 	GameManager.send_answer.connect(_on_send_answer)
@@ -28,46 +46,56 @@ func _ready():
 	shape.size = Vector2(detection_range * 2, 50)
 	collision_shape.shape = shape
 	keyboard_enter.visible = false
+	touch_screen_button.visible = false
 
 func _process(_delta: float) -> void:
 	if is_typing:
-		keyboard_enter.visible = false
+		if not _is_mobile_device():
+			keyboard_enter.visible = false
+		else:
+			touch_screen_button.visible = false
 	else:
-		keyboard_enter.visible = true
+		if not _is_mobile_device():
+			keyboard_enter.visible = true
+		else:
+			touch_screen_button.visible = true
 	
 func _input(event: InputEvent) -> void:
 	if not display_enigma:
 		return
 
 	if event.is_action_pressed("ui_accept"):
-		if is_typing:
-			# If press enter during typing, display all text
-			label.text = full_text
-			is_typing = false
-			audio_stream_player_2d.stop()
-		else:
-			if is_answering:
-				if answered_wrongly:
-					answered_wrongly = false
-					start_typing(getQuestionByIndex(0))
-					is_answering = false
-				else:
-					control.visible = false
-					GameManager.validate_enigma.emit(id)
-					display_enigma = false
-					audio_stream_player_2d.stop()
-				return
-						
-			# Next text
-			current_dialogue_index += 1
-			if current_dialogue_index < GameData.PNJ_DIALOGUES[id]["question"].size():
-				start_typing(getQuestionByIndex(current_dialogue_index))
+		_handle_accept_action()
+
+func _handle_accept_action() -> void:
+	if is_typing:
+		# If press enter during typing, display all text
+		label.text = full_text
+		is_typing = false
+		audio_stream_player_2d.stop()
+	else:
+		if is_answering:
+			if answered_wrongly:
+				answered_wrongly = false
+				start_typing(getQuestionByIndex(0))
+				is_answering = false
 			else:
-				# Plus de dialogues, fermer la bulle
 				control.visible = false
-				current_dialogue_index = 0
-				GameManager.display_player_answer.emit()
+				GameManager.validate_enigma.emit(id)
+				display_enigma = false
 				audio_stream_player_2d.stop()
+			return
+
+		# Next text
+		current_dialogue_index += 1
+		if current_dialogue_index < GameData.PNJ_DIALOGUES[id]["question"].size():
+			start_typing(getQuestionByIndex(current_dialogue_index))
+		else:
+			# Plus de dialogues, fermer la bulle
+			control.visible = false
+			current_dialogue_index = 0
+			GameManager.display_player_answer.emit()
+			audio_stream_player_2d.stop()
 
 func start_typing(text: String) -> void:
 	full_text = text
@@ -125,3 +153,7 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 		control.visible = false
 		is_typing = false
 		current_dialogue_index = 0
+
+func _on_touch_screen_button_pressed() -> void:
+	if display_enigma:
+		_handle_accept_action()

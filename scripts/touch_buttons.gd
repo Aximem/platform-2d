@@ -18,6 +18,7 @@ const SPACING_PERCENT = 0.02 # 2% de la hauteur pour l'espacement
 @onready var top_touch: TouchScreenButton = $Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer/TopTouch
 @onready var bottom_touch: TouchScreenButton = $Control/MarginContainer/Control/HBoxContainer/Control2/VBoxContainer/BottomTouch
 @onready var jump_touch: TouchScreenButton = $Control/MarginContainer/Control/Control2/JumpTouch
+@onready var touch_screen_button: TouchScreenButton = $Control/Panel/MarginContainer/TouchScreenButton
 
 func _ready() -> void:
 	if not _is_mobile_device():
