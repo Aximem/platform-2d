@@ -125,15 +125,16 @@ func resize_all() -> void:
 		var scale_factor = float(button_size * 1.5) / texture_size.y
 		jump_touch.scale = Vector2(scale_factor, scale_factor)
 
-	# Redimensionner le clavier virtuel (20% de la hauteur de l'écran)
-	var keyboard_height = int(screen_height * BUTTON_SIZE_PERCENT)
+	# Redimensionner le clavier virtuel (25% de la hauteur de l'écran, 60% de la largeur)
+	var keyboard_height = int(screen_height * 0.25)
 	var screen_width = get_viewport().get_visible_rect().size.x
-	var keyboard_width = int(screen_width * 0.9)  # 90% de la largeur de l'écran
+	var keyboard_width = int(screen_width * 0.6)
 	onscreen_keyboard.custom_minimum_size = Vector2(keyboard_width, keyboard_height)
-	# Repositionner le clavier pour qu'il soit centré horizontalement
+	# Repositionner le clavier pour qu'il soit centré horizontalement et visible en bas
 	onscreen_keyboard.offset_left = -keyboard_width / 2
 	onscreen_keyboard.offset_right = keyboard_width / 2
-	onscreen_keyboard.offset_top = -keyboard_height
+	onscreen_keyboard.offset_top = -keyboard_height - margin_size  # Ajouter une marge pour ne pas sortir de l'écran
+	onscreen_keyboard.offset_bottom = -margin_size
 
 	# Repositionner les boutons en croix (D-pad style manette)
 	# Left et Right au milieu verticalement (alignés entre top et bottom)
