@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var keyboard_enter: Sprite2D = $Control/Panel/MarginContainer/KeyboardEnter
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var touch_screen_button: TouchScreenButton = $Control/Panel/MarginContainer/TouchScreenButton
+@onready var collision_block: CollisionShape2D = $CollisionBlock
 
 @export var detection_range: float = 150.0
 @export var id: int = -1
@@ -84,6 +85,8 @@ func _handle_accept_action() -> void:
 				GameManager.validate_enigma.emit(id)
 				display_enigma = false
 				audio_stream_player_2d.stop()
+				# Remove top collision so player can jump over pnj
+				collision_block.queue_free()
 			return
 
 		# Next text
