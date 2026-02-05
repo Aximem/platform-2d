@@ -24,6 +24,7 @@ const SPACING_PERCENT = 0.02 # 2% de la hauteur pour l'espacement
 func _ready() -> void:
 	if not _is_mobile_device():
 		visible = false
+		onscreen_keyboard.set_process_input(false)
 		return
 
 	onscreen_keyboard.visibility_changed.connect(_on_keyboard_visibility_changed)
