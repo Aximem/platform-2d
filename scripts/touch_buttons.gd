@@ -134,7 +134,7 @@ func resize_all() -> void:
 		jump_touch.scale = Vector2(scale_factor, scale_factor)
 
 	# Redimensionner le clavier virtuel (30% de la hauteur de l'écran, 60% de la largeur)
-	var keyboard_height = int(screen_height * 0.3)
+	var keyboard_height = int(screen_height * 0.4)
 	var screen_width = get_viewport().get_visible_rect().size.x
 	var keyboard_width = int(screen_width * 0.6)
 	onscreen_keyboard.custom_minimum_size = Vector2(keyboard_width, keyboard_height)

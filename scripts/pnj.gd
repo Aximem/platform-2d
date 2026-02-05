@@ -65,6 +65,11 @@ func _input(event: InputEvent) -> void:
 	if not display_enigma:
 		return
 
+	# On mobile, le TouchScreenButton gère déjà l'interaction
+	# pour éviter un double déclenchement avec le clavier virtuel
+	if _is_mobile_device():
+		return
+
 	if event.is_action_pressed("ui_accept"):
 		_handle_accept_action()
 
