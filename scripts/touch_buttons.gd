@@ -26,6 +26,7 @@ func _ready() -> void:
 		visible = false
 		return
 
+	onscreen_keyboard.visibility_changed.connect(_on_keyboard_visibility_changed)
 	GameManager.display_player_answer.connect(_on_display_player_answer)
 	GameManager.send_answer.connect(_on_send_answer)
 
@@ -35,6 +36,12 @@ func _ready() -> void:
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
 
+func _on_keyboard_visibility_changed():
+	if not _is_mobile_device():
+		pass
+	if not onscreen_keyboard.visible:
+		GameManager.keyboard_close.emit()
+	
 func _on_display_player_answer():
 	onscreen_keyboard.show()
 
@@ -125,8 +132,8 @@ func resize_all() -> void:
 		var scale_factor = float(button_size * 1.5) / texture_size.y
 		jump_touch.scale = Vector2(scale_factor, scale_factor)
 
-	# Redimensionner le clavier virtuel (25% de la hauteur de l'écran, 60% de la largeur)
-	var keyboard_height = int(screen_height * 0.25)
+	# Redimensionner le clavier virtuel (30% de la hauteur de l'écran, 60% de la largeur)
+	var keyboard_height = int(screen_height * 0.3)
 	var screen_width = get_viewport().get_visible_rect().size.x
 	var keyboard_width = int(screen_width * 0.6)
 	onscreen_keyboard.custom_minimum_size = Vector2(keyboard_width, keyboard_height)
@@ -134,7 +141,7 @@ func resize_all() -> void:
 	onscreen_keyboard.offset_left = -keyboard_width / 2
 	onscreen_keyboard.offset_right = keyboard_width / 2
 	onscreen_keyboard.offset_top = -keyboard_height - margin_size  # Ajouter une marge pour ne pas sortir de l'écran
-	onscreen_keyboard.offset_bottom = -margin_size
+	onscreen_keyboard.offset_bottom = 0
 
 	# Repositionner les boutons en croix (D-pad style manette)
 	# Left et Right au milieu verticalement (alignés entre top et bottom)

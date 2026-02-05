@@ -82,6 +82,7 @@ func _ready() -> void:
 	GameManager.display_player_answer.connect(_on_display_player_answer)
 	GameManager.dialogue_started.connect(_on_dialogue_started)
 	GameManager.validate_enigma.connect(_on_validate_enigma)
+	GameManager.keyboard_close.connect(_on_keyboard_close)
 
 	# Load footstep sounds
 	footstep_sounds = [
@@ -391,7 +392,6 @@ func _on_enemy_killed(_id: int):
 	has_gun = false
 	gun.visible = false
 	ennemy_death_audio.play()
-	
 
 func _on_remove_gun():
 	can_shoot = false
@@ -412,28 +412,18 @@ func _on_validate_enigma(pnjId: int):
 		game_ended = true
 		GameManager.game_ended.emit()
 	
-func _is_mobile_device() -> bool:
-	var os_name = OS.get_name()
-
-	# Native mobile
-	if os_name in ["Android", "iOS"]:
-		return true
-
-	# Web: detect mobile browser via JavaScript
-	if os_name == "Web":
-		var is_mobile = JavaScriptBridge.eval("""
-			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
-		""")
-		return is_mobile
-
-	return false
-	
 func _on_display_player_answer():
 	answer_control.visible = true
+	line_edit.text = ""
+	line_edit.placeholder_text = "Votre réponse..."
 	line_edit.editable = true
-	line_edit.grab_focus.call_deferred()
 	line_edit.caret_blink = true
+	line_edit.caret_blink_interval = 0.5
+	line_edit.draw_control_chars = true
+	# Wait a bit for keyboard to appear, then focus
+	await get_tree().create_timer(0.2).timeout
+	line_edit.grab_focus()
+	line_edit.caret_column = 0
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	line_edit.text = ""
@@ -455,3 +445,7 @@ func play_footstep():
 		# Stop after 0.3 seconds
 		await get_tree().create_timer(0.3).timeout
 		move_audio.stop()
+
+func _on_keyboard_close(): 
+	GameManager.send_answer.emit(line_edit.text, current_pnj_id_speaking)
+	answer_control.visible = false

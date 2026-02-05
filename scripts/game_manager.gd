@@ -12,6 +12,7 @@ signal send_answer(text: String, pnjId: int)
 signal validate_enigma(pnjId: int)
 signal bomb_disappear(switch_id: int)
 signal game_ended()
+signal keyboard_close()
 
 # Checkpoint state
 var active_checkpoint_id: int = -1
