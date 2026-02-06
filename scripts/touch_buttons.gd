@@ -23,6 +23,7 @@ const SPACING_PERCENT = 0.02 # 2% de la hauteur pour l'espacement
 
 # Audio unlock for mobile browsers
 var audio_unlocked: bool = false
+var start_button: Button = null
 
 func _ready() -> void:
 	if not _is_mobile_device():
@@ -40,36 +41,70 @@ func _ready() -> void:
 	# Disable animation to prevent position issues
 	onscreen_keyboard.animate = false
 
+	# Create start button for mobile audio unlock
+	_create_start_button()
+
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
 
+func _create_start_button() -> void:
+	if not _is_mobile_device() or OS.get_name() != "Web":
+		return
+
+	# Create a fullscreen button overlay
+	start_button = Button.new()
+	start_button.text = "TAP TO START"
+	start_button.add_theme_font_size_override("font_size", 40)
+
+	# Style the button
+	var style_box = StyleBoxFlat.new()
+	style_box.bg_color = Color(0, 0, 0, 0.8)
+	style_box.border_color = Color(1, 1, 1, 1)
+	style_box.border_width_left = 3
+	style_box.border_width_right = 3
+	style_box.border_width_top = 3
+	style_box.border_width_bottom = 3
+	start_button.add_theme_stylebox_override("normal", style_box)
+	start_button.add_theme_color_override("font_color", Color(1, 1, 1, 1))
+
+	# Make it fullscreen
+	start_button.set_anchors_preset(Control.PRESET_FULL_RECT)
+	start_button.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	start_button.grow_vertical = Control.GROW_DIRECTION_BOTH
+
+	# Add to scene
+	$Control.add_child(start_button)
+	start_button.pressed.connect(_on_start_button_pressed)
+
+func _on_start_button_pressed() -> void:
+	_unlock_audio()
+	if start_button:
+		start_button.queue_free()
+		start_button = null
+
 func _unlock_audio() -> void:
 	if not audio_unlocked and _is_mobile_device():
-		# Find all AudioStreamPlayers in the scene tree and play them briefly
-		# This unlocks the audio context on mobile browsers
-		var audio_players = _get_all_audio_players(get_tree().root)
-		for player in audio_players:
-			if player is AudioStreamPlayer or player is AudioStreamPlayer2D or player is AudioStreamPlayer3D:
-				if player.stream != null and not player.playing:
-					var original_volume = player.volume_db
-					player.volume_db = -80  # Very quiet
-					player.play()
-					# Create a timer to stop and restore volume
-					var timer = get_tree().create_timer(0.1)
-					timer.timeout.connect(func():
-						player.stop()
-						player.volume_db = original_volume
-					)
-					break  # Only need to play one
+		# On mobile browsers, we need to play a sound after user interaction to unlock audio
+		# Create a temporary AudioStreamPlayer with a very short silent sound
+		if OS.get_name() == "Web":
+			# Use JavaScript to unlock the AudioContext
+			JavaScriptBridge.eval("""
+				if (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') {
+					var AudioContext = window.AudioContext || window.webkitAudioContext;
+					var context = new AudioContext();
+					if (context.state === 'suspended') {
+						context.resume();
+					}
+					// Play a silent buffer to unlock
+					var buffer = context.createBuffer(1, 1, 22050);
+					var source = context.createBufferSource();
+					source.buffer = buffer;
+					source.connect(context.destination);
+					source.start(0);
+				}
+			""")
 		audio_unlocked = true
-
-func _get_all_audio_players(node: Node) -> Array:
-	var players = []
-	if node is AudioStreamPlayer or node is AudioStreamPlayer2D or node is AudioStreamPlayer3D:
-		players.append(node)
-	for child in node.get_children():
-		players.append_array(_get_all_audio_players(child))
-	return players
+		print("Audio unlocked on mobile browser")
 
 func _on_keyboard_visibility_changed():
 	if not _is_mobile_device():
@@ -189,35 +224,30 @@ func resize_all() -> void:
 	jump_touch.position = Vector2.ZERO
 
 func _on_left_touch_pressed() -> void:
-	_unlock_audio()
 	Input.action_press("move_left")
 
 func _on_left_touch_released() -> void:
 	Input.action_release("move_left")
 
 func _on_right_touch_pressed() -> void:
-	_unlock_audio()
 	Input.action_press("move_right")
 
 func _on_right_touch_released() -> void:
 	Input.action_release("move_right")
 
 func _on_top_touch_pressed() -> void:
-	_unlock_audio()
 	Input.action_press("climb")
 
 func _on_top_touch_released() -> void:
 	Input.action_release("climb")
 
 func _on_bottom_touch_pressed() -> void:
-	_unlock_audio()
 	Input.action_press("descend")
 
 func _on_bottom_touch_released() -> void:
 	Input.action_release("descend")
 
 func _on_jump_touch_pressed() -> void:
-	_unlock_audio()
 	Input.action_press("jump")
 
 func _on_jump_touch_released() -> void:
