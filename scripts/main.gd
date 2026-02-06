@@ -33,7 +33,7 @@ func _is_mobile_device() -> bool:
 	
 func _ready() -> void:
 	if _is_mobile_device():
-		camera_2d.zoom = Vector2(3, 3)
+		camera_2d.zoom = Vector2(4, 4)
 		
 	GameManager.validate_enigma.connect(_on_validate_enigma)
 	GameManager.switch_activated.connect(_on_switch_activated)
