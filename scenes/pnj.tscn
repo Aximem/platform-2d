@@ -33,7 +33,7 @@ animations = [{
 radius = 32.06244
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0yhv8"]
-size = Vector2(103, 19)
+size = Vector2(103, 354)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_32aag"]
 
@@ -60,7 +60,7 @@ shape = SubResource("CircleShape2D_0yhv8")
 [node name="DetectionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(0, 26.5)
+position = Vector2(0, -141)
 shape = SubResource("RectangleShape2D_0yhv8")
 
 [node name="Control" type="Control" parent="."]

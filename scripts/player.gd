@@ -412,18 +412,37 @@ func _on_validate_enigma(pnjId: int):
 		game_ended = true
 		GameManager.game_ended.emit()
 	
+func _is_mobile_device() -> bool:
+	var os_name = OS.get_name()
+
+	# Native mobile
+	if os_name in ["Android", "iOS"]:
+		return true
+
+	# Web: detect mobile browser via JavaScript
+	if os_name == "Web":
+		var is_mobile = JavaScriptBridge.eval("""
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
+		""")
+		return is_mobile
+
+	return false
+	
 func _on_display_player_answer():
 	answer_control.visible = true
 	line_edit.text = ""
 	line_edit.placeholder_text = "Votre réponse..."
-	line_edit.editable = true
-	line_edit.caret_blink = true
-	line_edit.caret_blink_interval = 0.5
-	line_edit.draw_control_chars = true
-	# Wait a bit for keyboard to appear, then focus
-	await get_tree().create_timer(0.2).timeout
-	line_edit.grab_focus()
-	line_edit.caret_column = 0
+	
+	if not _is_mobile_device():
+		line_edit.editable = true
+		line_edit.caret_blink = true
+		line_edit.caret_blink_interval = 0.5
+		line_edit.draw_control_chars = true
+		# Wait a bit for keyboard to appear, then focus
+		await get_tree().create_timer(0.2).timeout
+		line_edit.grab_focus()
+		line_edit.caret_column = 0
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	answer_control.visible = false
