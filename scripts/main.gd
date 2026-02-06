@@ -4,6 +4,7 @@ extends Node2D
 @onready var moving_platform: AnimatableBody2D = $TileMaps/MovingPlatform
 @onready var boom_label: Label = $Bombs/BoomLabel
 @onready var explosion_audio: AudioStreamPlayer2D = $Audio/ExplosionAudio
+@onready var camera_2d: Camera2D = $Player/Camera2D
 
 var platform_speed: float = 65.0
 var platform_direction: int = 1  # 1 = droite, -1 = gauche
@@ -13,7 +14,27 @@ var platform_max_distance: float = 95.0
 var bomb_scene: PackedScene = preload("res://scenes/bomb.tscn")
 var bomb_spawn_position: Vector2 = Vector2(2875.0, 250.0)
 
+func _is_mobile_device() -> bool:
+	var os_name = OS.get_name()
+
+	# Native mobile
+	if os_name in ["Android", "iOS"]:
+		return true
+
+	# Web: detect mobile browser via JavaScript
+	if os_name == "Web":
+		var is_mobile = JavaScriptBridge.eval("""
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
+		""")
+		return is_mobile
+
+	return false
+	
 func _ready() -> void:
+	if _is_mobile_device():
+		camera_2d.zoom = Vector2(3, 3)
+		
 	GameManager.validate_enigma.connect(_on_validate_enigma)
 	GameManager.switch_activated.connect(_on_switch_activated)
 	GameManager.bomb_disappear.connect(_on_bomb_disappear)

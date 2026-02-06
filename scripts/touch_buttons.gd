@@ -21,6 +21,9 @@ const SPACING_PERCENT = 0.02 # 2% de la hauteur pour l'espacement
 @onready var touch_screen_button: TouchScreenButton = $Control/Panel/MarginContainer/TouchScreenButton
 @onready var onscreen_keyboard: PanelContainer = $Control/OnscreenKeyboard
 
+# Audio unlock for mobile browsers
+var audio_unlocked: bool = false
+
 func _ready() -> void:
 	if not _is_mobile_device():
 		visible = false
@@ -39,6 +42,34 @@ func _ready() -> void:
 
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
+
+func _unlock_audio() -> void:
+	if not audio_unlocked and _is_mobile_device():
+		# Find all AudioStreamPlayers in the scene tree and play them briefly
+		# This unlocks the audio context on mobile browsers
+		var audio_players = _get_all_audio_players(get_tree().root)
+		for player in audio_players:
+			if player is AudioStreamPlayer or player is AudioStreamPlayer2D or player is AudioStreamPlayer3D:
+				if player.stream != null and not player.playing:
+					var original_volume = player.volume_db
+					player.volume_db = -80  # Very quiet
+					player.play()
+					# Create a timer to stop and restore volume
+					var timer = get_tree().create_timer(0.1)
+					timer.timeout.connect(func():
+						player.stop()
+						player.volume_db = original_volume
+					)
+					break  # Only need to play one
+		audio_unlocked = true
+
+func _get_all_audio_players(node: Node) -> Array:
+	var players = []
+	if node is AudioStreamPlayer or node is AudioStreamPlayer2D or node is AudioStreamPlayer3D:
+		players.append(node)
+	for child in node.get_children():
+		players.append_array(_get_all_audio_players(child))
+	return players
 
 func _on_keyboard_visibility_changed():
 	if not _is_mobile_device():
@@ -158,30 +189,35 @@ func resize_all() -> void:
 	jump_touch.position = Vector2.ZERO
 
 func _on_left_touch_pressed() -> void:
+	_unlock_audio()
 	Input.action_press("move_left")
 
 func _on_left_touch_released() -> void:
 	Input.action_release("move_left")
 
 func _on_right_touch_pressed() -> void:
+	_unlock_audio()
 	Input.action_press("move_right")
 
 func _on_right_touch_released() -> void:
 	Input.action_release("move_right")
 
 func _on_top_touch_pressed() -> void:
+	_unlock_audio()
 	Input.action_press("climb")
 
 func _on_top_touch_released() -> void:
 	Input.action_release("climb")
 
 func _on_bottom_touch_pressed() -> void:
+	_unlock_audio()
 	Input.action_press("descend")
 
 func _on_bottom_touch_released() -> void:
 	Input.action_release("descend")
 
 func _on_jump_touch_pressed() -> void:
+	_unlock_audio()
 	Input.action_press("jump")
 
 func _on_jump_touch_released() -> void:
