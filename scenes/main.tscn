@@ -11816,14 +11816,16 @@ id = 1
 
 [node name="SupriseLabel" type="Label" parent="."]
 z_index = 1
-offset_left = 3622.0
-offset_top = 1024.0
-offset_right = 4036.0
-offset_bottom = 1098.0
+offset_left = 3490.0
+offset_top = 1110.0
+offset_right = 3690.09
+offset_bottom = 1187.0
 theme_override_colors/font_color = Color(0, 0, 0, 0.4392157)
 theme_override_fonts/font = ExtResource("5_tbgi4")
 theme_override_font_sizes/font_size = 32
-text = "Photo Surprise :)"
+text = "Photo 
+Surprise :)"
+horizontal_alignment = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Bombs" type="Node" parent="."]

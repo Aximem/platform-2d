@@ -34,6 +34,7 @@ func _ready() -> void:
 	onscreen_keyboard.visibility_changed.connect(_on_keyboard_visibility_changed)
 	GameManager.display_player_answer.connect(_on_display_player_answer)
 	GameManager.send_answer.connect(_on_send_answer)
+	GameManager.game_ended.connect(_on_game_ended)
 
 	# Disable auto_show to prevent keyboard from hiding automatically
 	onscreen_keyboard.auto_show = false
@@ -252,3 +253,6 @@ func _on_jump_touch_pressed() -> void:
 
 func _on_jump_touch_released() -> void:
 	Input.action_release("jump")
+
+func _on_game_ended():
+	visible = false
