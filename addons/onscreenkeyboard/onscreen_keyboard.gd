@@ -59,6 +59,7 @@ var style_special_keys:StyleBoxFlat = null
 ###########################
 
 signal layout_changed
+signal key_pressed(key_value: String)
 
 ###########################
 ## PANEL 
@@ -268,6 +269,9 @@ func _trigger_uppercase(key_data):
 func _key_released(key_data):
 	if key_data.has("output"):
 		var key_value = key_data.get("output")
+
+		# Emit signal for manual text handling (useful for mobile)
+		key_pressed.emit(key_value)
 
 		###########################
 		## DISPATCH InputEvent

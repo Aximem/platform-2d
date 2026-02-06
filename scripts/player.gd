@@ -51,6 +51,7 @@ var game_ended: bool = false
 @onready var gun_audio: AudioStreamPlayer2D = $GunAudio
 @onready var jump_audio: AudioStreamPlayer2D = $JumpAudio
 @onready var ennemy_death_audio: AudioStreamPlayer2D = $EnnemyDeathAudio
+@onready var onscreen_keyboard = $"../TouchButtons/Control/OnscreenKeyboard"
 
 var footstep_sounds: Array[AudioStream] = []
 var laser_sound: AudioStream = preload("res://assets/audio/laser/laser2.ogg")
@@ -74,6 +75,10 @@ func _ready() -> void:
 	gun.visible = false
 	answer_control.visible = false
 	keyboard_enter.visible = false
+
+	# Connect keyboard signal on mobile
+	if _is_mobile_device() and onscreen_keyboard:
+		onscreen_keyboard.key_pressed.connect(_on_keyboard_key_pressed)
 
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
@@ -467,3 +472,26 @@ func play_footstep():
 func _on_keyboard_close():
 	GameManager.send_answer.emit(line_edit.text, current_pnj_id_speaking)
 	answer_control.visible = false
+
+func _on_keyboard_key_pressed(key_value: String):
+	# Only handle if answer panel is visible
+	if not answer_control.visible:
+		return
+
+	# Handle special keys
+	if key_value == "backspace":
+		if line_edit.text.length() > 0:
+			line_edit.text = line_edit.text.substr(0, line_edit.text.length() - 1)
+			_on_line_edit_text_changed(line_edit.text)
+	elif key_value == "enter":
+		_on_line_edit_text_submitted(line_edit.text)
+	elif key_value == "space":
+		line_edit.text += " "
+		_on_line_edit_text_changed(line_edit.text)
+	else:
+		# Regular character - handle uppercase
+		var char_to_add = key_value
+		if onscreen_keyboard.uppercase:
+			char_to_add = key_value.to_upper()
+		line_edit.text += char_to_add
+		_on_line_edit_text_changed(line_edit.text)
