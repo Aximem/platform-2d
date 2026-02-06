@@ -117,6 +117,7 @@ func _on_send_answer(_text: String, _pnjId: int):
 	onscreen_keyboard.hide()
 	
 func _is_mobile_device() -> bool:
+	return true
 	var os_name = OS.get_name()
 
 	# Native mobile

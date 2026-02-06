@@ -5,6 +5,8 @@ extends Node2D
 @onready var boom_label: Label = $Bombs/BoomLabel
 @onready var explosion_audio: AudioStreamPlayer2D = $Audio/ExplosionAudio
 @onready var camera_2d: Camera2D = $Player/Camera2D
+@onready var keyboard_circle: Sprite2D = $Keyboard/KeyboardCircle
+@onready var keyboard_space: Sprite2D = $Keyboard/KeyboardSpace
 
 var platform_speed: float = 65.0
 var platform_direction: int = 1  # 1 = droite, -1 = gauche
@@ -34,6 +36,9 @@ func _is_mobile_device() -> bool:
 func _ready() -> void:
 	if _is_mobile_device():
 		camera_2d.zoom = Vector2(4, 4)
+		keyboard_space.visible = false
+	else:
+		keyboard_circle.visible = false
 		
 	GameManager.validate_enigma.connect(_on_validate_enigma)
 	GameManager.switch_activated.connect(_on_switch_activated)

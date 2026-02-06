@@ -35,7 +35,7 @@ const PNJ_DIALOGUES = {
 		"answer": {
 			"value": "surprise",
 			"correct": "Oui Suprise, Bravo ! Photo Surprise !",
-			"incorrect": "Non, je vais répéter."
+			"incorrect": "Non, je te donne un indice supplémentaire."
 		}
 	}
 }

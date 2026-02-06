@@ -147,11 +147,6 @@
         {
           "keys": [
             {
-              "type": "special-shift",
-              "display-icon": "PREDEFINED:SHIFT",
-              "stretch-ratio": 1.5
-            },
-            {
               "type": "char",
               "output": "W",
               "display": "W",

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://cdhceurbwvuoy"]
+[gd_scene load_steps=41 format=4 uid="uid://cdhceurbwvuoy"]
 
 [ext_resource type="Script" uid="uid://bjn7b0ovgit7" path="res://scripts/main.gd" id="1_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://ck5wm7pliwulq" path="res://scenes/player.tscn" id="1_o5qli"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://b8jg54ui3it4q" path="res://assets/keyboard/keyboard_arrow_right.png" id="19_pm3ni"]
 [ext_resource type="Texture2D" uid="uid://d4ihtvaqnyv5n" path="res://assets/keyboard/keyboard_arrow_up.png" id="20_y6deb"]
 [ext_resource type="Texture2D" uid="uid://cn7dfoxfpj8kg" path="res://assets/keyboard/keyboard_space.png" id="21_og1vs"]
+[ext_resource type="Texture2D" uid="uid://ba3820lmhwqfc" path="res://assets/button/button_circle.png" id="21_pm3ni"]
 [ext_resource type="AudioStream" uid="uid://der54k4kr8lfs" path="res://assets/audio/explosion/explosion.mp3" id="22_jscy8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbgi4"]
@@ -11667,7 +11668,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 z_index = 10
-position = Vector2(398.99997, 484)
+position = Vector2(3718.9998, 481)
 scale = Vector2(0.18, 0.18)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -11847,57 +11848,68 @@ metadata/_edit_use_anchors_ = true
 [node name="KeyboardArrowDown" type="Sprite2D" parent="Keyboard"]
 modulate = Color(0, 0, 0, 0.4392157)
 z_index = 1
-position = Vector2(254, 386)
+position = Vector2(295, 385)
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("17_yc10j")
 
 [node name="KeyboardArrowLeft" type="Sprite2D" parent="Keyboard"]
 modulate = Color(0, 0, 0, 0.4392157)
 z_index = 1
-position = Vector2(194, 385)
+position = Vector2(260, 385)
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("18_jscy8")
 
 [node name="KeyboardArrowRight" type="Sprite2D" parent="Keyboard"]
 modulate = Color(0, 0, 0, 0.4392157)
 z_index = 1
-position = Vector2(311, 386)
+position = Vector2(330, 384.99997)
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("19_pm3ni")
 
 [node name="KeyboardArrowUp" type="Sprite2D" parent="Keyboard"]
 modulate = Color(0, 0, 0, 0.4392157)
 z_index = 1
-position = Vector2(253, 332)
+position = Vector2(294, 350)
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("20_y6deb")
+
+[node name="KeyboardCircle" type="Sprite2D" parent="Keyboard"]
+modulate = Color(0, 0, 0, 0.4392157)
+z_index = 1
+position = Vector2(406.00003, 382.00003)
+scale = Vector2(0.59375, 0.57025033)
+texture = ExtResource("21_pm3ni")
 
 [node name="KeyboardSpace" type="Sprite2D" parent="Keyboard"]
 modulate = Color(0, 0, 0, 0.4392157)
 z_index = 1
-position = Vector2(407, 382.496)
-scale = Vector2(1, 0.953)
+position = Vector2(406.00003, 383)
+scale = Vector2(0.59375, 0.57025033)
 texture = ExtResource("21_og1vs")
 
 [node name="ClimbLabel" type="Label" parent="Keyboard"]
-offset_left = 222.0
-offset_top = 287.0
-offset_right = 286.0
-offset_bottom = 306.0
+offset_left = 262.0
+offset_top = 314.0
+offset_right = 326.0
+offset_bottom = 333.0
 theme_override_colors/font_color = Color(0, 0, 0, 0.4392157)
 theme_override_fonts/font = ExtResource("5_tbgi4")
 text = "GRIMPER"
 
 [node name="DescendLabel" type="Label" parent="Keyboard"]
-offset_left = 214.0
-offset_top = 413.0
-offset_right = 296.0
-offset_bottom = 432.0
+offset_left = 256.0
+offset_top = 403.0
+offset_right = 338.0
+offset_bottom = 422.0
 theme_override_colors/font_color = Color(0, 0, 0, 0.4392157)
 theme_override_fonts/font = ExtResource("5_tbgi4")
 text = "DESCENDRE"
 
 [node name="JumpLabel" type="Label" parent="Keyboard"]
 offset_left = 380.0
-offset_top = 395.496
+offset_top = 399.0
 offset_right = 436.0
-offset_bottom = 414.496
+offset_bottom = 418.0
 theme_override_colors/font_color = Color(0, 0, 0, 0.4392157)
 theme_override_fonts/font = ExtResource("5_tbgi4")
 text = "SAUTER"
