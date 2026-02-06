@@ -11600,7 +11600,7 @@ tile_set = SubResource("TileSet_jkv2x")
 visible = false
 position = Vector2(14, 5)
 scale = Vector2(0.25, 0.25)
-tile_map_data = PackedByteArray("AAB0ABwAAAAIAA8AAABzAB0AAAAIAA8AAAA=")
+tile_map_data = PackedByteArray("AAB0ABsAAAAIAA8AAAB1ABsAAAAIAA8AAABzABsAAAAIAA8AAAA=")
 tile_set = SubResource("TileSet_pm3ni")
 
 [node name="MovingPlatform" type="AnimatableBody2D" parent="TileMaps" groups=["moving_platform"]]
@@ -11667,7 +11667,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 z_index = 10
-position = Vector2(396.99997, 483.99997)
+position = Vector2(1594, 480.99997)
 scale = Vector2(0.18, 0.18)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

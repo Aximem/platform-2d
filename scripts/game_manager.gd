@@ -26,8 +26,16 @@ func _ready():
 
 	_force_landscape_on_mobile()
 
+	# Defer to ensure the scene is fully loaded
+	call_deferred("_disable_platform_tiles")
+
+func _disable_platform_tiles():
 	var tile_map_layer_platform_visible = get_tree().current_scene.get_node("TileMaps/TileMapLayerPlatformVisible")
-	tile_map_layer_platform_visible.collision_enabled = false
+	# Store the original tiles before clearing them
+	var used_cells = tile_map_layer_platform_visible.get_used_cells()
+	for cell in used_cells:
+		tile_map_layer_platform_visible.erase_cell(cell)
+	tile_map_layer_platform_visible.visible = false
 
 func _force_landscape_on_mobile():
 	if OS.get_name() == "Web":
@@ -132,8 +140,12 @@ func move_water_down():
 func _on_enemy_killed(id: int):
 	if id == 0:
 		var tile_map_layer_platform_visible = get_tree().current_scene.get_node("TileMaps/TileMapLayerPlatformVisible")
+		# Restore the tiles from the scene data
+		# Coordinates from main.tscn: AAB0ABsAAAAIAA8AAAB1ABsAAAAIAA8AAABzABsAAAAIAA8AAAA=
+		tile_map_layer_platform_visible.set_cell(Vector2i(116, 27), 0, Vector2i(8, 15))
+		tile_map_layer_platform_visible.set_cell(Vector2i(117, 27), 0, Vector2i(8, 15))
+		tile_map_layer_platform_visible.set_cell(Vector2i(115, 27), 0, Vector2i(8, 15))
 		tile_map_layer_platform_visible.visible = true
-		tile_map_layer_platform_visible.collision_enabled = true
 
 func _on_bomb_disappear(switch_id: int):
 	emit_signal("reset_switch_activated", switch_id)
