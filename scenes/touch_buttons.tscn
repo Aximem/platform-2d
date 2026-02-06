@@ -121,6 +121,7 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("2_fpuaf")
 custom_layout_file = "res://addons/onscreenkeyboard/customize/keyboardLayouts/keyboard_layout_fr.json"
+font_size = 30
 metadata/_custom_type_script = "uid://bf0esc4o736ox"
 
 [connection signal="pressed" from="Control/MarginContainer/Control/HBoxContainer/Control/LeftTouch" to="." method="_on_left_touch_pressed"]

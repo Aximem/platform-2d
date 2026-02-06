@@ -37,9 +37,6 @@ func _ready() -> void:
 	# Disable animation to prevent position issues
 	onscreen_keyboard.animate = false
 
-	# Configure keyboard font size
-	onscreen_keyboard.font_size = 30
-
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
 
@@ -56,22 +53,21 @@ func _on_send_answer(_text: String, _pnjId: int):
 	onscreen_keyboard.hide()
 	
 func _is_mobile_device() -> bool:
-	return true
-	# var os_name = OS.get_name()
+	var os_name = OS.get_name()
 
-	# # Native mobile
-	# if os_name in ["Android", "iOS"]:
-	# 	return true
+	# Native mobile
+	if os_name in ["Android", "iOS"]:
+		return true
 
-	# # Web: detect mobile browser via JavaScript
-	# if os_name == "Web":
-	# 	var is_mobile = JavaScriptBridge.eval("""
-	# 		/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-	# 		|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
-	# 	""")
-	# 	return is_mobile
+	# Web: detect mobile browser via JavaScript
+	if os_name == "Web":
+		var is_mobile = JavaScriptBridge.eval("""
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
+		""")
+		return is_mobile
 
-	# return false
+	return false
 
 func resize_all() -> void:
 	var screen_height = get_viewport().get_visible_rect().size.y
