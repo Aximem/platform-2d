@@ -426,7 +426,6 @@ func _on_display_player_answer():
 	line_edit.caret_column = 0
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:
-	line_edit.text = ""
 	answer_control.visible = false
 	GameManager.send_answer.emit(new_text, current_pnj_id_speaking)
 
