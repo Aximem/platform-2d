@@ -75,6 +75,10 @@ func _ready() -> void:
 	answer_control.visible = false
 	keyboard_enter.visible = false
 
+	# Disable native keyboard on mobile by preventing focus
+	if OS.get_name() == "Android" or OS.get_name() == "iOS":
+		line_edit.focus_mode = Control.FOCUS_NONE
+
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
 	GameManager.enemy_killed.connect(_on_enemy_killed)
@@ -420,10 +424,12 @@ func _on_display_player_answer():
 	line_edit.caret_blink = true
 	line_edit.caret_blink_interval = 0.5
 	line_edit.draw_control_chars = true
-	# Wait a bit for keyboard to appear, then focus
-	await get_tree().create_timer(0.2).timeout
-	line_edit.grab_focus()
-	line_edit.caret_column = 0
+
+	# Only grab focus on desktop to prevent native mobile keyboard
+	if OS.get_name() != "Android" and OS.get_name() != "iOS" and OS.get_name() != "Web":
+		await get_tree().create_timer(0.2).timeout
+		line_edit.grab_focus()
+		line_edit.caret_column = 0
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	answer_control.visible = false
