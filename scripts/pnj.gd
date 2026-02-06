@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 @export var detection_range: float = 150.0
 @export var id: int = -1
-@export var char_delay: float = 0.03  # Delay between characters
+@export var char_delay: float = 0.03 # Delay between characters
 
 var display_enigma: bool = false
 var current_dialogue_index: int = 0
@@ -22,26 +22,27 @@ var answered_wrongly: bool = false
 var found_solution: bool = false
 
 func _is_mobile_device() -> bool:
-	var os_name = OS.get_name()
+	return true
+	# var os_name = OS.get_name()
 
-	# Native mobile
-	if os_name in ["Android", "iOS"]:
-		return true
+	# # Native mobile
+	# if os_name in ["Android", "iOS"]:
+	# 	return true
 
-	# Web: detect mobile browser via JavaScript
-	if os_name == "Web":
-		var is_mobile = JavaScriptBridge.eval("""
-			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
-		""")
-		return is_mobile
+	# # Web: detect mobile browser via JavaScript
+	# if os_name == "Web":
+	# 	var is_mobile = JavaScriptBridge.eval("""
+	# 		/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+	# 		|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
+	# 	""")
+	# 	return is_mobile
 
-	return false
+	# return false
 	
 func _ready():
 	control.visible = false
 	GameManager.send_answer.connect(_on_send_answer)
-	
+
 	var collision_shape = detection_area.get_node("CollisionShape2D")
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(detection_range * 2, 50)
@@ -63,11 +64,6 @@ func _process(_delta: float) -> void:
 	
 func _input(event: InputEvent) -> void:
 	if not display_enigma:
-		return
-
-	# On mobile, le TouchScreenButton gère déjà l'interaction
-	# pour éviter un double déclenchement avec le clavier virtuel
-	if _is_mobile_device():
 		return
 
 	if event.is_action_pressed("ui_accept"):

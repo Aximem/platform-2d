@@ -34,6 +34,12 @@ func _ready() -> void:
 	# Disable auto_show to prevent keyboard from hiding automatically
 	onscreen_keyboard.auto_show = false
 
+	# Disable animation to prevent position issues
+	onscreen_keyboard.animate = false
+
+	# Configure keyboard font size
+	onscreen_keyboard.font_size = 30
+
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
 
@@ -50,21 +56,22 @@ func _on_send_answer(_text: String, _pnjId: int):
 	onscreen_keyboard.hide()
 	
 func _is_mobile_device() -> bool:
-	var os_name = OS.get_name()
+	return true
+	# var os_name = OS.get_name()
 
-	# Native mobile
-	if os_name in ["Android", "iOS"]:
-		return true
+	# # Native mobile
+	# if os_name in ["Android", "iOS"]:
+	# 	return true
 
-	# Web: detect mobile browser via JavaScript
-	if os_name == "Web":
-		var is_mobile = JavaScriptBridge.eval("""
-			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-			|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
-		""")
-		return is_mobile
+	# # Web: detect mobile browser via JavaScript
+	# if os_name == "Web":
+	# 	var is_mobile = JavaScriptBridge.eval("""
+	# 		/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+	# 		|| (navigator.maxTouchPoints > 0 && /Mobi|Android/i.test(navigator.userAgent))
+	# 	""")
+	# 	return is_mobile
 
-	return false
+	# return false
 
 func resize_all() -> void:
 	var screen_height = get_viewport().get_visible_rect().size.y
@@ -139,11 +146,11 @@ func resize_all() -> void:
 	var keyboard_width = int(screen_width * 0.6)
 	onscreen_keyboard.custom_minimum_size = Vector2(keyboard_width, keyboard_height)
 	# Repositionner le clavier pour qu'il soit centré horizontalement et visible en bas
-	onscreen_keyboard.offset_left = -keyboard_width / 2
+	onscreen_keyboard.offset_left = - keyboard_width / 2
 	onscreen_keyboard.offset_right = keyboard_width / 2
-	onscreen_keyboard.offset_top = -keyboard_height - margin_size  # Ajouter une marge pour ne pas sortir de l'écran
+	onscreen_keyboard.offset_top = - keyboard_height - margin_size # Ajouter une marge pour ne pas sortir de l'écran
 	onscreen_keyboard.offset_bottom = 0
-
+	
 	# Repositionner les boutons en croix (D-pad style manette)
 	# Left et Right au milieu verticalement (alignés entre top et bottom)
 	left_touch.position = Vector2(0, button_size + spacing_size)

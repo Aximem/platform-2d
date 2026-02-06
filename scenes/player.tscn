@@ -180,9 +180,9 @@ shape = SubResource("CircleShape2D_g2els")
 layout_mode = 3
 anchors_preset = 0
 offset_left = -325.0
-offset_top = -380.0
+offset_top = -450.0
 offset_right = 324.0
-offset_bottom = -219.0
+offset_bottom = -339.0
 
 [node name="Panel" type="Panel" parent="AnswerControl"]
 layout_mode = 1
@@ -215,7 +215,7 @@ theme_override_styles/read_only = SubResource("StyleBoxFlat_tuyoq")
 theme_override_styles/focus = SubResource("StyleBoxFlat_fjrip")
 
 [node name="KeyboardEnter" type="Sprite2D" parent="AnswerControl/Panel/MarginContainer"]
-position = Vector2(601, 110)
+position = Vector2(593, 55)
 texture = ExtResource("5_qlg0r")
 
 [node name="MoveAudio" type="AudioStreamPlayer2D" parent="."]

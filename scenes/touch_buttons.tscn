@@ -108,7 +108,6 @@ passby_press = true
 visibility_mode = 1
 
 [node name="OnscreenKeyboard" type="PanelContainer" parent="Control"]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -121,6 +120,7 @@ offset_right = 237.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("2_fpuaf")
+custom_layout_file = "res://addons/onscreenkeyboard/customize/keyboardLayouts/keyboard_layout_fr.json"
 metadata/_custom_type_script = "uid://bf0esc4o736ox"
 
 [connection signal="pressed" from="Control/MarginContainer/Control/HBoxContainer/Control/LeftTouch" to="." method="_on_left_touch_pressed"]

@@ -8,15 +8,15 @@
 					"keys": [
 						{
 							"type": "char",
-							"output": "Q",
-							"display": "q",
-							"display-uppercase": "Q"
+							"output": "A",
+							"display": "a",
+							"display-uppercase": "A"
 						},
 						{
 							"type": "char",
-							"output": "W",
-							"display": "w",
-							"display-uppercase": "W"
+							"output": "Z",
+							"display": "z",
+							"display-uppercase": "Z"
 						},
 						{
 							"type": "char",
@@ -38,9 +38,9 @@
 						},
 						{
 							"type": "char",
-							"output": "Z",
-							"display": "z",
-							"display-uppercase": "Z"
+							"output": "Y",
+							"display": "y",
+							"display-uppercase": "Y"
 						},
 						{
 							"type": "char",
@@ -84,9 +84,9 @@
 					"keys": [
 						{
 							"type": "char",
-							"output": "A",
-							"display": "a",
-							"display-uppercase": "A"
+							"output": "Q",
+							"display": "q",
+							"display-uppercase": "Q"
 						},
 						{
 							"type": "char",
@@ -138,15 +138,15 @@
 						},
 						{
 							"type": "char",
-							"output": "é",
-							"display": "é",
-							"display-uppercase": "É"
+							"output": "M",
+							"display": "m",
+							"display-uppercase": "M"
 						},
 						{
 							"type": "char",
-							"output": "à",
-							"display": "à",
-							"display-uppercase": "À"
+							"output": "ù",
+							"display": "ù",
+							"display-uppercase": "Ù"
 						},
 						{
 							"type": "special",
@@ -165,9 +165,9 @@
 						},
 						{
 							"type": "char",
-							"output": "Y",
-							"display": "y",
-							"display-uppercase": "Y"
+							"output": "W",
+							"display": "w",
+							"display-uppercase": "W"
 						},
 						{
 							"type": "char",
@@ -201,15 +201,15 @@
 						},
 						{
 							"type": "char",
-							"output": "M",
-							"display": "m",
-							"display-uppercase": "M"
+							"output": "é",
+							"display": "é",
+							"display-uppercase": "É"
 						},
 						{
 							"type": "char",
-							"output": "@",
-							"display": "@",
-							"display-uppercase": "@"
+							"output": "à",
+							"display": "à",
+							"display-uppercase": "À"
 						},
 						{
 							"type": "special-shift",
