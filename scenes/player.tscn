@@ -180,9 +180,9 @@ shape = SubResource("CircleShape2D_g2els")
 layout_mode = 3
 anchors_preset = 0
 offset_left = -325.0
-offset_top = -350.0
+offset_top = -400.0
 offset_right = 324.0
-offset_bottom = -239.0
+offset_bottom = -289.0
 
 [node name="Panel" type="Panel" parent="AnswerControl"]
 layout_mode = 1

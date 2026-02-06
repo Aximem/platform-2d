@@ -37,6 +37,7 @@ var can_shoot: bool = true
 var current_pnj_id_speaking: int = -1
 
 var game_ended: bool = false
+var use_native_keyboard: bool = false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
@@ -76,12 +77,19 @@ func _ready() -> void:
 	answer_control.visible = false
 	keyboard_enter.visible = false
 
-	# On mobile, continuously hide the native virtual keyboard
+	# On mobile, decide which keyboard to use
 	if OS.get_name() == "Android" or OS.get_name() == "iOS":
-		set_process(true)
-		# Connect to keyboard signal for manual text input
-		if onscreen_keyboard:
-			onscreen_keyboard.key_pressed.connect(_on_virtual_key_pressed)
+		# Check if native keyboard is available
+		use_native_keyboard = DisplayServer.has_feature(DisplayServer.FEATURE_VIRTUAL_KEYBOARD)
+
+		if use_native_keyboard:
+			# Hide custom keyboard, use native one
+			if onscreen_keyboard:
+				onscreen_keyboard.visible = false
+		else:
+			# Use custom keyboard
+			if onscreen_keyboard:
+				onscreen_keyboard.key_pressed.connect(_on_virtual_key_pressed)
 
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
@@ -104,12 +112,6 @@ func _ready() -> void:
 		var checkpoint_pos = GameManager.get_active_checkpoint_position()
 		global_position = checkpoint_pos
 		velocity = Vector2.ZERO
-
-func _process(_delta: float) -> void:
-	# On mobile, force hide native keyboard if it appears
-	if OS.get_name() == "Android" or OS.get_name() == "iOS":
-		if DisplayServer.virtual_keyboard_get_height() > 0:
-			DisplayServer.virtual_keyboard_hide()
 
 func _physics_process(delta: float) -> void:
 	# Game ended: apply gravity but block horizontal movement
@@ -438,12 +440,9 @@ func _on_display_player_answer():
 	# Wait a bit for keyboard to appear, then focus
 	await get_tree().create_timer(0.2).timeout
 
-	# On mobile, don't grab focus to prevent native keyboard
-	if OS.get_name() == "Android" or OS.get_name() == "iOS":
-		DisplayServer.virtual_keyboard_hide()
-		# Don't grab focus - we'll handle input manually via signal
-	else:
-		# On desktop, grab focus normally
+	# Only grab focus if using native keyboard or on desktop
+	# Custom keyboard on mobile doesn't need focus
+	if use_native_keyboard or OS.get_name() not in ["Android", "iOS"]:
 		line_edit.grab_focus()
 		line_edit.caret_column = 0
 	
