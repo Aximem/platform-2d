@@ -213,7 +213,6 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_qlg0r")
 theme_override_styles/read_only = SubResource("StyleBoxFlat_tuyoq")
 theme_override_styles/focus = SubResource("StyleBoxFlat_fjrip")
-virtual_keyboard_enabled = false
 
 [node name="KeyboardEnter" type="Sprite2D" parent="AnswerControl/Panel/MarginContainer"]
 position = Vector2(593, 55)

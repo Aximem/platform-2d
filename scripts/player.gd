@@ -37,7 +37,6 @@ var can_shoot: bool = true
 var current_pnj_id_speaking: int = -1
 
 var game_ended: bool = false
-var use_native_keyboard: bool = false
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tile_map_layer_tiles: TileMapLayer = $"../TileMaps/TileMapLayerTiles"
@@ -52,7 +51,6 @@ var use_native_keyboard: bool = false
 @onready var gun_audio: AudioStreamPlayer2D = $GunAudio
 @onready var jump_audio: AudioStreamPlayer2D = $JumpAudio
 @onready var ennemy_death_audio: AudioStreamPlayer2D = $EnnemyDeathAudio
-@onready var onscreen_keyboard = $"../TouchButtons/Control/OnscreenKeyboard"
 
 var footstep_sounds: Array[AudioStream] = []
 var laser_sound: AudioStream = preload("res://assets/audio/laser/laser2.ogg")
@@ -76,20 +74,6 @@ func _ready() -> void:
 	gun.visible = false
 	answer_control.visible = false
 	keyboard_enter.visible = false
-
-	# On mobile, decide which keyboard to use
-	if OS.get_name() == "Android" or OS.get_name() == "iOS":
-		# Check if native keyboard is available
-		use_native_keyboard = DisplayServer.has_feature(DisplayServer.FEATURE_VIRTUAL_KEYBOARD)
-
-		if use_native_keyboard:
-			# Hide custom keyboard, use native one
-			if onscreen_keyboard:
-				onscreen_keyboard.visible = false
-		else:
-			# Use custom keyboard
-			if onscreen_keyboard:
-				onscreen_keyboard.key_pressed.connect(_on_virtual_key_pressed)
 
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
@@ -436,15 +420,10 @@ func _on_display_player_answer():
 	line_edit.caret_blink = true
 	line_edit.caret_blink_interval = 0.5
 	line_edit.draw_control_chars = true
-
 	# Wait a bit for keyboard to appear, then focus
 	await get_tree().create_timer(0.2).timeout
-
-	# Only grab focus if using native keyboard or on desktop
-	# Custom keyboard on mobile doesn't need focus
-	if use_native_keyboard or OS.get_name() not in ["Android", "iOS"]:
-		line_edit.grab_focus()
-		line_edit.caret_column = 0
+	line_edit.grab_focus()
+	line_edit.caret_column = 0
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	answer_control.visible = false
@@ -469,27 +448,3 @@ func play_footstep():
 func _on_keyboard_close():
 	GameManager.send_answer.emit(line_edit.text, current_pnj_id_speaking)
 	answer_control.visible = false
-
-func _on_virtual_key_pressed(key_value: String):
-	# Handle keyboard input manually on mobile to avoid native keyboard
-	if not answer_control.visible:
-		return
-
-	# Handle special keys
-	if key_value == "backspace":
-		var text = line_edit.text
-		if text.length() > 0:
-			line_edit.text = text.substr(0, text.length() - 1)
-			_on_line_edit_text_changed(line_edit.text)
-	elif key_value == "enter":
-		_on_line_edit_text_submitted(line_edit.text)
-	elif key_value == "space":
-		line_edit.text += " "
-		_on_line_edit_text_changed(line_edit.text)
-	else:
-		# Regular character - check if uppercase is active
-		var char_to_add = key_value
-		if onscreen_keyboard and onscreen_keyboard.uppercase:
-			char_to_add = key_value.to_upper()
-		line_edit.text += char_to_add
-		_on_line_edit_text_changed(line_edit.text)
