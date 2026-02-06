@@ -75,9 +75,9 @@ func _ready() -> void:
 	answer_control.visible = false
 	keyboard_enter.visible = false
 
-	# Disable native keyboard on mobile by preventing focus
+	# On mobile, continuously hide the native virtual keyboard
 	if OS.get_name() == "Android" or OS.get_name() == "iOS":
-		line_edit.focus_mode = Control.FOCUS_NONE
+		set_process(true)
 
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
@@ -100,6 +100,12 @@ func _ready() -> void:
 		var checkpoint_pos = GameManager.get_active_checkpoint_position()
 		global_position = checkpoint_pos
 		velocity = Vector2.ZERO
+
+func _process(_delta: float) -> void:
+	# On mobile, force hide native keyboard if it appears
+	if OS.get_name() == "Android" or OS.get_name() == "iOS":
+		if DisplayServer.virtual_keyboard_get_height() > 0:
+			DisplayServer.virtual_keyboard_hide()
 
 func _physics_process(delta: float) -> void:
 	# Game ended: apply gravity but block horizontal movement
@@ -425,11 +431,16 @@ func _on_display_player_answer():
 	line_edit.caret_blink_interval = 0.5
 	line_edit.draw_control_chars = true
 
-	# Only grab focus on desktop to prevent native mobile keyboard
-	if OS.get_name() != "Android" and OS.get_name() != "iOS" and OS.get_name() != "Web":
-		await get_tree().create_timer(0.2).timeout
-		line_edit.grab_focus()
-		line_edit.caret_column = 0
+	# Wait a bit for keyboard to appear, then focus
+	await get_tree().create_timer(0.2).timeout
+
+	# On mobile, set virtual_keyboard_enabled to false before grabbing focus
+	if OS.get_name() == "Android" or OS.get_name() == "iOS":
+		# Force disable virtual keyboard via DisplayServer
+		DisplayServer.virtual_keyboard_hide()
+
+	line_edit.grab_focus()
+	line_edit.caret_column = 0
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	answer_control.visible = false
