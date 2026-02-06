@@ -42,9 +42,6 @@ func _ready() -> void:
 	# Disable animation to prevent position issues
 	onscreen_keyboard.animate = false
 
-	# Create start button for mobile audio unlock
-	_create_start_button()
-
 	resize_all()
 	get_tree().root.size_changed.connect(resize_all)
 
