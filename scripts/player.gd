@@ -51,6 +51,7 @@ var game_ended: bool = false
 @onready var gun_audio: AudioStreamPlayer2D = $GunAudio
 @onready var jump_audio: AudioStreamPlayer2D = $JumpAudio
 @onready var ennemy_death_audio: AudioStreamPlayer2D = $EnnemyDeathAudio
+@onready var onscreen_keyboard = $"../TouchButtons/Control/OnscreenKeyboard"
 
 var footstep_sounds: Array[AudioStream] = []
 var laser_sound: AudioStream = preload("res://assets/audio/laser/laser2.ogg")
@@ -78,6 +79,9 @@ func _ready() -> void:
 	# On mobile, continuously hide the native virtual keyboard
 	if OS.get_name() == "Android" or OS.get_name() == "iOS":
 		set_process(true)
+		# Connect to keyboard signal for manual text input
+		if onscreen_keyboard:
+			onscreen_keyboard.key_pressed.connect(_on_virtual_key_pressed)
 
 	disable_bridges()
 	GameManager.switch_activated.connect(_on_switch_activated)
@@ -434,13 +438,14 @@ func _on_display_player_answer():
 	# Wait a bit for keyboard to appear, then focus
 	await get_tree().create_timer(0.2).timeout
 
-	# On mobile, set virtual_keyboard_enabled to false before grabbing focus
+	# On mobile, don't grab focus to prevent native keyboard
 	if OS.get_name() == "Android" or OS.get_name() == "iOS":
-		# Force disable virtual keyboard via DisplayServer
 		DisplayServer.virtual_keyboard_hide()
-
-	line_edit.grab_focus()
-	line_edit.caret_column = 0
+		# Don't grab focus - we'll handle input manually via signal
+	else:
+		# On desktop, grab focus normally
+		line_edit.grab_focus()
+		line_edit.caret_column = 0
 	
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	answer_control.visible = false
@@ -462,6 +467,30 @@ func play_footstep():
 		await get_tree().create_timer(0.3).timeout
 		move_audio.stop()
 
-func _on_keyboard_close(): 
+func _on_keyboard_close():
 	GameManager.send_answer.emit(line_edit.text, current_pnj_id_speaking)
 	answer_control.visible = false
+
+func _on_virtual_key_pressed(key_value: String):
+	# Handle keyboard input manually on mobile to avoid native keyboard
+	if not answer_control.visible:
+		return
+
+	# Handle special keys
+	if key_value == "backspace":
+		var text = line_edit.text
+		if text.length() > 0:
+			line_edit.text = text.substr(0, text.length() - 1)
+			_on_line_edit_text_changed(line_edit.text)
+	elif key_value == "enter":
+		_on_line_edit_text_submitted(line_edit.text)
+	elif key_value == "space":
+		line_edit.text += " "
+		_on_line_edit_text_changed(line_edit.text)
+	else:
+		# Regular character - check if uppercase is active
+		var char_to_add = key_value
+		if onscreen_keyboard and onscreen_keyboard.uppercase:
+			char_to_add = key_value.to_upper()
+		line_edit.text += char_to_add
+		_on_line_edit_text_changed(line_edit.text)
