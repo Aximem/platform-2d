@@ -108,6 +108,7 @@ passby_press = true
 visibility_mode = 1
 
 [node name="OnscreenKeyboard" type="PanelContainer" parent="Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

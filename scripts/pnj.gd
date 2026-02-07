@@ -43,8 +43,9 @@ func _ready():
 	GameManager.send_answer.connect(_on_send_answer)
 
 	var collision_shape = detection_area.get_node("CollisionShape2D")
+	collision_shape.position = Vector2(0, 0)  # Centrer sur le PNJ
 	var shape = RectangleShape2D.new()
-	shape.size = Vector2(detection_range * 2, 50)
+	shape.size = Vector2(detection_range * 2, 200)  # Hauteur suffisante pour détecter le player au sol
 	collision_shape.shape = shape
 	keyboard_enter.visible = false
 	touch_screen_button.visible = false

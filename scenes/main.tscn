@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://cdhceurbwvuoy"]
+[gd_scene load_steps=42 format=4 uid="uid://cdhceurbwvuoy"]
 
 [ext_resource type="Script" uid="uid://bjn7b0ovgit7" path="res://scripts/main.gd" id="1_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://ck5wm7pliwulq" path="res://scenes/player.tscn" id="1_o5qli"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bufbf2xyt1e8h" path="res://scenes/gun.tscn" id="10_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bmjnok6mltb47" path="res://scenes/ennemy.tscn" id="12_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://bdd0rffss6dpx" path="res://scenes/pnj.tscn" id="14_a8y0u"]
+[ext_resource type="Texture2D" uid="uid://cdktibhk1mhqv" path="res://assets/photo/IMG_8610.jpeg" id="17_y6deb"]
 [ext_resource type="Texture2D" uid="uid://dyhrbwahmxorm" path="res://assets/keyboard/keyboard_arrow_down.png" id="17_yc10j"]
 [ext_resource type="Texture2D" uid="uid://ddi86vnhbv7i" path="res://assets/keyboard/keyboard_arrow_left.png" id="18_jscy8"]
 [ext_resource type="Texture2D" uid="uid://b8jg54ui3it4q" path="res://assets/keyboard/keyboard_arrow_right.png" id="19_pm3ni"]
@@ -11668,7 +11669,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 z_index = 10
-position = Vector2(3569, 484)
+position = Vector2(398.99997, 485)
 scale = Vector2(0.18, 0.18)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -11814,6 +11815,11 @@ id = 0
 position = Vector2(3803, 475)
 scale = Vector2(0.25, 0.25)
 id = 1
+
+[node name="Img8610" type="Sprite2D" parent="Pnjs"]
+position = Vector2(3759, 1154)
+scale = Vector2(0.044477344, 0.044146802)
+texture = ExtResource("17_y6deb")
 
 [node name="SupriseLabel" type="Label" parent="."]
 z_index = 1

@@ -402,11 +402,6 @@
               "display": "/"
             },
             {
-              "type": "char",
-              "output": "Space",
-              "stretch-ratio": 5
-            },
-            {
               "type": "special",
               "output": "LeftArrow",
               "display-icon": "PREDEFINED:LEFT"

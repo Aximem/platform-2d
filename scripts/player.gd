@@ -478,14 +478,16 @@ func _on_keyboard_key_pressed(key_value: String):
 	if not answer_control.visible:
 		return
 
-	# Handle special keys
-	if key_value == "backspace":
+	# Handle special keys (case-insensitive)
+	var key_lower = key_value.to_lower()
+
+	if key_lower == "backspace":
 		if line_edit.text.length() > 0:
 			line_edit.text = line_edit.text.substr(0, line_edit.text.length() - 1)
 			_on_line_edit_text_changed(line_edit.text)
-	elif key_value == "enter":
+	elif key_lower == "return" or key_lower == "enter":
 		_on_line_edit_text_submitted(line_edit.text)
-	elif key_value == "space":
+	elif key_lower == "space":
 		line_edit.text += " "
 		_on_line_edit_text_changed(line_edit.text)
 	else:
